@@ -1,8 +1,7 @@
-<ion-modal-view>
-
+<ion-view>
   <ion-header-bar align-title="center" class="bar">
   <div class="buttons">
-    <button class="button button-clear button-small button-stable" ng-click="forgetpswd()">mot de passe oublier ?</button>
+    <button class="button button-clear button-small button-stable" ng-click="forgetpswd()">mot de passe oublié ?</button>
   </div>
   <h1 class="title">Connexion</h1>
 </ion-header-bar>
@@ -18,8 +17,8 @@
           <input type="password" ng-model="loginData.password">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Connectez vous maintenant !</button>
-          <button class="button button-block button-outline button-royal" ng-click="createUser()">Inscription ici !</button>
+          <button class="button button-block button-positive" type="submit">Connexion</button>
+          <a href="/#/register" class="button button-block button-outline button-royal"  >Inscription</a>
         </label>
       </div>
     </form>

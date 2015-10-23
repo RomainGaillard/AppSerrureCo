@@ -4,7 +4,7 @@
 
 angular.module("register.controllers")
 
-    .controller('RegisterCtrl', ['$scope','RegisterSrv', function($scope, RegisterSrv) {
+    .controller('RegisterCtrl', function($scope) {
         //$scope.playlists = RegisterSrv.getPlaylist();
-        $scope.test = "Hello";
-    }])
+
+    })

@@ -1,0 +1,15 @@
+<ion-view>
+    <ion-header-bar>
+        <div class="buttons">
+            <a href="#" class="button icon-left ion-power  button-clear button-dark" ng-click="closeLogin()">Déconnexion</a>
+        </div>
+        <h1 class="title">Gestion des serrures</h1>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="lock in locks" href="#/locks/{{lock.id}}">
+                {{lock.title}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

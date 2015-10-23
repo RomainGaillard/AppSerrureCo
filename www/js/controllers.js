@@ -5,5 +5,6 @@
 
 
 //angular.module('starter.controllers',[])
-angular.module('register.controllers',['register.services'])
-
+angular.module('register.controllers',[])
+angular.module('locks.controllers',['locks.services'])
+angular.module('login.controllers', [])

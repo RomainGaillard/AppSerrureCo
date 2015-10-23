@@ -5,4 +5,4 @@
 
 
 //angular.module('starter.services', [])
-angular.module('register.services', [])
+angular.module('locks.services', [])
