@@ -15,8 +15,5 @@ angular.module('register.services')
             { title: 'Rap', id: 5},
             { title: 'Cowbell', id: 6 }
         ];
-
-        this.getPlaylist = function(){
-            return playlist;
-        }
+        
     });
