@@ -4,8 +4,6 @@
  */
 
 
+//angular.module('starter.controllers',[])
+angular.module('register.controllers',[])
 
-angular.module('starter.controllers',[])
-
-//angular.module('playlist.controllers',['starter.services'])
-//angular.module('todolist.controllers',['starter.services'])
