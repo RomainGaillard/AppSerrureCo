@@ -1,12 +1,38 @@
 <ion-view>
     <ion-header-bar>
-        <h1 class="title">Inscription</h1>
         <div class="buttons">
-            <button class="button button-clear" ng-click="closeLogin()">Close</button>
+            <a href="#" class="button icon-left ion-chevron-left button-clear button-dark" ng-click="closeLogin()">Retour</a>
         </div>
+        <h1 class="title">Inscription</h1>
     </ion-header-bar>
     <ion-content>
-       test register
+        <form ng-submit="doRegister()">
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Nom</span>
+                    <input type="text" ng-model="registerData.name">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Prénom</span>
+                    <input type="text" ng-model="registerData.firstname">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Email</span>
+                    <input type="text" ng-model="registerData.email">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Mot de passe</span>
+                    <input type="password" ng-model="registerData.password">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Confirmer le mot de passe</span>
+                    <input type="password" ng-model="registerData.confirm_password">
+                </label>
+                <label class="item">
+                    <button class="button button-block button-balanced " type="submit">S'inscrire</button>
+                </label>
+            </div>
+        </form>
     </ion-content>
 </ion-view>
 
