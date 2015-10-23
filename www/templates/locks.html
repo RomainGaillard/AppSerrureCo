@@ -7,8 +7,21 @@
     </ion-header-bar>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="lock in locks" href="#/locks/{{lock.id}}">
-                {{lock.title}}
+            <ion-item ng-repeat="lock in locks">
+                {{lock.id}} - {{lock.title}}
+
+
+
+                <a class="item-icon-right" href="#">
+                    <span class="badge badge-assertive">{{lock.id}}</span>
+                </a>
+
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
             </ion-item>
         </ion-list>
     </ion-content>

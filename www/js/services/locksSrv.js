@@ -5,14 +5,12 @@
 
 angular.module('locks.services')
 
-    .service('LocksService', function() {
+    .service('LocksSrv', function() {
         var locks = [
-            { title: 'Sauvons la FRANCE', id: 1 },
-            { title: 'Vive Bordeaux', id: 2 },
-            { title: 'Dubstep', id: 3},
-            { title: 'Indie', id: 4},
-            { title: 'Rap', id: 5},
-            { title: 'Cowbell', id: 6 }
+            { title: 'Portail Ingesup', id: 1 },
+            { title: 'Entree Maison', id: 2 },
+            { title: 'Boite au lettre', id: 3},
+            { title: 'Chez Juppe', id: 4},
         ]
 
         this.getLocks = function(){
