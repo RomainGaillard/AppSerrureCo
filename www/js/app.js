@@ -3,43 +3,36 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter',['ionic','Appstarter.controllers','register.controllers', 'register.services'])
+angular.module('starter', ['ionic', 'Appstarter.controllers', 'register.controllers', 'register.services'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
-})
+    .run(function ($ionicPlatform) {
+        $ionicPlatform.ready(function () {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if (window.StatusBar) {
+                StatusBar.styleDefault();
+            }
+        });
+    })
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $stateProvider
 
-      .state('app', {
-        url: '/app',
-        views: {
-          'content': {
-            templateUrl: 'templates/login.html',
-            controller: 'LoginCtrl'
-          }
-        }
-      })
+            .state('app', {
+                url: '',
+                templateUrl: 'templates/login.html',
+                controller: 'LoginCtrl'
+            })
 
-      .state('app.register', {
-        url: '/register',
-        views: {
-          'content': {
-            templateUrl: 'templates/register.html'
-          }
-        }
-      })
+            .state('register', {
+                url: '/register',
+                templateUrl: 'templates/register.html'
+            })
 
-  // if none of the above states are matched, use this as the fallback
-  //$urlRouterProvider.otherwise('/app');
-});
+// if none of the above states are matched, use this as the fallback
+        $urlRouterProvider.otherwise('/');
+    })
+;
