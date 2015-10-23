@@ -5,5 +5,5 @@
 
 
 //angular.module('starter.controllers',[])
-angular.module('register.controllers',[])
+angular.module('register.controllers',['register.services'])
 
