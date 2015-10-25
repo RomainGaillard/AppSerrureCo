@@ -1,7 +1,7 @@
 <ion-view>
     <ion-header-bar>
         <a class="button button-icon icon ion-settings"></a>
-        <h1 class="title">Panneau de contrôle</h1>
+        <h1 class="title">Accueil</h1>
         <div class="buttons">
             <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logOut()"> Déconnexion </a>
         </div>
@@ -42,8 +42,14 @@
     </ion-content>
     <div class="footer">
         <div class="button-bar">
-            <button class="button button-full button-positive">Nouveau groupe</button>
-            <button class="button button-full button-balanced">Nouvelle serrure</button>
+            <button class="button button-full button-positive">
+                <i class="ion-android-add-circle"></i>
+                <span>  Nouveau groupe</span>
+            </button>
+            <button class="button button-full button-balanced">
+                <i class="ion-android-add-circle"></i>
+                <span>  Nouvelle serrure</span>
+            </button>
         </div>
     </div>
 </ion-view>
