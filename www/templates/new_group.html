@@ -1,0 +1,62 @@
+<div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+        <h1 class="title">Nouveau Groupe</h1>
+        <button class="button button-clear button-positive" ng-click="closeNewGroup()">Annuler</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+
+        <div class="list">
+            <form ng-submit="createGroup(group)">
+                <label class="item item-input">
+                    <input type="text" placeholder="Nom" ng-model="group.name">
+                </label>
+                <label class="item" style="font-weight: bold">
+                    Serrures associées:
+                </label>
+                <li class="item item-checkbox" ng-repeat="lock in locks">
+                    <label class="checkbox">
+                        <input type="checkbox">
+                    </label>
+                    {{lock.title}}
+                </li>
+            </form>
+            <label class="item" style="font-weight: bold">Membres:</label>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="Email" ng-model="group.members">
+                </label>
+                <button class="button button-icon" ng-click="">
+                    <i class="ion-android-add-circle">  Ajouter</i>
+                </button>
+            </div>
+            <div class="row">
+                <label class="col col-70">
+                    <button class="button button-small button-icon" ng-click="removeTask($index)" style="float:right;vertical-align:middle;display:inline-block;">
+                        <i class="icon ion-android-cancel" style="color:#EC4545;"></i>
+                    </button>
+                    <span>romain.gaillard@ynov.com</span>
+                </label>
+                <label class="item item-select col col-30">
+                    <select>
+                        <option selected>Membre</option>
+                        <option>Admin</option>
+                    </select>
+                </label>
+            </div>
+
+        </div>
+
+    </ion-content>
+    <div class="footer">
+        <div class="button-bar">
+            <button class="button button-full button-balanced">
+                <i class="ion-android-add-circle"></i>
+                <span>  Créer le groupe</span>
+            </button>
+        </div>
+    </div>
+</div>

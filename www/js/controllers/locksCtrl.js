@@ -4,7 +4,7 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv', function($scope, $state, LocksSrv) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal', function($scope, $state, LocksSrv,$ionicModal) {
         $scope.locks = LocksSrv.getLocks();
 
         $scope.gotoLock = function(){
@@ -20,5 +20,31 @@ angular.module("locks.controllers")
             //parent.trigger( "keypress" );
             parent.css("background-color",color)
         }
+
+        // Create and load the Modal
+        $ionicModal.fromTemplateUrl('templates/new_group.html', function(modal) {
+            $scope.taskModal = modal;
+        }, {
+            scope: $scope,
+            animation: 'slide-in-up'
+        });
+
+        // Open our new group modal
+        $scope.newGroup = function(){
+            $scope.taskModal.show();
+        }
+
+        // Called when the form is submitted
+        $scope.createGroup = function(task) {
+            //TodolistService.addItem(task.title);
+            $scope.taskModal.hide();
+            task.title = "";
+            //$scope.todolist = TodolistService.getTodolist();
+        };
+
+        // Close the new group modal
+        $scope.closeNewGroup = function() {
+            $scope.taskModal.hide();
+        };
 
     }])
