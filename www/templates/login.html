@@ -11,7 +11,10 @@
         <label class="item item-input">
           <input type="password" placeholder="Mot de passe" ng-model="loginData.password">
         </label>
-        <button class="button button-full button-balanced" type="submit">Se connecter</button>
+        <button class="button button-full button-balanced" type="submit">
+            <i class="ion-android-arrow-dropright-circle"></i>
+            <span>   Se connecter</span>
+        </button>
       </div>
     </form>
     <!-- CSS A REVOIR... le mettre dans scss !!! -->
@@ -20,7 +23,10 @@
 
     <!-- CSS A REVOIR... le mettre dans scss !!! -->
   <div class="bar bar-footer bar-positive" ng-click="gotoRegister()" style="cursor:pointer">
-    <div class="title" >Inscription</div>
+    <div class="title">
+        <i class="ion-compose"></i>
+        <span>   Inscription</span>
+    </div>
   </div>
 </ion-view>
 
