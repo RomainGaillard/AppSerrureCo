@@ -7,8 +7,12 @@ angular.module("locks.controllers")
     .controller('LocksCtrl', ['$scope','$state','LocksSrv', function($scope, $state, LocksSrv) {
         $scope.locks = LocksSrv.getLocks();
 
-        $scope.gotoLock = function($event){
+        $scope.gotoLock = function(){
+            //$state.go("app");
+        }
 
+        $scope.gotoEditGroup = function(){
+            $state.go("editGroup");
         }
 
         $scope.changeColor = function($event,color){

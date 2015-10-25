@@ -1,17 +1,17 @@
 <ion-view>
     <ion-header-bar>
-        <div class="buttons">
-            <a href="#" class="button icon-left ion-power  button-clear button-dark" ng-click="closeLogin()">Déconnexion</a>
-        </div>
-        <h1 class="title">Gestion des serrures</h1>
         <a class="button button-icon icon ion-settings"></a>
+        <h1 class="title">Panneau de contrôle</h1>
+        <div class="buttons">
+            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logOut()"> Déconnexion </a>
+        </div>
     </ion-header-bar>
     <ion-content>
             <div class="item item-divider">
-                Groupe 1
+                #G25R - Groupe 1
                 <!-- CSS A REVOIR dans le fichier scss.-->
                 <div style="float:right;">
-                    <button class="button-clear ion-wrench" style="color:black" ng-click="" > Editer</button>
+                    <button class="button-clear ion-wrench" style="color:black" ng-click="gotoEditGroup()" > Editer</button>
                 </div>
             </div>
             <div class="list">

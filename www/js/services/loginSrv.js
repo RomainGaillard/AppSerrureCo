@@ -1,7 +1,7 @@
 
 angular.module('authentification.services')
 
-    .service('LoginService', function($q) {
+    .service('LoginSrv', function($q) {
         return {
             loginUser: function(name, pw) {
                 var deferred = $q.defer();

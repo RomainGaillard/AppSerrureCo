@@ -16,4 +16,8 @@ angular.module('login.controllers')
     $scope.login = function() {
         console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
     }
+
+    $scope.logOut = function(){
+        $state.go("app");
+    }
 }])
