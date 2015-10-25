@@ -6,7 +6,11 @@ angular.module('login.controllers')
     }
 
     $scope.doLogin = function(){
-        alert('En contruction');
+        $state.go("locks");
+    }
+
+    $scope.forgetPassword = function(){
+        alert("Indisponible")
     }
 
     $scope.login = function() {

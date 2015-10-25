@@ -8,29 +8,29 @@
     <ion-content>
         <form ng-submit="doRegister()">
             <div class="list">
-                <label class="item item-input">
-                    <span class="input-label">Nom</span>
-                    <input type="text" ng-model="registerData.name">
-                </label>
-                <label class="item item-input">
+                <label class="item item-input item-floating-label">
                     <span class="input-label">Prénom</span>
-                    <input type="text" ng-model="registerData.firstname">
+                    <input type="text" placeholder="Prenom" ng-model="registerData.firstname">
                 </label>
-                <label class="item item-input">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Nom</span>
+                    <input type="text" placeholder="Nom" ng-model="registerData.name">
+                </label>
+                <label class="item item-input item-floating-label">
                     <span class="input-label">Email</span>
-                    <input type="text" ng-model="registerData.email">
+                    <input type="text" placeholder="Email" ng-model="registerData.email">
                 </label>
-                <label class="item item-input">
+                <label class="item item-input item-floating-label">
                     <span class="input-label">Mot de passe</span>
-                    <input type="password" ng-model="registerData.password">
+                    <input type="password" placeholder="Mot de passe" ng-model="registerData.password">
                 </label>
-                <label class="item item-input">
+                <label class="item item-input item-floating-label">
                     <span class="input-label">Confirmer le mot de passe</span>
-                    <input type="password" ng-model="registerData.confirm_password">
+                    <input type="password" placeholder="Confirmer le mot de passe" ng-model="registerData.confirm_password">
                 </label>
-                <label class="item">
-                    <button class="button button-block button-balanced " type="submit">S'inscrire</button>
-                </label>
+                <br>
+                <button class="button button-full button-balanced " type="submit">S'inscrire</button>
+
             </div>
         </form>
     </ion-content>

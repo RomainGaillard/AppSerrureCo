@@ -4,28 +4,46 @@
             <a href="#" class="button icon-left ion-power  button-clear button-dark" ng-click="closeLogin()">Déconnexion</a>
         </div>
         <h1 class="title">Gestion des serrures</h1>
+        <a class="button button-icon icon ion-settings"></a>
     </ion-header-bar>
     <ion-content>
-        <ion-list>
-            <ion-item ng-repeat="lock in locks">
-                {{lock.id}} -
-                <a class="item-icon-right ion-ios-mic" href="#"></a>
-                <a class="item-icon-right ion-ios-bell" href="#"></a>
-                <a class="item-icon-right ion-ios-videocam" href="#"></a>
-
-                {{lock.title}}
-
-                <a class="item-icon-right" href="#">
-                    <span class="badge badge-assertive">{{lock.id}}</span>
-                </a>
-
-                <label class="toggle toggle-balanced">
-                    <input type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
+            <div class="item item-divider">
+                Groupe 1
+                <!-- CSS A REVOIR dans le fichier scss.-->
+                <div style="float:right;">
+                    <button class="button-clear ion-plus" style="color:black" ng-click="" > Ajouter serrure</button>
+                </div>
+            </div>
+            <div class="list">
+                <div class="row item" ng-repeat="lock in locks">
+                    <!-- CSS A REVOIR dans le fichier scss.-->
+                    <div class="col col-80" ng-mousedown="changeColor($event,'#D9E5F3')" ng-mouseleave="changeColor($event,'')" ng-click="gotoLock()" style="cursor:pointer;">
+                        {{lock.id}} -
+                        <i class="ion-ios-mic"></i>
+                        <i class="ion-ios-bell"></i>
+                        <i class="ion-ios-videocam"></i>
+                        <!-- CSS A REVOIR dans le fichier scss.-->
+                        <span style="margin-left:10px;">{{lock.title}}</span>
                     </div>
-                </label>
-            </ion-item>
-        </ion-list>
+                    <div class="col col-10">
+                        <!-- CSS A REVOIR dans le fichier scss.-->
+                        <label class="toggle toggle-balanced" style="cursor:pointer">
+                            <input type="checkbox">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col col-10">
+                        <span ng-click="" class="badge badge-energized">{{lock.id}}</span>
+                    </div>
+                </div>
+            </div>
     </ion-content>
+    <div class="footer">
+        <div class="button-bar">
+            <button class="button button-full button-positive">Nouveau groupe</button>
+            <button class="button button-full button-balanced">Nouvelle serrure</button>
+        </div>
+    </div>
 </ion-view>

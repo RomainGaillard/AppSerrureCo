@@ -5,7 +5,10 @@
 angular.module("register.controllers")
 
     .controller('RegisterCtrl',['$scope','$state', function($scope,$state) {
-        //$scope.playlists = RegisterSrv.getPlaylist();
+
+        $scope.doRegister = function(){
+            alert('En contruction');
+        }
 
         $scope.gotoLogin = function() {
             $state.go("app");
