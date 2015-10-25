@@ -1,18 +1,15 @@
 angular.module('login.controllers')
 
-.controller('LoginCtrl', function($scope) {
-    $scope.data = "test";
-
+.controller('LoginCtrl', ['$scope','$state', function($scope, $state) {
     $scope.gotoRegister = function() {
-        alert("ok");
         $state.go("register");
     }
 
-    $scope.test = function(){
-        return "TESTING"
+    $scope.doLogin = function(){
+        alert('En contruction');
     }
 
     $scope.login = function() {
         console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
     }
-})
+}])
