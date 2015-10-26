@@ -1,0 +1,84 @@
+<div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+        <h1 class="title">Nouvelle serrure</h1>
+        <button class="button button-clear button-positive" ng-click="closeNewLock()">Annuler</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+
+        <div class="list">
+            <form ng-submit="createLock(lock)">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Nom:</span>
+                    <input type="text" placeholder="Nom" ng-model="lock.name">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Adresse Mac:</span>
+                    <input type="text" placeholder="Adresse Mac " ng-model="lock.addressMac">
+                </label>
+
+                <div class="row item">
+                    <div class="col">Caméra:</div>
+                    <div class="col">
+                        <!-- CSS A REVOIR dans le fichier scss.-->
+                        <label class="toggle toggle-balanced" style="float:right">
+                            <input type="checkbox" ng-model="lock.camera">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row item">
+                    <div class="col">Microphone:</div>
+                    <div class="col">
+                        <!-- CSS A REVOIR dans le fichier scss.-->
+                        <label class="toggle toggle-balanced" style="float:right">
+                            <input type="checkbox" ng-model="lock.micro">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row item">
+                    <div class="col">Sonnette:</div>
+                    <div class="col">
+                        <!-- CSS A REVOIR dans le fichier scss.-->
+                        <label class="toggle toggle-balanced" style="float:right">
+                            <input type="checkbox" ng-model="lock.bell">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row item">
+                    <div class="col">Enregistrer les logs:</div>
+                    <div class="col">
+                        <!-- CSS A REVOIR dans le fichier scss.-->
+                        <label class="toggle toggle-balanced" style="float:right">
+                            <input type="checkbox" ng-model="lock.isRegister">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-bar">
+                    <button class="button button-full button-balanced" type="submit">
+                        <i class="ion-android-add-circle"></i>
+                        <span>  Créer la serrure</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</div>

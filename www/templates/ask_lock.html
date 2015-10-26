@@ -1,0 +1,23 @@
+<div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+        <h1 class="title">Que voulez-vous faire ?</h1>
+        <button class="button button-clear button-positive" ng-click="closeAskLock()">Annuler</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+
+        <button class="button button-full button-positive" ng-click="addLock()">
+            <i class="ion-android-search"></i>
+            <span>  Ajouter une serrure existante</span>
+        </button>
+
+        <button class="button button-full button-balanced" ng-click="newLock()" >
+            <i class="ion-android-add-circle"></i>
+            <span>  Créer une nouvelle serrure</span>
+        </button>
+
+    </ion-content>
+</div>

@@ -4,7 +4,7 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal', function($scope, $state, LocksSrv,$ionicModal) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope', function($scope, $state, LocksSrv,$ionicModal,$rootScope) {
         $scope.locks = LocksSrv.getLocks();
 
         $scope.gotoLock = function(){
@@ -111,5 +111,33 @@ angular.module("locks.controllers")
         $scope.doExitGroup = function(){
 
         }
+
+        // ===== POPUP - NEW LOCK! =====
+
+        $ionicModal.fromTemplateUrl('templates/new_lock.html', function(modal) {
+            $rootScope.newLockModal = modal;
+        }, {
+            scope: $rootScope,
+            animation: 'slide-in-up'
+        });
+
+        $rootScope.newLock = function(){
+            $rootScope.newLockModal.show();
+        };
+
+        $rootScope.closeNewLock = function() {
+            $rootScope.newLockModal.hide();
+        };
+
+        $rootScope.createLock = function(task) {
+            //TodolistService.addItem(task.title);
+            $rootScope.newLockModal.hide();
+            task.title = "";
+            //$scope.todolist = TodolistService.getTodolist();
+        };
+
+        $rootScope.$on("callNewLock", function (event) {
+            $rootScope.newLock();
+        });
 
     }])
