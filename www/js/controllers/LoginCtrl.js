@@ -1,6 +1,6 @@
 angular.module('login.controllers')
 
-.controller('LoginCtrl', ['$scope','$state', function($scope, $state) {
+.controller('LoginCtrl', ['$scope','$state','$ionicModal', function($scope, $state,$ionicModal) {
     $scope.gotoRegister = function() {
         $state.go("register");
     }
@@ -20,4 +20,25 @@ angular.module('login.controllers')
     $scope.logOut = function(){
         $state.go("app");
     }
-}])
+
+    // Create and load the Modal
+    $ionicModal.fromTemplateUrl('templates/forget_password.html', function(modal) {
+        $scope.forgetPasswordModal = modal;
+    }, {
+        scope: $scope,
+        animation: 'slide-in-up'
+    })
+
+    $scope.forgetPassword = function(){
+        $scope.forgetPasswordModal.show();
+    }
+
+    $scope.closeForgetPassword = function() {
+        $scope.forgetPasswordModal.hide();
+    }
+
+    $scope.resetPassword = function(){
+
+    }
+
+    }])

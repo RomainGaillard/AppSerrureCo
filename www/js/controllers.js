@@ -6,6 +6,7 @@
 
 //angular.module('starter.controllers',[])
 angular.module('login.controllers', ['authentification.services'])
-angular.module('register.controllers',[])
+angular.module('register.controllers',['authentification.services'])
+angular.module('account.controllers' ,['authentification.services'])
 angular.module('locks.controllers',['locks.services'])
 angular.module('groups.controllers',['groups.services'])

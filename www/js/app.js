@@ -3,7 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'login.controllers', 'register.controllers', 'groups.controllers','groups.services', 'locks.controllers', 'locks.services'])
+angular.module('starter', ['ionic', 'login.controllers', 'register.controllers', 'account.controllers',
+    'groups.controllers', 'locks.controllers',
+    'groups.services', 'locks.services'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -43,6 +45,12 @@ angular.module('starter', ['ionic', 'login.controllers', 'register.controllers',
                 url:'/editGroup',
                 templateUrl: 'templates/group_edit.html',
                 controller: 'GroupsCtrl'
+            })
+
+            .state('account', {
+                url:'/account',
+                templateUrl: 'templates/account.html',
+                controller: 'AccountCtrl'
             })
 
 // if none of the above states are matched, use this as the fallback

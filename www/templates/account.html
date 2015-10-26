@@ -1,0 +1,41 @@
+<ion-view>
+    <ion-header-bar>
+        <div class="buttons">
+            <a ng-click="gotoLocks()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
+        </div>
+        <h1 class="title">Mon compte</h1>
+        <div class="buttons">
+            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logOut()"> Déconnexion </a>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <form ng-submit="doRegister()">
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Prénom</span>
+                    <input type="text" placeholder="Prenom" ng-model="registerData.firstname">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Nom</span>
+                    <input type="text" placeholder="Nom" ng-model="registerData.name">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Email</span>
+                    <input type="text" placeholder="Email" ng-model="registerData.email">
+                </label>
+                <br>
+                <!-- CSS A REVOIR dans le fichier scss.-->
+                <button class="button button-outline button-positive" ng-click="editPassword()" style="display:block;margin:auto;">
+                    <i class="ion-android-sync"></i>
+                    <span>  Modifier mot de passe</span>
+                </button>
+                <br>
+                <button class="button button-full button-balanced " type="submit">
+                    <i class="ion-checkmark"></i>
+                    <span>  Sauvegarder</span>
+                </button>
+
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

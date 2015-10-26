@@ -15,6 +15,10 @@ angular.module("locks.controllers")
             $state.go("editGroup");
         }
 
+        $scope.gotoAccount = function(){
+            $state.go("account");
+        }
+
         $scope.changeColor = function($event,color){
             var parent = angular.element($event.target).parent();
             //parent.trigger( "keypress" );
