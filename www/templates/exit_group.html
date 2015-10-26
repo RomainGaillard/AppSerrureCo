@@ -1,0 +1,23 @@
+<div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+        <h1 class="title">Confirmation</h1>
+        <button class="button button-clear button-positive" ng-click="closeExitGroup()">Annuler</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+        <label class="item">Etes vous sûr de vouloir quitter le groupe #G28B ?</label>
+        <div class="button-bar">
+            <button class="button button-full button-outline button-assertive" ng-click="closeExitGroup()">
+                <i class="ion-android-arrow-back"></i>
+                <span>  Annuler</span>
+            </button>
+            <button class="button button-full button-assertive" ng-click="doExitGroup()">
+                <i class="ion-ios-trash"></i>
+                <span>  Confirmer</span>
+            </button>
+        </div>
+    </ion-content>
+</div>

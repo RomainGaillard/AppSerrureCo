@@ -9,29 +9,23 @@ angular.module("locks.controllers")
 
         $scope.gotoLock = function(){
             //$state.go("app");
-        }
+        };
 
         $scope.gotoEditGroup = function(){
             $state.go("editGroup");
-        }
+        };
 
         $scope.gotoAccount = function(){
             $state.go("account");
-        }
+        };
 
         $scope.changeColor = function($event,color){
             var parent = angular.element($event.target).parent();
             //parent.trigger( "keypress" );
             parent.css("background-color",color)
-        }
+        };
 
-        // Create and load the Modal
-        $ionicModal.fromTemplateUrl('templates/new_group.html', function(modal) {
-            $scope.newGroupModal = modal;
-        }, {
-            scope: $scope,
-            animation: 'slide-in-up'
-        });
+        // ===== POPUP - ASK GROUP! ====
 
         $ionicModal.fromTemplateUrl('templates/ask_group.html', function(modal) {
             $scope.askGroupModal = modal;
@@ -40,6 +34,16 @@ angular.module("locks.controllers")
             animation: 'slide-in-up'
         });
 
+        $scope.closeAskGroup = function() {
+            $scope.askGroupModal.hide();
+        };
+
+        $scope.askGroup = function(){
+            $scope.askGroupModal.show();
+        };
+
+        // ===== POPUP - JOIN GROUP! ====
+
         $ionicModal.fromTemplateUrl('templates/join_group.html', function(modal) {
             $scope.joinGroupModal = modal;
         }, {
@@ -47,26 +51,9 @@ angular.module("locks.controllers")
             animation: 'slide-in-up'
         });
 
-        // Open our new group modal
-        $scope.newGroup = function(){
-            $scope.newGroupModal.show();
-            $scope.closeAskGroup();
-        }
-
-        $scope.askGroup = function(){
-            $scope.askGroupModal.show();
-        }
-
         $scope.joinGroup = function(){
             $scope.joinGroupModal.show();
             $scope.closeAskGroup();
-        }
-        // Called when the form is submitted
-        $scope.createGroup = function(task) {
-            //TodolistService.addItem(task.title);
-            $scope.newGroupModal.hide();
-            task.title = "";
-            //$scope.todolist = TodolistService.getTodolist();
         };
 
         $scope.requestJoinGroup = function(task) {
@@ -76,17 +63,53 @@ angular.module("locks.controllers")
             //$scope.todolist = TodolistService.getTodolist();
         };
 
-        // Close the new group modal
+        $scope.closeJoinGroup = function() {
+            $scope.joinGroupModal.hide();
+        };
+
+        // ===== POPUP - NEW GROUP! =====
+
+        $ionicModal.fromTemplateUrl('templates/new_group.html', function(modal) {
+            $scope.newGroupModal = modal;
+        }, {
+            scope: $scope,
+            animation: 'slide-in-up'
+        });
+
+        $scope.newGroup = function(){
+            $scope.newGroupModal.show();
+            $scope.closeAskGroup();
+        };
+
         $scope.closeNewGroup = function() {
             $scope.newGroupModal.hide();
         };
 
-        $scope.closeAskGroup = function() {
-            $scope.askGroupModal.hide();
+        $scope.createGroup = function(task) {
+            //TodolistService.addItem(task.title);
+            $scope.newGroupModal.hide();
+            task.title = "";
+            //$scope.todolist = TodolistService.getTodolist();
         };
 
-        $scope.closeJoinGroup = function() {
-            $scope.joinGroupModal.hide();
+        // ===== POPUP - EXIT GROUP ! =====
+        $ionicModal.fromTemplateUrl('templates/exit_group.html', function(modal) {
+            $scope.exitGroupModal = modal;
+        }, {
+            scope: $scope,
+            animation: 'slide-in-up'
+        });
+
+        $scope.exitGroup = function(){
+            $scope.exitGroupModal.show();
         };
+
+        $scope.closeExitGroup = function() {
+            $scope.exitGroupModal.hide();
+        };
+
+        $scope.doExitGroup = function(){
+
+        }
 
     }])
