@@ -1,25 +1,27 @@
 angular.module('login.controllers')
 
 .controller('LoginCtrl', ['$scope','$state','$ionicModal', function($scope, $state,$ionicModal) {
+    $scope.loginData = {};
+
     $scope.gotoRegister = function() {
         $state.go("register");
     }
 
     $scope.doLogin = function(){
         $state.go("locks");
-    }
-
-    $scope.forgetPassword = function(){
-        alert("Indisponible")
-    }
-
-    $scope.login = function() {
-        console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
+        alert("LOGIN user: " + $scope.loginData.username + " - PW: " + $scope.loginData.password);
+        
     }
 
     $scope.logOut = function(){
         $state.go("app");
     }
+
+
+    $scope.forgetPassword = function(){
+        alert("Indisponible")
+    }
+
 
     // Create and load the Modal
     $ionicModal.fromTemplateUrl('templates/forget_password.html', function(modal) {
@@ -41,4 +43,4 @@ angular.module('login.controllers')
 
     }
 
-    }])
+}])
