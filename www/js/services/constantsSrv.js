@@ -6,7 +6,6 @@ angular.module('constants.services')
 
     .service('ConstantsSrv', function() {
         var domain = "http://localhost:13337/"
-        this.createGroup = domain+"groups/create";
+        this.createGroup = domain+"group/create";
         this.login = domain+"login";
-
     });

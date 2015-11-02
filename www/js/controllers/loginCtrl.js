@@ -22,12 +22,21 @@ angular.module('login.controllers')
             $ionicLoading.hide();
             deferred.reject();
         });
-
  */
         //$http.defaults.headers.post["Authorization"] = "token";
         alert("LOGIN user: " + loginData.email + " - PW: " + loginData.password);
-        alert(ConstantsSrv.login);
-        $http.post(ConstantsSrv.login,{data:{email:loginData.email,password:loginData.password}})
+        alert(ConstantsSrv.createGroup);
+        /*$http.post(ConstantsSrv.login,{data:{email:loginData.email,password:loginData.password}})
+            .success(function(data,status,headers){
+                alert("Success:"+data);
+            })
+            .error(function(data,status,headers){
+                alert("Error:"+data);
+            })
+        */
+        //$state.go("locks");
+        $http.defaults.headers.post["Authorization"] = "wx6h30Kf+zqf5onU4lo0mRArM4uhGl9A08UYteSB/cA4PenMPsXSqhLQb8j+0Sy9";
+        $http.post(ConstantsSrv.createGroup,{data:{name:"toto"}})
             .success(function(data,status,headers){
                 alert("Success:"+data);
             })
@@ -35,7 +44,6 @@ angular.module('login.controllers')
                 alert("Error:"+data);
             })
 
-        //$state.go("locks");
     }
 
     $scope.logOut = function(){
