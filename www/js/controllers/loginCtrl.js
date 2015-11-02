@@ -1,11 +1,12 @@
 angular.module('login.controllers')
 
-.controller('LoginCtrl', ['$scope','$state','$ionicModal', function($scope, $state,$ionicModal) {
+.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http', function($scope, $state,$ionicModal,$http) {
     $scope.gotoRegister = function() {
         $state.go("register");
     }
 
     $scope.doLogin = function(){
+        $http.get()
         $state.go("locks");
     }
 

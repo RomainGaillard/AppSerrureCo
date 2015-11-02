@@ -88,8 +88,7 @@ angular.module("locks.controllers")
         $scope.createGroup = function(task) {
             //TodolistService.addItem(task.title);
             $scope.newGroupModal.hide();
-            task.title = "";
-            //$scope.todolist = TodolistService.getTodolist();
+            GroupsSrv.createGroup("Test");
         };
 
         // ===== POPUP - EXIT GROUP ! =====
