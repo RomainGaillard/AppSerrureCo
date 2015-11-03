@@ -22,11 +22,33 @@ angular.module('login.controllers')
             $ionicLoading.hide();
             deferred.reject();
         });
+
+            $http.put('https://api.parse.com/1/classes/Todo/'+id,data,{
+            headers:{
+            'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
+            'X-Parse-REST-API-Key':PARSE_CREDENTIALS.REST_API_KEY,
+            'Content-Type':'application/json'
+            }
+            });
+
  */
         //$http.defaults.headers.post["Authorization"] = "token";
         alert("LOGIN user: " + loginData.email + " - PW: " + loginData.password);
-        alert(ConstantsSrv.createGroup);
-        /*$http.post(ConstantsSrv.login,{data:{email:loginData.email,password:loginData.password}})
+        alert(ConstantsSrv.login);
+        var data = {identifier:loginData.email,password:loginData.password};
+        $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+        $http.post(ConstantsSrv.login,data,{
+            headers:{
+                'Content-Type':'application/json'
+            }
+        }).success(function(data,status,headers){
+
+        }).error(function(data,status,headers){
+            alert("Error:"+headers);
+        });
+
+        /*
+        $http.post(ConstantsSrv.login,{data:{identifier:loginData.email,password:loginData.password}})
             .success(function(data,status,headers){
                 alert("Success:"+data);
             })
@@ -35,7 +57,7 @@ angular.module('login.controllers')
             })
         */
         //$state.go("locks");
-        $http.defaults.headers.post["Authorization"] = "wx6h30Kf+zqf5onU4lo0mRArM4uhGl9A08UYteSB/cA4PenMPsXSqhLQb8j+0Sy9";
+        /*$http.defaults.headers.post["Authorization"] = "wx6h30Kf+zqf5onU4lo0mRArM4uhGl9A08UYteSB/cA4PenMPsXSqhLQb8j+0Sy9";
         $http.post(ConstantsSrv.createGroup,{data:{name:"toto"}})
             .success(function(data,status,headers){
                 alert("Success:"+data);
@@ -43,7 +65,7 @@ angular.module('login.controllers')
             .error(function(data,status,headers){
                 alert("Error:"+data);
             })
-
+        */
     }
 
     $scope.logOut = function(){
