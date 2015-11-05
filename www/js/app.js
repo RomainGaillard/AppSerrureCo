@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'login.controllers', 'register.controllers', 'account.controllers',
     'groups.controllers', 'locks.controllers',
-    'groups.services', 'locks.services'])
+    'groups.services', 'locks.services','constants.services'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -51,6 +51,7 @@ angular.module('starter', ['ionic', 'login.controllers', 'register.controllers',
                 url:'/account',
                 templateUrl: 'templates/account.html',
                 controller: 'AccountCtrl'
+                // authenticate: true
             })
 
 // if none of the above states are matched, use this as the fallback

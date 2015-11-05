@@ -75,8 +75,8 @@ angular.module("groups.controllers")
         }
 
         $scope.doAddLock = function(){
-        }
 
+        }
 
         $scope.newLock = function(){
             //alert("merde")

@@ -8,3 +8,4 @@
 angular.module('locks.services', [])
 angular.module('authentification.services', [])
 angular.module('groups.services', [])
+angular.module('constants.services', [])
