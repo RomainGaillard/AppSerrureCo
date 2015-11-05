@@ -4,12 +4,14 @@
 </ion-header-bar>
   <ion-content>
     <form ng-submit="doLogin()">
+    <!--<form name="signinForm" novalidate="" ng-submit="signIn(signinForm)"> -->
+
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="Email" ng-model="loginData.username">
+          <input type="text" placeholder="Email" ng-model="loginData.email" required>
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Mot de passe" ng-model="loginData.password">
+          <input class="" type="password" placeholder="Mot de passe" ng-model="loginData.password" ng-minlength="3" ng-maxlength="45" required>
         </label>
         <button class="button button-full button-balanced" type="submit">
             <i class="ion-android-arrow-dropright-circle"></i>
@@ -29,5 +31,3 @@
     </div>
   </div>
 </ion-view>
-
-

@@ -8,8 +8,27 @@ angular.module('login.controllers')
     }
 
     $scope.doLogin = function(){
-        $state.go("locks");
-        alert("LOGIN user: " + $scope.loginData.username + " - PW: " + $scope.loginData.password);
+        var email = 'jordi@set.com';
+        var password = '1234';
+        /* var answer = loginSendToapi($scope.loginData.email, $scope.loginData.password)
+        
+        if(anwser == 1){
+            $state.go("locks");
+            alert('good ...');
+        }
+        else{
+            alert('bad request, please check your login or password');   
+        }
+
+        */
+        if(email == $scope.loginData.email && password == $scope.loginData.password){
+            $state.go("locks");
+            alert('good');
+        }
+        else{
+            alert('bad');
+        }
+        alert("LOGIN user: " + $scope.loginData.email + " - PW: " + $scope.loginData.password);
         
     }
 
