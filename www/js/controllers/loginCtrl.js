@@ -7,34 +7,23 @@ angular.module('login.controllers')
         $state.go("register");
     }
 
-
+/*
     $scope.doLogin = function(){
-        var email = 'jordi@set.com';
-        var password = '1234';
-        /* var answer = loginSendToapi($scope.loginData.email, $scope.loginData.password)
-        
-        if(anwser == 1){
-            $state.go("locks");
-            alert('good ...');
-        }
-        else{
-            alert('bad request, please check your login or password');   
-        }
+    var email = 'jordi@set.com';
+    var password = '1234';
+    if(email == $scope.loginData.email && password == $scope.loginData.password){
+    $state.go("locks");
+    alert('good');
+    }
+    else{
+    alert('bad');
+    }
+    alert("LOGIN user: " + $scope.loginData.email + " - PW: " + $scope.loginData.password);
+    }  */
 
-        */
-        if(email == $scope.loginData.email && password == $scope.loginData.password){
-            $state.go("locks");
-            alert('good');
-        }
-        else{
-            alert('bad');
-        }
-        alert("LOGIN user: " + $scope.loginData.email + " - PW: " + $scope.loginData.password);
-        
- /*   $scope.doLogin = function(loginData){
-
+    $scope.doLogin = function(loginData){
+/*
  https://blog.nraboy.com/2014/08/make-http-requests-android-ios-ionicframework/
-
         http({method: 'GET', url: 'https://creatorup.com/wp-json/users/me',
             headers: { 'Authorization': 'Basic ' + encodedString }
         })
@@ -46,7 +35,6 @@ angular.module('login.controllers')
             $ionicLoading.hide();
             deferred.reject();
         });
-
             $http.put('https://api.parse.com/1/classes/Todo/'+id,data,{
             headers:{
             'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
@@ -54,8 +42,7 @@ angular.module('login.controllers')
             'Content-Type':'application/json'
             }
             });
-
- /////////////////////// décommenté ///////////////////////////////////////
+ */
         //$http.defaults.headers.post["Authorization"] = "token";
         alert("LOGIN user: " + loginData.email + " - PW: " + loginData.password);
         alert(ConstantsSrv.login);
@@ -70,8 +57,7 @@ angular.module('login.controllers')
         }).error(function(data,status,headers){
             alert("Error:"+headers);
         });
-    //////////////////////////////////////////////////////////////////
-    */
+
         /*
         $http.post(ConstantsSrv.login,{data:{identifier:loginData.email,password:loginData.password}})
             .success(function(data,status,headers){
