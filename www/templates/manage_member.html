@@ -1,0 +1,65 @@
+<html ng-app="MemberCtrl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>listes des membres</title>
+   
+        <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+        <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+    </head>
+
+    <body ng-controller="MyCtrl">
+    
+    <ion-header-bar class="bar-positive">
+        <div class="buttons">
+            <a ng-click="gotoEditGroup()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
+        </div>
+        <h1 class="title">Edition des membres</h1>
+        <div class="buttons">
+            <button class="button button-icon icon-right icon ion-ios-minus-outline"
+            ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
+        </div
+        <div class="buttons">
+            <a class="button ion-power ion-ios-minus-outline icon-right" ng-controller="LoginCtrl" ng-click="logOut()"> Déconnexion </a>
+        </div>
+    </ion-header-bar>
+
+    <ion-content>
+      
+      <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+
+        <ion-item ng-repeat="item in items" 
+                  item="item"
+                  class="item-remove-animate">
+        {{ item.title }}, {{ item.grade }}
+        <div class="col-28">
+            <!-- CSS A REVOIR dans le fichier scss.-->
+            <label class="item item-select">
+                <select>
+                    <option selected>Membre</option>
+                    <option>Admin</option>
+                </select>
+            </label>
+        </div>
+          <ion-delete-button class="ion-minus-circled" 
+                             ng-click="onItemDelete(item)">
+          </ion-delete-button>
+          <ion-option-button class="button-assertive"
+                             ng-click="edit(item)">
+            Edit
+          </ion-option-button>
+          <ion-option-button class="button-calm"
+                             ng-click="share(item)">
+            Share
+          </ion-option-button>
+          <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+        </ion-item>
+        <div class="buttons">
+            <a class="button button-dark button-full button-balanced" ng-controller="LoginCtrl" ng-click="saveMember()"> OK </a>
+        </div>
+      </ion-list>
+
+    </ion-content>
+      
+  </body>
+</html>

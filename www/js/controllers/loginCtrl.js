@@ -8,6 +8,7 @@ angular.module('login.controllers')
         $state.go("register");
     }
 
+
     $scope.doLogin = function(myUser){
 
         //get(), query(), save() post, et delete() (ou remove() au choix)
@@ -39,6 +40,7 @@ angular.module('login.controllers')
 
         */
         /*
+
         var data = {identifier:loginData.email,password:loginData.password};
         $http.post(ConstantsSrv.login,data,{
             headers:{

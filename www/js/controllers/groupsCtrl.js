@@ -12,6 +12,11 @@ angular.module("groups.controllers")
             $state.go("locks")
         }
 
+        // ===== MANAGE MEMBER ====
+        $scope.goToManageMembers = function() {
+            $state.go("member");
+        }
+
         // ===== POPUP - DELETE GROUP! ====
         $ionicModal.fromTemplateUrl('templates/delete_group.html', function(modal) {
             $scope.deleteGroupModal = modal;
@@ -79,7 +84,6 @@ angular.module("groups.controllers")
         }
 
         $scope.newLock = function(){
-            //alert("merde")
             $scope.closeAskLock()
             $rootScope.$emit("callNewLock");
         };

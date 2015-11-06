@@ -5,7 +5,8 @@
 
 
 //angular.module('starter.services', [])
+angular.module('constants.services', [])
+angular.module('groups.services', [])
 angular.module('locks.services', [])
 angular.module('authentification.services', ['constants.services'])
-angular.module('groups.services', [])
-angular.module('constants.services',[])
+angular.module('member.services', [])
