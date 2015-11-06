@@ -28,10 +28,13 @@ angular.module('authentification.services')
     .factory('User',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
         return $resource(null,null,{
             login:{
-                method:'GET', url: ConstantsSrv.login
+                method:'POST', url: ConstantsSrv.login
             },
             logout:{
                 method:'GET', url: ConstantsSrv.logout
+            },
+            register:{
+                method:'POST', url: ConstantsSrv.register
             }
         });
     }]);
