@@ -6,9 +6,8 @@ angular.module("lock.controllers")
     };*/
     $scope.gotoLocks = function(){
             $state.go("locks")
-    }/*
-     }
-    $scope.gotoLock = function(){
-        $state.go("lock");
-    };*/
+    };
+    $scope.gotoLogs = function(){
+        $state.go("logs");
+    };
 }])

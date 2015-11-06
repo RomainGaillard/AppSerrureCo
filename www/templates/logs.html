@@ -1,0 +1,57 @@
+<ion-view view-title="Logs">
+    <ion-header-bar>
+        <div class="buttons">
+            <a ng-click="gotoLock()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
+        </div>
+        <h1 class="title">LOGS DE BATARD !</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="row">
+            <div class="col col-50">
+                Date :
+            </div>
+            <div class="col col-50">
+                Date jusqu'à :
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-50">
+                <label class="item item-input">
+                        <input type="date">
+                </label>
+            </div>
+            <div class="col col-50">
+                <label class="item item-input">
+                    <input type="date">
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-50">
+                <button class="button button-block button-balanced">
+                    Chercher
+                </button>
+            </div>
+            <div class="col col-50">
+                <div class="list">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Filtre :
+                        </div>
+                        <select>
+                            <option>Ouverture</option>
+                            <option selected>Fermeture</option>
+                            <option>Sonnette</option>
+                            <option>Ketchup</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <ul class="list">
+            <li class="item">
+                ...
+            </li>
+        </ul>
+    </ion-content>
+</ion-view>

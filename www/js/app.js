@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'login.controllers', 'register.controllers', 'account.controllers',
     'groups.controllers', 'locks.controllers', 'lock.controllers', 'locks.services',
-    'groups.services'])
+    'groups.services', 'logs.controllers'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -53,12 +53,43 @@ angular.module('starter', ['ionic', 'login.controllers', 'register.controllers',
                 controller: 'AccountCtrl'
             })
 
-             .state('lock', {
-                url:'/lock',
-                templateUrl: 'templates/lock.html',
-                controller: 'LockCtrl'
+            // .state('lock', {
+            //    url:'/lock',
+            //    templateUrl: 'templates/lock.html',
+            //    controller: 'LockCtrl'
+            //})
+            //
+            //.state('logs', {
+            //    url:'/logs',
+            //    templateUrl: 'templates/logs.html',
+            //    controller: 'LogsCtrl'
+            //})
+
+            .state('tab', {
+                url: '/tab',
+                abstract: true,
+                templateUrl: 'templates/tabs.html'
             })
 
+            .state('tab.lock', {
+                url: '/lock',
+                views: {
+                    'tab-lock': {
+                        templateUrl: 'templates/lock.html',
+                        controller: 'LockCtrl'
+                    }
+                }
+            })
+
+            .state('tab.log', {
+                url: '/logs',
+                views: {
+                    'tab-logs': {
+                        templateUrl: 'templates/logs.html',
+                        controller: 'LogsCtrl'
+                    }
+                }
+            })
 // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/#');
     })

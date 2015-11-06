@@ -8,7 +8,7 @@ angular.module("locks.controllers")
         $scope.locks = LocksSrv.getLocks();
 
         $scope.gotoLock = function(){
-            $state.go("lock");
+            $state.go("tab.lock");
         };
 
         $scope.gotoEditGroup = function(){
