@@ -1,71 +1,58 @@
 angular.module('login.controllers')
 
 
-.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','ConstantsSrv', function($scope, $state,$ionicModal,$http,ConstantsSrv) {
+.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','ConstantsSrv','User', function($scope, $state,$ionicModal,$http,ConstantsSrv,User) {
 
+
+    $scope.myUser = new User();
     $scope.gotoRegister = function() {
         $state.go("register");
     }
 
-    $scope.doLogin = function(loginData){
-/*
- https://blog.nraboy.com/2014/08/make-http-requests-android-ios-ionicframework/
+    $scope.doLogin = function(myUser){
 
-        http({method: 'GET', url: 'https://creatorup.com/wp-json/users/me',
-            headers: { 'Authorization': 'Basic ' + encodedString }
-        })
-            .success(function(data, status){
-                $ionicLoading.hide();
-                deferred.resolve(data);
-            }).error(){
-            console.log("Error while received data.");
-            $ionicLoading.hide();
-            deferred.reject();
+        //get(), query(), save() post, et delete() (ou remove() au choix)
+
+        myUser.$save(function(user){
+            $http.defaults.headers.post["Authorization"] = user.token;
+            $state.go("locks");
+        },function(err){
+            console.log(err);
         });
 
-            $http.put('https://api.parse.com/1/classes/Todo/'+id,data,{
-            headers:{
-            'X-Parse-Application-Id': PARSE_CREDENTIALS.APP_ID,
-            'X-Parse-REST-API-Key':PARSE_CREDENTIALS.REST_API_KEY,
-            'Content-Type':'application/json'
-            }
-            });
 
- */
-        //$http.defaults.headers.post["Authorization"] = "token";
-        alert("LOGIN user: " + loginData.email + " - PW: " + loginData.password);
-        alert(ConstantsSrv.login);
+        /***********************************************************************
+        *                                                                      *
+        *     LAISSER LES COMMENTAIRES CI-DESSOUS POUR LE MOMENT. Merci !      *
+        *                                                                      *
+        ************************************************************************/
+
+        /*io.socket.on('connect',function(){
+            console.log('connected to sails ok')
+            io.socket.get('/mylocks/3',function(data,jwres){
+                console.log(data);
+                $scope.locks = data;
+            })
+            io.socket.on('lock',function(msg){
+                console.log(msg);
+            })
+        })
+
+        */
+        /*
         var data = {identifier:loginData.email,password:loginData.password};
-        $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
         $http.post(ConstantsSrv.login,data,{
             headers:{
                 'Content-Type':'application/json'
             }
         }).success(function(data,status,headers){
-
+            alert(status);
+            document.getElementById("test").innerHTML = data.token;
         }).error(function(data,status,headers){
             alert("Error:"+headers);
         });
+        */
 
-        /*
-        $http.post(ConstantsSrv.login,{data:{identifier:loginData.email,password:loginData.password}})
-            .success(function(data,status,headers){
-                alert("Success:"+data);
-            })
-            .error(function(data,status,headers){
-                alert("Error:"+data);
-            })
-        */
-        //$state.go("locks");
-        /*$http.defaults.headers.post["Authorization"] = "wx6h30Kf+zqf5onU4lo0mRArM4uhGl9A08UYteSB/cA4PenMPsXSqhLQb8j+0Sy9";
-        $http.post(ConstantsSrv.createGroup,{data:{name:"toto"}})
-            .success(function(data,status,headers){
-                alert("Success:"+data);
-            })
-            .error(function(data,status,headers){
-                alert("Error:"+data);
-            })
-        */
     }
 
     $scope.logOut = function(){

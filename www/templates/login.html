@@ -3,13 +3,13 @@
   <h1 class="title">Accueil</h1>
 </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin(loginData)">
+    <form ng-submit="doLogin(myUser)">
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="Email" ng-model="loginData.email">
+          <input type="text" placeholder="Email" ng-model="myUser.identifier">
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Mot de passe" ng-model="loginData.password">
+          <input type="password" placeholder="Mot de passe" ng-model="myUser.password">
         </label>
         <button class="button button-full button-balanced" type="submit">
             <i class="ion-android-arrow-dropright-circle"></i>
@@ -17,6 +17,7 @@
         </button>
       </div>
     </form>
+    <div id="test"></div>
     <!-- CSS A REVOIR... le mettre dans scss !!! -->
     <button style="margin:auto;display:block;" class="button button-clear button-positive" ng-click="forgetPassword()" >Mot de passe oublié</button>
   </ion-content>
