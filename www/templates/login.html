@@ -4,6 +4,14 @@
 </ion-header-bar>
   <ion-content>
     <form ng-submit="doLogin(myUser)">
+<!--
+    <form ng-submit="doLogin()">
+    <!--<form name="signinForm" novalidate="" ng-submit="signIn(signinForm)"> --
+
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Email" ng-model="loginData.email" required>
+-->
       <div class="list">
         <label class="item item-input">
           <input type="text" placeholder="Email" ng-model="myUser.identifier">
@@ -30,5 +38,3 @@
     </div>
   </div>
 </ion-view>
-
-

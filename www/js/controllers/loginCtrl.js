@@ -8,7 +8,7 @@ angular.module('login.controllers')
     $scope.gotoRegister = function() {
         $state.go("register");
     }
-
+    
     $scope.doLogin = function(myUser){
 
         //get(), query(), save() post, et delete() (ou remove() au choix)
