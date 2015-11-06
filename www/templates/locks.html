@@ -3,7 +3,7 @@
         <a class="button button-icon icon ion-settings" ng-click="gotoAccount()"></a>
         <h1 class="title">Accueil</h1>
         <div class="buttons">
-            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logOut()"> Déconnexion </a>
+            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logout()"> Déconnexion </a>
         </div>
     </ion-header-bar>
     <ion-content>
@@ -28,7 +28,7 @@
                     <div class="col col-10">
                         <!-- CSS A REVOIR dans le fichier scss.-->
                         <label class="toggle toggle-balanced" style="cursor:pointer">
-                            <input type="checkbox">
+                            <input type="checkbox" onchange="";>
                             <div class="track">
                                 <div class="handle"></div>
                             </div>

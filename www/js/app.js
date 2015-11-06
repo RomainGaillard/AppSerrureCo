@@ -3,11 +3,11 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'login.controllers', 'register.controllers', 'account.controllers',
+angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.controllers', 'account.controllers',
     'groups.controllers', 'locks.controllers', 'member.controllers',
-    'groups.services', 'locks.services','constants.services', 'member.services'])
+    'authentification.services','groups.services', 'locks.services','constants.services', 'member.services'])
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform,$rootScope) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -17,6 +17,21 @@ angular.module('starter', ['ionic', 'login.controllers', 'register.controllers',
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
+            $rootScope.$on("$stateStartChange",function(event,toState,toParams,fromState,fromParams){
+                if(toState.authenticate)
+                {
+                    /*if($http.defaults.headers.post["Authorization"] != ""){
+                        // Ok
+                        alert("ok");
+                    }
+                    else{
+                        alert("ok");
+                        $state.go("app");
+                    }*/
+                    $state.go("app");
+                    // On vérifie que l'user est connecté.
+                }
+            })
         });
     })
 
@@ -38,7 +53,8 @@ angular.module('starter', ['ionic', 'login.controllers', 'register.controllers',
             .state('locks', {
                 url: '/locks',
                 templateUrl: 'templates/locks.html',
-                controller: 'LocksCtrl'
+                controller: 'LocksCtrl',
+                authenticate:true
             })
 
             .state('editGroup', {
