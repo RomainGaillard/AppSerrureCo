@@ -14,7 +14,7 @@
     <form ng-submit="doLogin(loginData)">
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="Email" ng-model="loginData.email">
+          <input type="text" placeholder="Email" ng-model="loginData.email" required>
         </label>
         <label class="item item-input">
           <input class="" type="password" placeholder="Mot de passe" ng-model="loginData.password" ng-minlength="3" ng-maxlength="45" required>

@@ -67,6 +67,7 @@ angular.module("locks.controllers")
             $scope.joinGroupModal.hide();
         };
 
+
         // ===== POPUP - NEW GROUP! =====
 
         $ionicModal.fromTemplateUrl('templates/new_group.html', function(modal) {

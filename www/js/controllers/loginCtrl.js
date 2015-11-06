@@ -7,21 +7,22 @@ angular.module('login.controllers')
         $state.go("register");
     }
 
-/*
-    $scope.doLogin = function(){
+    $scope.doLogin = function(loginData){ 
+/****************************************** Partie romain **************************************************/
+        
+    
     var email = 'jordi@set.com';
     var password = '1234';
-    if(email == $scope.loginData.email && password == $scope.loginData.password){
+    if(email == loginData.email && password == loginData.password){
     $state.go("locks");
     alert('good');
     }
     else{
     alert('bad');
     }
-    alert("LOGIN user: " + $scope.loginData.email + " - PW: " + $scope.loginData.password);
-    }  */
-
-    $scope.doLogin = function(loginData){
+    alert("LOGIN user: " + loginData.email + " - PW: " + loginData.password);
+    // }  
+/******************************************************************************************************************/
 /*
  https://blog.nraboy.com/2014/08/make-http-requests-android-ios-ionicframework/
         http({method: 'GET', url: 'https://creatorup.com/wp-json/users/me',
@@ -44,6 +45,8 @@ angular.module('login.controllers')
             });
  */
         //$http.defaults.headers.post["Authorization"] = "token";
+
+    /****************************************************************************************
         alert("LOGIN user: " + loginData.email + " - PW: " + loginData.password);
         alert(ConstantsSrv.login);
         var data = {identifier:loginData.email,password:loginData.password};
@@ -58,7 +61,7 @@ angular.module('login.controllers')
             alert("Error:"+headers);
         });
 
-        /*
+  *************************************************************************************/      /*
         $http.post(ConstantsSrv.login,{data:{identifier:loginData.email,password:loginData.password}})
             .success(function(data,status,headers){
                 alert("Success:"+data);

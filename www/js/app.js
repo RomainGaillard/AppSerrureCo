@@ -4,8 +4,8 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'login.controllers', 'register.controllers', 'account.controllers',
-    'groups.controllers', 'locks.controllers',
-    'groups.services', 'locks.services','constants.services'])
+    'groups.controllers', 'locks.controllers', 'member.controllers',
+    'groups.services', 'locks.services','constants.services', 'member.services'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -54,7 +54,13 @@ angular.module('starter', ['ionic', 'login.controllers', 'register.controllers',
                 // authenticate: true
             })
 
+            .state('member', {
+                url:'/member',
+                templateUrl: 'templates/manage_member.html',
+                controller: 'MemberCtrl'
+                // authenticate: true
+            })
+
 // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/#');
-    })
-;
+    });
