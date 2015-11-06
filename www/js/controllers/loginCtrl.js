@@ -1,19 +1,18 @@
 angular.module('login.controllers')
 
 
-.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','ConstantsSrv','User', function($scope, $state,$ionicModal,$http,ConstantsSrv,User) {
+.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User','$rootScope', function($scope, $state,$ionicModal,$http,User,$rootScope) {
 
-
-    $scope.myUser = new User();
+    $rootScope.myUser = new User();
     $scope.gotoRegister = function() {
         $state.go("register");
     }
-    
+
     $scope.doLogin = function(myUser){
 
         //get(), query(), save() post, et delete() (ou remove() au choix)
 
-        myUser.$save(function(user){
+        myUser.$login(function(user){
             $http.defaults.headers.post["Authorization"] = user.token;
             $state.go("locks");
         },function(err){
@@ -55,8 +54,13 @@ angular.module('login.controllers')
 
     }
 
-    $scope.logOut = function(){
-        $state.go("app");
+    $scope.logout = function(){
+        $rootScope.myUser.$logout(function(user){
+            $http.defaults.headers.post["Authorization"] = "";
+            $state.go("app");
+        },function(err){
+
+        });
     }
 
 

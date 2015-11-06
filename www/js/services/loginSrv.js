@@ -25,7 +25,16 @@ angular.module('authentification.services')
          }
     })*/
 
-    .factory('User', function ($resource) {
-        return $resource('http://localhost:1337/Auth/Local');
-    });
+    .factory('User',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
+        return $resource(null,null,{
+            login:{
+                method:'GET', url: ConstantsSrv.login
+            },
+            logout:{
+                method:'GET', url: ConstantsSrv.logout
+            }
+        });
+    }]);
+
+
 

@@ -9,4 +9,5 @@ angular.module('constants.services')
         var domain = "http://localhost:1337/"
         this.createGroup = domain+"group/create";
         this.login = domain+"auth/local";
+        this.logout = domain+"logout"
     });

@@ -7,7 +7,7 @@ angular.module('starter', ['ionic','ngResource', 'login.controllers', 'register.
     'groups.controllers', 'locks.controllers',
     'authentification.services','groups.services', 'locks.services','constants.services'])
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform,$rootScope) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -17,6 +17,21 @@ angular.module('starter', ['ionic','ngResource', 'login.controllers', 'register.
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
+            $rootScope.$on("$stateStartChange",function(event,toState,toParams,fromState,fromParams){
+                if(toState.authenticate)
+                {
+                    /*if($http.defaults.headers.post["Authorization"] != ""){
+                        // Ok
+                        alert("ok");
+                    }
+                    else{
+                        alert("ok");
+                        $state.go("app");
+                    }*/
+                    $state.go("app");
+                    // On vérifie que l'user est connecté.
+                }
+            })
         });
     })
 
@@ -38,7 +53,8 @@ angular.module('starter', ['ionic','ngResource', 'login.controllers', 'register.
             .state('locks', {
                 url: '/locks',
                 templateUrl: 'templates/locks.html',
-                controller: 'LocksCtrl'
+                controller: 'LocksCtrl',
+                authenticate:true
             })
 
             .state('editGroup', {
