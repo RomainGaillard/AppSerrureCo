@@ -6,15 +6,13 @@
 angular.module('groups.services')
 
     .service('GroupsSrv', function() {
-        var locks = [
-            { title: 'Portail Ingesup', id: 1 },
-            { title: 'Entree Maison', id: 2 },
-            { title: 'Boite au lettre', id: 3},
-            { title: 'Chez Juppe', id: 4},
+        var groups = [
+            { code: 'FG215C20', name: "Ingesup 1" },
+            { code: 'XF5C80', name: "Ingesup 2" }
         ]
 
-        this.getLocks = function(){
-            return locks;
+        this.getGroups = function(){
+            return groups;
         }
 
         this.createGroup = function(name){

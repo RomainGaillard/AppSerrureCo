@@ -4,8 +4,10 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope', function($scope, $state, LocksSrv,$ionicModal,$rootScope) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,socketioJwt) {
+        $scope.groups = GroupsSrv.getGroups();
         $scope.locks = LocksSrv.getLocks();
+
         $scope.gotoLock = function(){
             //$state.go("app");
         };
@@ -23,6 +25,19 @@ angular.module("locks.controllers")
             //parent.trigger( "keypress" );
             parent.css("background-color",color)
         };
+
+
+        io.socket.on('connect',function(){
+            console.log('connected to sails ok')
+            io.socket.get('/group',function(data,jwres){
+                console.log(data);
+            })
+            io.socket.on('group',function(msg){
+                console.log(msg);
+            })
+        })
+
+
 
         // ===== POPUP - ASK GROUP! ====
 

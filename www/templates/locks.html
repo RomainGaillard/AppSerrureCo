@@ -7,14 +7,15 @@
         </div>
     </ion-header-bar>
     <ion-content>
-            <div class="item item-divider">
-                #G25R: Groupe 1
-                <!-- CSS A REVOIR dans le fichier scss.-->
-                <div style="float:right;">
-                    <button class="button-clear ion-wrench" style="color:black" ng-click="gotoEditGroup()" > Editer</button>
+        <div class="list">
+            <div ng-repeat="group in groups">
+                <div class="item item-divider">
+                    #{{group.code}}: {{group.name}}
+                    <!-- CSS A REVOIR dans le fichier scss.-->
+                    <div style="float:right;">
+                        <button class="button-clear ion-wrench" style="color:black" ng-click="gotoEditGroup()" > Editer</button>
+                    </div>
                 </div>
-            </div>
-            <div class="list">
                 <div class="row item" ng-repeat="lock in locks">
                     <!-- CSS A REVOIR dans le fichier scss.-->
                     <div class="col col-80" ng-mousedown="changeColor($event,'#D9E5F3')" ng-mouseleave="changeColor($event,'')" ng-click="gotoLock()" style="cursor:pointer;">
@@ -49,6 +50,7 @@
             <div class="item item-divider">
                 Serrures sans groupe:
             </div>
+        </div>
     </ion-content>
     <div class="footer">
         <div class="button-bar">
