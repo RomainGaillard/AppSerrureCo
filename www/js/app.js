@@ -3,9 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic','ngResource', 'login.controllers', 'register.controllers', 'account.controllers',
-    'groups.controllers', 'locks.controllers',
-    'authentification.services','groups.services', 'locks.services','constants.services'])
+angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.controllers', 'account.controllers',
+    'groups.controllers', 'locks.controllers', 'member.controllers',
+    'authentification.services','groups.services', 'locks.services','constants.services', 'member.services'])
 
     .run(function ($ionicPlatform,$rootScope) {
         $ionicPlatform.ready(function () {
@@ -70,7 +70,13 @@ angular.module('starter', ['ionic','ngResource', 'login.controllers', 'register.
                 // authenticate: true
             })
 
+            .state('member', {
+                url:'/member',
+                templateUrl: 'templates/manage_member.html',
+                controller: 'MemberCtrl'
+                // authenticate: true
+            })
+
 // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/#');
-    })
-;
+    });

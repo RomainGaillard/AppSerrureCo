@@ -10,4 +10,5 @@ angular.module('constants.services')
         this.createGroup = domain+"group/create";
         this.login = domain+"auth/local";
         this.logout = domain+"logout"
+        this.register = domain+"auth/local/register"
     });

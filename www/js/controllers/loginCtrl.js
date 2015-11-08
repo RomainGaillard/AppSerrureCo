@@ -92,6 +92,7 @@ angular.module('login.controllers')
 
         */
         /*
+
         var data = {identifier:loginData.email,password:loginData.password};
         $http.post(ConstantsSrv.login,data,{
             headers:{

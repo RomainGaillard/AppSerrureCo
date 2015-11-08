@@ -26,5 +26,4 @@ angular.module('groups.services')
                 // err.status will contain the status code
             })
         }
-
-    });
+});

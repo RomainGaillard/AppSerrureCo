@@ -32,6 +32,9 @@ angular.module('authentification.services')
             },
             logout:{
                 method:'GET', url: ConstantsSrv.logout
+            },
+            register:{
+                method:'POST', url: ConstantsSrv.register
             }
         });
     }]);
