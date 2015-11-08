@@ -6,37 +6,43 @@
         <h1 class="title">Inscription</h1>
     </ion-header-bar>
     <ion-content>
-        <form ng-submit="doRegister(confirm_password)">
+        <form ng-submit="doRegister(confirmPassword)">
             <div class="list">
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Prénom</span>
-                    <input type="text" placeholder="Prenom" ng-model="myUser.firstname">
+                    <input type="text" placeholder="Prenom" ng-model="myUser.firstname" ng-focus="reinitCase($event)">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Nom</span>
-                    <input type="text" placeholder="Nom" ng-model="myUser.lastname">
+                    <input type="text" placeholder="Nom" ng-model="myUser.lastname" ng-focus="reinitCase($event)">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Email</span>
-                    <input type="text" placeholder="Email" ng-model="myUser.email">
+                    <input type="text" placeholder="Email" ng-model="myUser.email" ng-focus="reinitCase($event)">
                 </label>
                 <label class="item item-input item-floating-label">
-                    <span class="input-label">Username</span>
-                    <input type="text" placeholder="username" ng-model="myUser.username">
+                    <span class="input-label">Pseudo</span>
+                    <input type="text" placeholder="Pseudo" ng-model="myUser.username" ng-focus="reinitCase($event)">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Mot de passe</span>
-                    <input type="password" placeholder="Mot de passe" ng-model="myUser.password">
+                    <input type="password" placeholder="Mot de passe" ng-model="myUser.password" ng-focus="reinitCase($event)">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Confirmer le mot de passe</span>
-                    <input type="password" placeholder="Confirmer le mot de passe" ng-model="confirm_password">
+                    <input type="password" placeholder="Confirmer le mot de passe" ng-model="confirmPassword" ng-focus="reinitCase($event)">
                 </label>
                 <br>
 
-                <button class="button button-full button-balanced " type="submit">
-                    <i class="ion-checkmark"></i>
-                    <span>  S'inscrire</span>
+                <button id="btRegister" class="button button-full button-balanced " type="submit">
+                    <div id="successRegister">
+                        <i class="ion-checkmark"></i>
+                        <span>   S'inscrire</span>
+                    </div>
+                    <div id="errorRegister">
+                        <i class="ion-alert-circled"></i>
+                        <span>   {{msgBtRegister}}</span>
+                    </div>
                 </button>
 
             </div>

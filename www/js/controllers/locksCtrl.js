@@ -6,7 +6,6 @@ angular.module("locks.controllers")
 
     .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope', function($scope, $state, LocksSrv,$ionicModal,$rootScope) {
         $scope.locks = LocksSrv.getLocks();
-
         $scope.gotoLock = function(){
             //$state.go("app");
         };

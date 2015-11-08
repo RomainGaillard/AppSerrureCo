@@ -1,9 +1,9 @@
 angular.module('login.controllers')
 
 
-.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User','$rootScope', function($scope, $state,$ionicModal,$http,User,$rootScope) {
+.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User', function($scope, $state,$ionicModal,$http,User) {
 
-    $rootScope.myUser = new User();
+    $scope.myUser = new User();
     $("[id='errorCo']").hide();
 
     $scope.gotoRegister = function() {
@@ -12,32 +12,30 @@ angular.module('login.controllers')
 
     var finVerif = true;
     $scope.doLogin = function(myUser){
-
         //get(), query(), save() post, et delete() (ou remove() au choix)
-
-        myUser.$login(function(user){
-            $http.defaults.headers.post["Authorization"] = user.token;
-            $state.go("locks");
-        },function(err){
-            if(verifCase()){
+        if(verifCase()){
+            myUser.$login(function(user){
+                $http.defaults.headers.post["Authorization"] = user.token;
+                $state.go("locks");
+            },function(err){
                 errorCase();
                 showError("Identifiant ou mot de passe incorrect.");
-            }
-        });
+            });
+        }
 
         var verifCase = function(){
-            var res = true;
+            var noEmpty = true;
             if($("[ng-model='myUser.identifier']").val() == ""){
                 errorCaseEmpty($("[ng-model='myUser.identifier']"));
-                res = false;
+                noEmpty = false;
             }
             if($("[ng-model='myUser.password']").val() == ""){
                 errorCaseEmpty($("[ng-model='myUser.password']"));
-                res = false;
+                noEmpty = false;
             }
-            if(!res)
+            if(!noEmpty)
                 showError("Remplissez les champs");
-            return res;
+            return noEmpty;
         }
 
         var errorCaseEmpty = function(elem){
