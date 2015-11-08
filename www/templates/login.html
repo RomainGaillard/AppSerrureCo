@@ -14,18 +14,23 @@
 -->
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="Email" ng-model="myUser.identifier">
+          <input type="text" placeholder="Email" ng-model="myUser.identifier" ng-focus="reinitCase($event)">
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Mot de passe" ng-model="myUser.password">
+          <input type="password" placeholder="Mot de passe" ng-model="myUser.password" ng-focus="reinitCase($event)">
         </label>
-        <button class="button button-full button-balanced" type="submit">
-            <i class="ion-android-arrow-dropright-circle"></i>
-            <span>   Se connecter</span>
-        </button>
       </div>
+      <button id="btConnexion" class="button button-full button-balanced" type="submit">
+          <div id="successCo">
+              <i class="ion-android-arrow-dropright-circle"></i>
+              <span>   Se Connecter</span>
+          </div>
+          <div id="errorCo">
+              <i class="ion-alert-circled"></i>
+              <span>   {{msgBtConnexion}}</span>
+          </div>
+      </button>
     </form>
-    <div id="test"></div>
     <!-- CSS A REVOIR... le mettre dans scss !!! -->
     <button style="margin:auto;display:block;" class="button button-clear button-positive" ng-click="forgetPassword()" >Mot de passe oublié</button>
   </ion-content>

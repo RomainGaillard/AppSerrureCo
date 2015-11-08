@@ -4,10 +4,13 @@ angular.module('login.controllers')
 .controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User','$rootScope', function($scope, $state,$ionicModal,$http,User,$rootScope) {
 
     $rootScope.myUser = new User();
+    $("[id='errorCo']").hide();
+
     $scope.gotoRegister = function() {
         $state.go("register");
     }
 
+    var finVerif = true;
     $scope.doLogin = function(myUser){
 
         //get(), query(), save() post, et delete() (ou remove() au choix)
@@ -16,8 +19,58 @@ angular.module('login.controllers')
             $http.defaults.headers.post["Authorization"] = user.token;
             $state.go("locks");
         },function(err){
-            console.log(err);
+            if(verifCase()){
+                errorCase();
+                showError("Identifiant ou mot de passe incorrect.");
+            }
         });
+
+        var verifCase = function(){
+            var res = true;
+            if($("[ng-model='myUser.identifier']").val() == ""){
+                errorCaseEmpty($("[ng-model='myUser.identifier']"));
+                res = false;
+            }
+            if($("[ng-model='myUser.password']").val() == ""){
+                errorCaseEmpty($("[ng-model='myUser.password']"));
+                res = false;
+            }
+            if(!res)
+                showError("Remplissez les champs");
+            return res;
+        }
+
+        var errorCaseEmpty = function(elem){
+            elem.parent().css("border","1px solid red");
+        }
+
+        var errorCase = function(){
+            $("[ng-model='myUser.password']").css({"color":"red"})
+            $("[ng-model='myUser.identifier']").css({"color":"red"})
+        }
+
+        $scope.reinitCase = function(elem){
+            $(elem.target).css("color","").parent().css("border","");
+        }
+
+        var showError = function(msgError){
+            if(finVerif){
+                finVerif = false;
+                $scope.msgBtConnexion = msgError;
+                $("[id='successCo']").fadeOut("fast",function(){
+                    $("[id='errorCo']").fadeIn("fast");
+                });
+
+                $("[id='btConnexion']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
+                    $("[id='btConnexion']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
+                        $("[id='errorCo']").fadeOut("fast",function(){
+                            $("[id='successCo']").fadeIn("fast");
+                            finVerif = true;
+                        });
+                    })
+                })
+            }
+        }
 
 
         /***********************************************************************
@@ -59,7 +112,7 @@ angular.module('login.controllers')
             $http.defaults.headers.post["Authorization"] = "";
             $state.go("app");
         },function(err){
-
+            alert(err);
         });
     }
 

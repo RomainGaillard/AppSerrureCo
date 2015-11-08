@@ -28,7 +28,7 @@ angular.module('starter', ['ionic','ngResource', 'login.controllers', 'register.
                         alert("ok");
                         $state.go("app");
                     }*/
-                    $state.go("app");
+                    //$state.go("app");
                     // On vérifie que l'user est connecté.
                 }
             })
