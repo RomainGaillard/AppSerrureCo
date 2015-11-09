@@ -4,7 +4,7 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,socketioJwt) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','LoginSrv', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,LoginSrv) {
         $scope.groups = GroupsSrv.getGroups();
         $scope.locks = LocksSrv.getLocks();
 
@@ -26,9 +26,9 @@ angular.module("locks.controllers")
             parent.css("background-color",color)
         };
 
-
         io.socket.on('connect',function(){
             console.log('connected to sails ok')
+
             io.socket.get('/group',function(data,jwres){
                 console.log(data);
             })
