@@ -5,7 +5,7 @@
 
 angular.module('groups.services')
 
-    .service('GroupsSrv', function() {
+    .service('GroupsSrv',['LocksSrv', function(LocksSrv) {
         var groups = [
             { code: 'FG215C20', name: "Ingesup 1" },
             { code: 'XF5C80', name: "Ingesup 2" }
@@ -13,6 +13,10 @@ angular.module('groups.services')
 
         this.getGroups = function(){
             return groups;
+        }
+
+        this.getLocks = function(){
+            return LocksSrv.getLocks();
         }
 
         this.createGroup = function(name){
@@ -24,4 +28,4 @@ angular.module('groups.services')
                 // err.status will contain the status code
             })
         }
-});
+}]);

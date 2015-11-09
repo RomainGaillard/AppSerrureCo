@@ -1,9 +1,9 @@
 angular.module('login.controllers')
 
 
-.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User', function($scope, $state,$ionicModal,$http,User) {
+.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User','LoginSrv', function($scope, $state,$ionicModal,$http,User,LoginSrv) {
 
-    $scope.myUser = new User();
+    $scope.myUser = LoginSrv.getUser();
     $("[id='errorCo']").hide();
 
     $scope.gotoRegister = function() {
@@ -16,61 +16,13 @@ angular.module('login.controllers')
         if(verifCase()){
             myUser.$login(function(user){
                 $http.defaults.headers.post["Authorization"] = user.token;
+                LoginSrv.setUser(user);
                 $state.go("locks");
             },function(err){
                 errorCase();
                 showError("Identifiant ou mot de passe incorrect.");
             });
         }
-
-        var verifCase = function(){
-            var noEmpty = true;
-            if($("[ng-model='myUser.identifier']").val() == ""){
-                errorCaseEmpty($("[ng-model='myUser.identifier']"));
-                noEmpty = false;
-            }
-            if($("[ng-model='myUser.password']").val() == ""){
-                errorCaseEmpty($("[ng-model='myUser.password']"));
-                noEmpty = false;
-            }
-            if(!noEmpty)
-                showError("Remplissez les champs");
-            return noEmpty;
-        }
-
-        var errorCaseEmpty = function(elem){
-            elem.parent().css("border","1px solid red");
-        }
-
-        var errorCase = function(){
-            $("[ng-model='myUser.password']").css({"color":"red"})
-            $("[ng-model='myUser.identifier']").css({"color":"red"})
-        }
-
-        $scope.reinitCase = function(elem){
-            $(elem.target).css("color","").parent().css("border","");
-        }
-
-        var showError = function(msgError){
-            if(finVerif){
-                finVerif = false;
-                $scope.msgBtConnexion = msgError;
-                $("[id='successCo']").fadeOut("fast",function(){
-                    $("[id='errorCo']").fadeIn("fast");
-                });
-
-                $("[id='btConnexion']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
-                    $("[id='btConnexion']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
-                        $("[id='errorCo']").fadeOut("fast",function(){
-                            $("[id='successCo']").fadeIn("fast");
-                            finVerif = true;
-                        });
-                    })
-                })
-            }
-        }
-
-
         /***********************************************************************
         *                                                                      *
         *     LAISSER LES COMMENTAIRES CI-DESSOUS POUR LE MOMENT. Merci !      *
@@ -103,12 +55,61 @@ angular.module('login.controllers')
             alert("Error:"+headers);
         });
         */
-
     }
 
+
+    var verifCase = function(){
+        var noEmpty = true;
+        if($("[ng-model='myUser.identifier']").val() == ""){
+            errorCaseEmpty($("[ng-model='myUser.identifier']"));
+            noEmpty = false;
+        }
+        if($("[ng-model='myUser.password']").val() == ""){
+            errorCaseEmpty($("[ng-model='myUser.password']"));
+            noEmpty = false;
+        }
+        if(!noEmpty)
+            showError("Remplissez les champs");
+        return noEmpty;
+    }
+
+    var errorCaseEmpty = function(elem){
+        elem.parent().css("border","1px solid red");
+    }
+
+    var errorCase = function(){
+        $("[ng-model='myUser.password']").css({"color":"red"})
+        $("[ng-model='myUser.identifier']").css({"color":"red"})
+    }
+
+    $scope.reinitCase = function(elem){
+        $(elem.target).css("color","").parent().css("border","");
+    }
+
+    var showError = function(msgError){
+        if(finVerif){
+            finVerif = false;
+            $scope.msgBtConnexion = msgError;
+            $("[id='successCo']").fadeOut("fast",function(){
+                $("[id='errorCo']").fadeIn("fast");
+            });
+
+            $("[id='btConnexion']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
+                $("[id='btConnexion']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
+                    $("[id='errorCo']").fadeOut("fast",function(){
+                        $("[id='successCo']").fadeIn("fast");
+                        finVerif = true;
+                    });
+                })
+            })
+        }
+    }
+
+
     $scope.logout = function(){
-        $rootScope.myUser.$logout(function(user){
+        $scope.myUser.$logout(function(user){
             $http.defaults.headers.post["Authorization"] = "";
+            LoginSrv.removeUser();
             $state.go("app");
         },function(err){
             alert(err);

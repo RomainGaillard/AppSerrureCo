@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.controllers', 'account.controllers',
     'groups.controllers', 'locks.controllers', 'member.controllers',
-    'authentification.services','groups.services', 'locks.services','constants.services', 'member.services'])
+    'groups.services', 'locks.services','constants.services', 'member.services','authentification.services'])
 
-    .run(function ($ionicPlatform,$rootScope) {
+    .run(function ($ionicPlatform,$rootScope,$http,$state) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -17,19 +17,14 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
-            $rootScope.$on("$stateStartChange",function(event,toState,toParams,fromState,fromParams){
+            $rootScope.$on("$stateChangeStart",function(event,toState,toParams,fromState,fromParams){
                 if(toState.authenticate)
                 {
-                    /*if($http.defaults.headers.post["Authorization"] != ""){
-                        // Ok
-                        alert("ok");
-                    }
-                    else{
-                        alert("ok");
+                    if($http.defaults.headers.post["Authorization"] == ""){
+                        alert("Veuillez vous connecter !");
+                        event.preventDefault();
                         $state.go("app");
-                    }*/
-                    //$state.go("app");
-                    // On vérifie que l'user est connecté.
+                    }
                 }
             })
         });
@@ -60,21 +55,22 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
             .state('editGroup', {
                 url:'/editGroup',
                 templateUrl: 'templates/group_edit.html',
-                controller: 'GroupsCtrl'
+                controller: 'GroupsCtrl',
+                authenticate:true
             })
 
             .state('account', {
                 url:'/account',
                 templateUrl: 'templates/account.html',
-                controller: 'AccountCtrl'
-                // authenticate: true
+                controller: 'AccountCtrl',
+                authenticate:true
             })
 
             .state('member', {
                 url:'/member',
                 templateUrl: 'templates/manage_member.html',
-                controller: 'MemberCtrl'
-                // authenticate: true
+                controller: 'MemberCtrl',
+                authenticate:true
             })
 
 // if none of the above states are matched, use this as the fallback

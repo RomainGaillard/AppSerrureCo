@@ -25,6 +25,22 @@ angular.module('authentification.services')
          }
     })*/
 
+    .service('LoginSrv',['User', function(User) {
+        var myUser = new User();
+
+        this.getUser = function(){
+            return myUser;
+        }
+
+        this.setUser = function(user){
+            myUser = user;
+        }
+
+        this.removeUser = function(){
+            myUser = new User();
+        }
+    }])
+
     .factory('User',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
         return $resource(null,null,{
             login:{
@@ -37,7 +53,8 @@ angular.module('authentification.services')
                 method:'POST', url: ConstantsSrv.register
             }
         });
-    }]);
+    }])
+
 
 
 
