@@ -13,7 +13,8 @@
                     #{{group.code}}: {{group.name}}
                     <!-- CSS A REVOIR dans le fichier scss.-->
                     <div style="float:right;">
-                        <button class="button-clear ion-wrench" style="color:black" ng-click="gotoEditGroup()" > Editer</button>
+                        <button ng-hide="!group.admin" class="button-clear ion-wrench black" ng-click="gotoEditGroup()"> Editer </button>
+                        <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="gotoExitGroup()"> Quitter </button>
                     </div>
                 </div>
                 <div class="row item" ng-repeat="lock in locks">
@@ -41,16 +42,10 @@
                 </div>
             </div>
             <div class="item item-divider">
-                #G28B: Ingesup
-                <!-- CSS A REVOIR dans le fichier scss.-->
-                <div style="float:right;">
-                    <button class="button-clear ion-android-walk" style="color:black" ng-click="exitGroup()" > Quitter</button>
-                </div>
-            </div>
-            <div class="item item-divider">
                 Serrures sans groupe:
             </div>
         </div>
+        <br><br><br>
     </ion-content>
     <div class="footer">
         <div class="button-bar">

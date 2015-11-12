@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.controllers', 'account.controllers',
     'groups.controllers', 'locks.controllers', 'member.controllers',
-    'groups.services', 'locks.services','constants.services', 'member.services','authentification.services'])
+    'groups.services', 'locks.services','constants.services', 'member.services','authentification.services','ngStorage'])
 
     .run(function ($ionicPlatform,$rootScope,$http,$state) {
         $ionicPlatform.ready(function () {

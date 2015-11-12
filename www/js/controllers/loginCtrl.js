@@ -1,10 +1,13 @@
 angular.module('login.controllers')
 
 
-.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User','LoginSrv', function($scope, $state,$ionicModal,$http,User,LoginSrv) {
+.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User','AuthSrv', function($scope, $state,$ionicModal,$http,User,AuthSrv) {
 
-    $scope.myUser = LoginSrv.getUser();
+    $scope.myUser = new User();
     $("[id='errorCo']").hide();
+
+    $scope.myUser.identifier = "romain2.gaillard@ynov.com"
+    $scope.myUser.password = "mdpRomain2"
 
     $scope.gotoRegister = function() {
         $state.go("register");
@@ -16,7 +19,6 @@ angular.module('login.controllers')
         if(verifCase()){
             myUser.$login(function(user){
                 $http.defaults.headers.post["Authorization"] = user.token;
-                LoginSrv.setUser(user);
                 $state.go("locks");
             },function(err){
                 errorCase();
@@ -105,11 +107,10 @@ angular.module('login.controllers')
         }
     }
 
-
     $scope.logout = function(){
         $scope.myUser.$logout(function(user){
             $http.defaults.headers.post["Authorization"] = "";
-            LoginSrv.removeUser();
+            //LoginSrv.removeUser();
             $state.go("app");
         },function(err){
             alert(err);

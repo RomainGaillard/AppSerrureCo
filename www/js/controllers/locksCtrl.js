@@ -4,9 +4,9 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','LoginSrv', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,LoginSrv) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv) {
         $scope.groups = GroupsSrv.getGroups();
-        $scope.locks = LocksSrv.getLocks();
+        $scope.locks = new Array();
 
         $scope.gotoLock = function(){
             //$state.go("app");
@@ -22,21 +22,30 @@ angular.module("locks.controllers")
 
         $scope.changeColor = function($event,color){
             var parent = angular.element($event.target).parent();
-            //parent.trigger( "keypress" );
             parent.css("background-color",color)
         };
 
-        io.socket.on('connect',function(){
-            console.log('connected to sails ok')
-
-            io.socket.get('/group',function(data,jwres){
-                console.log(data);
-            })
-            io.socket.on('group',function(msg){
-                console.log(msg);
-            })
+        io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
+            for(var i=0;i<groups.length;i++){
+                var admin = groups[i].admin;
+                var validate = groups[i].validate;
+                var grp = groups[i].group;
+                var id = grp.id;
+                GroupsSrv.addGroup(id,grp.code,grp.name,admin,validate);
+                io.socket.get('/group/'+grp.code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                    for(var j=0;j<locks.length;j++){
+                        GroupsSrv.addLock(id,locks[j].name,locks[j].state,locks[j].addressMac,locks[j].hasCamera,locks[j].hasBell,locks[j].hasMicro,locks[j].isRegister)
+                    }
+                    var test = GroupsSrv.getLocks(id);
+                    console.log(test);
+                })
+            }
+            $scope.groups = GroupsSrv.getGroups();
         })
 
+        io.socket.on('group',function(msg){
+            console.log(msg);
+        })
 
 
         // ===== POPUP - ASK GROUP! ====
