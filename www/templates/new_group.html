@@ -14,7 +14,7 @@
                 <label class="item item-input">
                     <input type="text" placeholder="Nom" ng-model="group.name">
                 </label>
-                <label class="item" style="font-weight: bold">
+                <label class="item font-bold">
                     Serrures associées:
                 </label>
                 <li class="item item-checkbox" ng-repeat="lock in locks">
@@ -24,7 +24,7 @@
                     {{lock.title}}
                 </li>
             </form>
-            <label class="item" style="font-weight: bold">Membres:</label>
+            <label class="item font-bold">Membres:</label>
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
                     <input type="text" placeholder="Email" ng-model="group.members">
@@ -35,8 +35,8 @@
             </div>
             <div class="row">
                 <label class="col col-70">
-                    <button class="button button-small button-icon" ng-click="removeTask($index)" style="float:right;vertical-align:middle;display:inline-block;">
-                        <i class="icon ion-android-cancel" style="color:#EC4545;"></i>
+                    <button class="button button-small button-icon new-group-bt" ng-click="removeTask($index)">
+                        <i class="icon ion-android-cancel color-red"></i>
                     </button>
                     <span>romain.gaillard@ynov.com</span>
                 </label>

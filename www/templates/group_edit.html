@@ -9,24 +9,21 @@
     <ion-content>
         <div class="item item-divider">
 
-            <!-- CSS A REVOIR dans le fichier scss.-->
             <label class="item item-input">
-                <span class="input-label" style="font-weight:bold;width:10%" >#G25R:</span>
+                <span class="input-label group-title">#G25R:</span>
                 <input type="text" placeholder="Nom du groupe" value="Groupe 1">
             </label>
         </div>
 
-        <!-- CSS A REVOIR dans le fichier scss.-->
         <li class="item" ng-repeat="lock in locks">
-            <button class="button button-small button-icon" ng-click="removeTask($index)" style="float:right;vertical-align:middle;display:inline-block;">
-                <i class="icon ion-android-cancel" style="color:#EC4545;"></i>
+            <button class="button button-small button-icon group-list" ng-click="removeTask($index)">
+                <i class="icon ion-android-cancel group_color"></i>
             </button>
             {{lock.id}} -
             <i class="ion-ios-mic"></i>
             <i class="ion-ios-bell"></i>
             <i class="ion-ios-videocam"></i>
-            <!-- CSS A REVOIR dans le fichier scss.-->
-            <span style="margin-left:10px;">{{lock.title}}</span>
+            <span class="group-marginitem-title">{{lock.title}}</span>
         </li>
         <br>
 

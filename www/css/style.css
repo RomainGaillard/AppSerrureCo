@@ -1,14 +1,1 @@
 /* Empty. Add your own CSS if you like */
-
-.toggle .track{
-    background-color:#CE3C31;
-    border:solid 2px #BD2318;
-}
-
-.footer{
-    display:block;
-    position: absolute; bottom: 0;
-    border-top-width: 1px;
-    border-bottom-width: 0;
-    width: 100%;
-}
