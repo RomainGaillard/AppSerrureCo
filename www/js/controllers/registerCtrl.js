@@ -6,7 +6,7 @@ angular.module("register.controllers")
 
     .controller('RegisterCtrl',['$scope','$state','$http','User', function($scope,$state,$http, User) {
 
-        $scope.myUser = new User();
+        $scope.myNewUser = new User();
         $("[id='errorRegister']").hide();
 
         $scope.gotoLogin = function() {
@@ -16,12 +16,12 @@ angular.module("register.controllers")
         var finVerif = true;
         $scope.doRegister = function(confirmPassword) {
             if(verifCase()){
-                $scope.myUser.$register(function(user){
+                $scope.myNewUser.$register(function(user){
                     $http.defaults.headers.post["Authorization"] = user.token;
                     $state.go("locks");
                 },function(err) {
-                    ErrorCase($("[ng-model='myUser.email']"));
-                    ErrorCase($("[ng-model='myUser.username']"));
+                    ErrorCase($("[ng-model='myNewUser.email']"));
+                    ErrorCase($("[ng-model='myNewUser.username']"));
                     showError("Inscription refusée: Identifiant existant !");
                 });
             }
@@ -29,25 +29,25 @@ angular.module("register.controllers")
 
         var verifCase= function(){
             var noEmpty = true;
-            if($("[ng-model='myUser.firstname']").val() == ""){
-                errorCaseEmpty($("[ng-model='myUser.firstname']"));
+            if($("[ng-model='myNewUser.firstname']").val() == ""){
+                errorCaseEmpty($("[ng-model='myNewUser.firstname']"));
                 noEmpty = false;
             }
-            if($("[ng-model='myUser.lastname']").val() == ""){
-                errorCaseEmpty($("[ng-model='myUser.lastname']"));
+            if($("[ng-model='myNewUser.lastname']").val() == ""){
+                errorCaseEmpty($("[ng-model='myNewUser.lastname']"));
                 noEmpty = false;
             }
-            if($("[ng-model='myUser.email']").val() == ""){
-                errorCaseEmpty($("[ng-model='myUser.email']"));
+            if($("[ng-model='myNewUser.email']").val() == ""){
+                errorCaseEmpty($("[ng-model='myNewUser.email']"));
                 noEmpty = false;
             }
-            if($("[ng-model='myUser.username']").val() == ""){
-                errorCaseEmpty($("[ng-model='myUser.username']"));
+            if($("[ng-model='myNewUser.username']").val() == ""){
+                errorCaseEmpty($("[ng-model='myNewUser.username']"));
                 noEmpty = false;
             }
-            var password = $("[ng-model='myUser.password']").val();
+            var password = $("[ng-model='myNewUser.password']").val();
             if(password == ""){
-                errorCaseEmpty($("[ng-model='myUser.password']"));
+                errorCaseEmpty($("[ng-model='myNewUser.password']"));
                 noEmpty = false;
             }
             var confirm_password = $("[ng-model='confirmPassword']").val();
@@ -92,7 +92,7 @@ angular.module("register.controllers")
         }
 
         var errorCaseEmpty = function(elem){
-            $(elem.target).parent().css("border","1px solid red");
+            elem.parent().css("border","1px solid red");
         }
 
         var ErrorCase = function(elem){
@@ -100,7 +100,7 @@ angular.module("register.controllers")
                 $(elem.target).css({"color":"red"})
             }
             else{
-                $("[ng-model='myUser.password']").css({"color":"red"})
+                $("[ng-model='myNewUser.password']").css({"color":"red"})
                 $("[ng-model='confirmPassword']").css({"color":"red"})
             }
         }
