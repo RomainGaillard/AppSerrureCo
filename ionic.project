@@ -1,4 +1,12 @@
 {
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
   "name": "AppSerrureCo",
-  "app_id": ""
+  "app_id": "",
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }
