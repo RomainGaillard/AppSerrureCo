@@ -54,7 +54,7 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
 
             .state('editGroup', {
                 url:'/editGroup',
-                templateUrl: 'templates/group_edit.html',
+                templateUrl: 'templates/edit_group.html',
                 controller: 'GroupsCtrl',
                 authenticate:true
             })

@@ -7,6 +7,7 @@ angular.module("groups.controllers")
 
     .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope', function($scope, $state, GroupsSrv,$ionicModal,$rootScope) {
         $scope.locks = GroupsSrv.getLocks();
+        $scope.group = new Array();
 
         $scope.gotoLocks = function(){
             $state.go("locks")
@@ -25,7 +26,7 @@ angular.module("groups.controllers")
             animation: 'slide-in-up'
         })
 
-        $scope.deleteGroup = function(){
+        $scope.deleteGroup = function(group){
             $scope.deleteGroupModal.show();
         }
 
