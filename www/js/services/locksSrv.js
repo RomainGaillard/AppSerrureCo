@@ -11,7 +11,11 @@ angular.module('locks.services')
         this.getLocks = function(id){
             for(var i=0;i<locks.length;i++){
                 if(locks[i].indexOf(id) >= 0){
-                    return locks[i]
+                    var locks2 = new Array();
+                    for (var j = 1; j < locks[i].length; j++){
+                        locks2[j-1] = locks[i][j];
+                    }
+                    return locks2;
                 }
             }
         }
