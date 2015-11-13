@@ -29,23 +29,10 @@ angular.module("locks.controllers")
             parent.css("background-color",color)
         };
 
-        /*
-        var getLock = function(){
-            for(var i=0;i<$scope.groups.length;i++){
-                var group = $scope.groups[i];
-                io.socket.get('/group/'+group.code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    console.log(i);
-                    console.log(group.id);
-                    GroupsSrv.addLock(group.id,locks)
-                    group.locks = GroupsSrv.getLocks(group.id);
-                })
-            }
-            console.log($scope.groups);
-            console.log($scope.groups[0]);
-            console.log($scope.groups[1]);
-            console.log($scope.groups[2]);
-            //$scope.groups[i].locks = GroupsSrv.getLocks(id);
-        }*/
+        $scope.showLocks = function(code){
+            $("#"+code).slideToggle();
+        }
+
 
         io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
             for(var i=0;i<groups.length;i++){
