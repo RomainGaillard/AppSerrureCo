@@ -1,7 +1,6 @@
 
 angular.module('authentification.services')
 
-
     .service('AuthSrv',function($localStorage){
         this.setUser = function(user){
             $localStorage.user = user;
@@ -9,6 +8,10 @@ angular.module('authentification.services')
 
         this.getUser = function(){
             return $localStorage.user;
+        }
+
+        this.removeUser = function(){
+            $localStorage.user = null;
         }
     })
 

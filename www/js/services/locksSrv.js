@@ -27,4 +27,8 @@ angular.module('locks.services')
                 locks[locks.length] = new Array(id,locks_);
             }
         }
+
+        this.remove = function(){
+            locks = new Array();
+        }
     });

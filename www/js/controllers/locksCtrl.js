@@ -137,14 +137,15 @@ angular.module("locks.controllers")
         $scope.doExitGroup = function(){
             $scope.group.code = $scope.groupExit.code;
             //console.log($scope.groupExit);
-            $http.defaults.headers.post["Authorization"] = AuthSrv.getUser().token;
-            $scope.group.$exit(),function(group){
-                console.log(group);
-                this.closeExitGroup();
+            var t = $scope.group.$exit();
+            t.then(function(data){
+                var index = $scope.groups.indexOf($scope.groupExit);
+                $scope.groups.splice(index,1);
+                $scope.closeExitGroup();
             },function(err){
-                console.log(err);
-            }
-        }
+                alert(err);
+            })
+        },
 
         // ===== POPUP - NEW LOCK! =====
 
