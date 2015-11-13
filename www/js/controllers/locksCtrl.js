@@ -28,9 +28,11 @@ angular.module("locks.controllers")
         var getLock = function(){
             for(var i=0;i<$scope.groups.length;i++){
                 var group = $scope.groups[i];
-                io.socket.get('/group/'+$scope.groups[i].code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                io.socket.get('/group/'+group.code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                    console.log(i);
+                    console.log(group.id);
                     GroupsSrv.addLock(group.id,locks)
-                    $scope.groups[i].locks = GroupsSrv.getLocks(group.id);
+                    group.locks = GroupsSrv.getLocks(group.id);
                 })
             }
             console.log($scope.groups);
