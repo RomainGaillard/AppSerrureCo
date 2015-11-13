@@ -17,7 +17,7 @@
                         <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="gotoExitGroup()"> Quitter </button>
                     </div>
                 </div>
-                <div class="row item" ng-repeat="lock in locks">
+                <div class="row item" ng-repeat="lock in group.locks">
                     <!-- CSS A REVOIR dans le fichier scss.-->
                     <div class="col col-80" ng-mousedown="changeColor($event,'#D9E5F3')" ng-mouseleave="changeColor($event,'')" ng-click="gotoLock()" style="cursor:pointer;">
                         {{lock.id}} -

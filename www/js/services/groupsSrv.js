@@ -20,8 +20,7 @@ angular.module('groups.services')
             return LocksSrv.getLocks(id);
         }
 
-        this.addLock = function(id,name,state,addressMac,camera,bell,micro,isRegister){
-            var locks = {name:name,state:state,addressMac:addressMac,camera:camera,bell:bell,micro:micro,isRegister:isRegister}
+        this.addLock = function(id,locks){
             LocksSrv.addLock(id,locks);
         }
 

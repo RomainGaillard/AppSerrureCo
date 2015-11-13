@@ -25,6 +25,18 @@ angular.module("locks.controllers")
             parent.css("background-color",color)
         };
 
+        var getLock = function(){
+            for(var i=0;i<$scope.groups.length;i++){
+                var group = $scope.groups[i];
+                $scope.groups[i].locks = io.socket.get('/group/'+$scope.groups[i].code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                    GroupsSrv.addLock(group.id,locks)
+                    return GroupsSrv.getLocks(group.id);
+                })
+            }
+            console.log($scope.groups);
+            //$scope.groups[i].locks = GroupsSrv.getLocks(id);
+        }
+
         io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
             for(var i=0;i<groups.length;i++){
                 var admin = groups[i].admin;
@@ -32,21 +44,14 @@ angular.module("locks.controllers")
                 var grp = groups[i].group;
                 var id = grp.id;
                 GroupsSrv.addGroup(id,grp.code,grp.name,admin,validate);
-                io.socket.get('/group/'+grp.code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    for(var j=0;j<locks.length;j++){
-                        GroupsSrv.addLock(id,locks[j].name,locks[j].state,locks[j].addressMac,locks[j].hasCamera,locks[j].hasBell,locks[j].hasMicro,locks[j].isRegister)
-                    }
-                    var test = GroupsSrv.getLocks(id);
-                    console.log(test);
-                })
             }
             $scope.groups = GroupsSrv.getGroups();
+            getLock();
         })
 
         io.socket.on('group',function(msg){
             console.log(msg);
         })
-
 
         // ===== POPUP - ASK GROUP! ====
 

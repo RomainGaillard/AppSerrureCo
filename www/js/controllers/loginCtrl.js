@@ -19,6 +19,7 @@ angular.module('login.controllers')
         if(verifCase()){
             myUser.$login(function(user){
                 $http.defaults.headers.post["Authorization"] = user.token;
+                AuthSrv.setUser(user);
                 $state.go("locks");
             },function(err){
                 errorCase();
