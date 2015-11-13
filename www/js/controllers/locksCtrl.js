@@ -4,7 +4,9 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv) {
+
+
+.controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv) {
         $scope.groups = GroupsSrv.getGroups();
         $scope.locks = new Array();
 
@@ -25,6 +27,7 @@ angular.module("locks.controllers")
             parent.css("background-color",color)
         };
 
+        /*
         var getLock = function(){
             for(var i=0;i<$scope.groups.length;i++){
                 var group = $scope.groups[i];
@@ -36,8 +39,11 @@ angular.module("locks.controllers")
                 })
             }
             console.log($scope.groups);
+            console.log($scope.groups[0]);
+            console.log($scope.groups[1]);
+            console.log($scope.groups[2]);
             //$scope.groups[i].locks = GroupsSrv.getLocks(id);
-        }
+        }*/
 
         io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
             for(var i=0;i<groups.length;i++){
@@ -48,7 +54,6 @@ angular.module("locks.controllers")
                 GroupsSrv.addGroup(id,grp.code,grp.name,admin,validate);
             }
             $scope.groups = GroupsSrv.getGroups();
-            getLock();
         })
 
         io.socket.on('group',function(msg){
@@ -130,7 +135,8 @@ angular.module("locks.controllers")
             animation: 'slide-in-up'
         });
 
-        $scope.exitGroup = function(){
+        $scope.exitGroup = function(group){
+            $scope.groupExit = group;
             $scope.exitGroupModal.show();
         };
 
@@ -139,7 +145,8 @@ angular.module("locks.controllers")
         };
 
         $scope.doExitGroup = function(){
-
+            //$scope.group.$save
+            //$scope.exitGroupModal.hide();
         }
 
         // ===== POPUP - NEW LOCK! =====
@@ -171,3 +178,22 @@ angular.module("locks.controllers")
         });
 
     }])
+
+.directive('lockGroup', ['AuthSrv','GroupsSrv',function (AuthSrv,GroupsSrv) {
+    return {
+        restrict: 'E',
+        scope: true,
+        templateUrl: 'templates/lock_group.html',
+        link: function ($scope, element, attributes) {
+            $scope.locks = {};
+            var code = attributes.code;
+            io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                $scope.$apply(function(){
+                    $scope.locks = locks;
+                    console.log($scope.locks);
+                })
+
+            })
+        }
+    }
+}])

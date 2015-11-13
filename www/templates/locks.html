@@ -13,28 +13,11 @@
                     #{{group.code}}: {{group.name}}
                     <div class="right">
                         <button ng-hide="!group.admin" class="button-clear ion-wrench black" ng-click="gotoEditGroup()"> Editer </button>
-                        <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="gotoExitGroup()"> Quitter </button>
+                        <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="exitGroup(group)"> Quitter </button>
                     </div>
                 </div>
-                <div class="row item" ng-repeat="lock in group.locks">
-                    <div class="col col-80 cursor-point" ng-mousedown="changeColor($event,'#D9E5F3')" ng-mouseleave="changeColor($event,'')" ng-click="gotoLock()">
-                        {{lock.id}} -
-                        <i class="ion-ios-mic"></i>
-                        <i class="ion-ios-bell"></i>
-                        <i class="ion-ios-videocam"></i>
-                        <span class="lock-margin">{{lock.title}}</span>
-                    </div>
-                    <div class="col col-10">
-                        <label class="toggle toggle-balanced cursor-point">
-                            <input type="checkbox" onchange="";>
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="col col-10">
-                        <span ng-click="" class="badge badge-energized l-margin">{{lock.id}}</span>
-                    </div>
+                <lock-group code="{{group.code}}"></lock-group>
+
                 </div>
             </div>
             <div class="item item-divider">

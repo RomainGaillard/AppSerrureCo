@@ -24,4 +24,5 @@ angular.module('groups.services')
             LocksSrv.addLock(id,locks);
         }
 
+
 }]);
