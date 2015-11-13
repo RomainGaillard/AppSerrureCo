@@ -28,7 +28,4 @@ angular.module('locks.services')
             }
         }
 
-        this.remove = function(){
-            locks = new Array();
-        }
     });

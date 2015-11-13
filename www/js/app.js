@@ -7,7 +7,7 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
     'groups.controllers', 'locks.controllers', 'member.controllers',
     'groups.services', 'locks.services','constants.services', 'member.services','authentification.services','ngStorage','directives'])
 
-    .run(function ($ionicPlatform,$rootScope,$http,$state) {
+    .run(function ($ionicPlatform,$rootScope,$http,$state,AuthSrv) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -20,7 +20,7 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
             $rootScope.$on("$stateChangeStart",function(event,toState,toParams,fromState,fromParams){
                 if(toState.authenticate)
                 {
-                    if($http.defaults.headers.post["Authorization"] == ""){
+                    if(AuthSrv.getUser().token == undefined){
                         alert("Veuillez vous connecter !");
                         event.preventDefault();
                         $state.go("app");

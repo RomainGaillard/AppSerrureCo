@@ -8,11 +8,6 @@ angular.module('groups.services')
     .service('GroupsSrv',['LocksSrv', function(LocksSrv) {
         var groups = new Array();
 
-        this.remove = function(){
-            LocksSrv.remove();
-            groups = new Array();
-        }
-
         this.addGroup = function(id,code,name,admin,validate){
             groups[groups.length] =  {id:id,code:code,name:name,admin:admin,validate:validate};
         }
@@ -35,7 +30,7 @@ angular.module('groups.services')
         return $resource(ConstantsSrv.group,{code:'@code'},{
             exit:{
                 method:'DELETE',
-                url:"http://localhost:1337/group/:code/exit",
+                url:ConstantsSrv.exitGroup,
                 params:{code:'@code'},
                 headers: {
                     'Authorization': AuthSrv.getUser().token
