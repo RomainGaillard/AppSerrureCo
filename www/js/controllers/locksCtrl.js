@@ -4,9 +4,11 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','LoginSrv','Group', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,LoginSrv, Group) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group) {
+
         $scope.groups = GroupsSrv.getGroups();
-        $scope.locks = LocksSrv.getLocks();
+        
+        $scope.locks = new Array();
 
         $scope.group = new Group();
 
@@ -24,22 +26,38 @@ angular.module("locks.controllers")
 
         $scope.changeColor = function($event,color){
             var parent = angular.element($event.target).parent();
-            //parent.trigger( "keypress" );
             parent.css("background-color",color)
         };
 
-        io.socket.on('connect',function(){
-            console.log('connected to sails ok')
+        var getLock = function(){
+            for(var i=0;i<$scope.groups.length;i++){
+                var group = $scope.groups[i];
+                io.socket.get('/group/'+group.code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                    console.log(i);
+                    console.log(group.id);
+                    GroupsSrv.addLock(group.id,locks)
+                    group.locks = GroupsSrv.getLocks(group.id);
+                })
+            }
+            console.log($scope.groups);
+            //$scope.groups[i].locks = GroupsSrv.getLocks(id);
+        }
 
-            io.socket.get('/group',function(data,jwres){
-                console.log(data);
-            })
-            io.socket.on('group',function(msg){
-                console.log(msg);
-            })
+        io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
+            for(var i=0;i<groups.length;i++){
+                var admin = groups[i].admin;
+                var validate = groups[i].validate;
+                var grp = groups[i].group;
+                var id = grp.id;
+                GroupsSrv.addGroup(id,grp.code,grp.name,admin,validate);
+            }
+            $scope.groups = GroupsSrv.getGroups();
+            getLock();
         })
 
-
+        io.socket.on('group',function(msg){
+            console.log(msg);
+        })
 
         // ===== POPUP - ASK GROUP! ====
 

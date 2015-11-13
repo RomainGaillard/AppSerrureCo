@@ -11,11 +11,12 @@
             <div ng-repeat="group in groups">
                 <div class="item item-divider">
                     #{{group.code}}: {{group.name}}
-                    <div class="lock-divright">
-                        <button class="button-clear ion-wrench black" ng-click="gotoEditGroup()" > Editer</button>
+                    <div class="right">
+                        <button ng-hide="!group.admin" class="button-clear ion-wrench black" ng-click="gotoEditGroup()"> Editer </button>
+                        <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="gotoExitGroup()"> Quitter </button>
                     </div>
                 </div>
-                <div class="row item" ng-repeat="lock in locks">
+                <div class="row item" ng-repeat="lock in group.locks">
                     <div class="col col-80 cursor-point" ng-mousedown="changeColor($event,'#D9E5F3')" ng-mouseleave="changeColor($event,'')" ng-click="gotoLock()">
                         {{lock.id}} -
                         <i class="ion-ios-mic"></i>
@@ -37,15 +38,10 @@
                 </div>
             </div>
             <div class="item item-divider">
-                #G28B: Ingesup
-                <div style="float:right;">
-                    <button class="button-clear ion-android-walk black" ng-click="exitGroup()" > Quitter</button>
-                </div>
-            </div>
-            <div class="item item-divider">
                 Serrures sans groupe:
             </div>
         </div>
+        <br><br><br>
     </ion-content>
     <div class="footer">
         <div class="button-bar">

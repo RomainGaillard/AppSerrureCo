@@ -1,4 +1,9 @@
 /*
+
+COMMANDE à exécuter pour "compiler" le fichier en css:
+	ionic setup sass
+
+
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
 
@@ -22,7 +27,6 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 /*=======================================*/
 
 $m_left: 10px;
-$f_right: right;
 
 /*=======================================*/
 
@@ -58,18 +62,18 @@ $f_right: right;
 }
 
 .group-list{
-	float:$f_right;
+	float:right;
 	vertical-align:middle;
 	display:inline-block;
 }
 
 
 .black{
-	color:$dark;
+	color:$dark !important;
 }
 
 .lock-divright{
-	float:f_right;
+	float:right;
 }
 
 .cursor-point{
@@ -86,7 +90,7 @@ $f_right: right;
 }
 
 .right{
-	float: f_right;
+	float: right;
 }
 
 .font-bold{
@@ -98,7 +102,7 @@ $f_right: right;
 }
 
 .new-group-bt{
-	float:f_right;
+	float:right;
 	vertical-align:middle;
 	display:inline-block;
 }
@@ -109,4 +113,8 @@ $f_right: right;
 
 .item .badge{
 	right:5%;
+}
+
+.reduce{
+	width: 2% !important;
 }

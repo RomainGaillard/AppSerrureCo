@@ -6,14 +6,21 @@
 angular.module('locks.services')
 
     .service('LocksSrv', function() {
-        var locks = [
-            { title: 'Portail Ingesup', id: 1 },
-            { title: 'Entree Maison', id: 2 },
-            { title: 'Boite au lettre', id: 3},
-            { title: 'Chez Juppe', id: 4},
-        ]
+        var locks = new Array();
 
-        this.getLocks = function(){
-            return locks;
+        this.getLocks = function(id){
+            for(var i=0;i<locks.length;i++){
+                if(locks[i].indexOf(id) >= 0){
+                    return locks[i]
+                }
+            }
+        }
+
+        this.addLock = function(id,locks_){
+            if(locks.length == 0) {
+                locks[0] = new Array(id, locks_);
+            }else {
+                locks[locks.length] = new Array(id,locks_);
+            }
         }
     });

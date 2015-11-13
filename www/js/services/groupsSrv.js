@@ -6,21 +6,37 @@
 angular.module('groups.services')
 
     .service('GroupsSrv',['LocksSrv', function(LocksSrv) {
-        var groups = [
-            { code: 'FG215C20', name: "Ingesup 1" },
-            { code: 'XF5C80', name: "Ingesup 2" }
-        ]
+        var groups = new Array();
+
+        this.addGroup = function(id,code,name,admin,validate){
+            groups[groups.length] =  {id:id,code:code,name:name,admin:admin,validate:validate};
+        }
 
         this.getGroups = function(){
             return groups;
         }
 
-        this.getLocks = function(){
-            return LocksSrv.getLocks();
+        this.getLocks = function(id){
+            return LocksSrv.getLocks(id);
         }
-}]);
+
+        this.addLock = function(id,locks){
+            LocksSrv.addLock(id,locks);
+        }
+    }])
 
 
     .factory('Group',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
         return $resource(ConstantsSrv.group,{code:'@code'});
+    }]);
+/*
+    .factory('Group',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
+        return $resource(null,null,{
+            create:{
+                method:'POST', url: ConstantsSrv.group
+            },
+        });
     }])
+        
+
+*/
