@@ -1,4 +1,9 @@
 /*
+
+COMMANDE à exécuter pour "compiler" le fichier en css:
+	ionic setup sass
+
+
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
 
@@ -14,10 +19,98 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
-
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+/*=======================================*/
 
+$m_left: 10px;
+
+/*=======================================*/
+
+.toggle .track{
+    background-color:$assertive;
+    border:solid 2px #BD2318;
+}
+
+.footer{
+    display:block;
+    position: absolute; bottom: 0;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    width: 100%;
+}
+
+.block-center{
+	display:block;
+	margin:auto;
+}
+
+.group-title{
+	font-weight:bold;
+	width:10%;
+}
+
+.group-marginitem-title{
+	margin-left: $m_left;	
+}
+
+.group-color{
+	color:#EC4545;
+}
+
+.group-list{
+	float:right;
+	vertical-align:middle;
+	display:inline-block;
+}
+
+
+.black{
+	color:$dark;
+}
+
+.lock-divright{
+	float:right;
+}
+
+.cursor-point{
+	cursor:pointer;
+}
+
+.lock-margin{
+	margin-left:$m_left;
+}
+
+.login-marginblock{
+	margin:auto;
+	display:block;
+}
+
+.right{
+	float: right;
+}
+
+.font-bold{
+	font-weight: bold;
+}
+
+.color-red{
+	 color:#EC4545;
+}
+
+.new-group-bt{
+	float:right;
+	vertical-align:middle;
+	display:inline-block;
+}
+
+.footer{
+	background-color: $light !important;
+}
+
+.item .badge{
+	right:5%;
+}

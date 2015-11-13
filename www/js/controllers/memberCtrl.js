@@ -37,13 +37,13 @@ angular.module("member.controllers")
   };
   
   $scope.items = [
-     { title: 'Jean Ingesup', grade: 'sbire', id: 1 },
-     { title: 'Entre ManBon', grade: 'popcorn', id: 2 },
-     { title: 'Jeau Boiteaulettre', grade: 'grade', id: 3},
-     { title: 'Sanchez Juepe', grade: 'femme', id:5},
-     { title: 'Entre ManBon', grade: 'popcorn', id:6 },
-     { title: 'Jeau Boiteaulettre', grade: 'grade', id: 6},
-     { title: 'Sanchez Juepe', grade: 'femme', id: 7}
+     { title: 'Jean Ingesup', id: 1 },
+     { title: 'Entre ManBon', id: 2 },
+     { title: 'Jeau Boiteaulettre', id: 3},
+     { title: 'Sanchez Juepe', id:5},
+     { title: 'Entre ManBon', id:6 },
+     { title: 'Jeau Boiteaulettre', id: 6},
+     { title: 'Sanchez Juepe', id: 7}
   ];
   
 }]);

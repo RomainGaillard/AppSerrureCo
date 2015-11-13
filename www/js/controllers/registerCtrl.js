@@ -14,7 +14,7 @@ angular.module("register.controllers")
         };
 
         var finVerif = true;
-        $scope.doRegister = function(confirmPassword) {
+            $scope.doRegister = function(confirmPassword) {
             if(verifCase()){
                 $scope.myNewUser.$register(function(user){
                     $http.defaults.headers.post["Authorization"] = user.token;
@@ -26,8 +26,15 @@ angular.module("register.controllers")
                 });
             }
         }
+        
+        var test_email = function validateEmail(email) {
+            alert(email);
+            var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            return re.test(email);
+        }
 
         var verifCase= function(){
+            var email = $("[ng-model='myNewUser.email']").val();
             var noEmpty = true;
             if($("[ng-model='myNewUser.firstname']").val() == ""){
                 errorCaseEmpty($("[ng-model='myNewUser.firstname']"));
@@ -57,19 +64,23 @@ angular.module("register.controllers")
             }
             if(!noEmpty){
                 showError("Remplissez les champs");
-                return false;
+            }
+            else if(!test_email(email)){
+                ErrorCase();
+                showError("L'email n'est pas valide");
             }
             else if(password != confirm_password){
+                alert('ok');
                 ErrorCase();
-                showError("Les mots de passe ne correspondent pas !")
-                return false;
+                showError("Les mots de passe ne correspondent pas !");
             }
             else if(password.length < 8){
                 ErrorCase();
                 showError("Le mot de passe est trop court. Minimum 8 caractères !");
-                return false;
             }
-            return true;
+            else
+                return true;
+            return false;
         }
 
         var showError = function(msgError){
