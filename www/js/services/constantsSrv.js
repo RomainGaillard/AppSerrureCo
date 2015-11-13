@@ -8,6 +8,7 @@ angular.module('constants.services')
 
         var domain = "http://localhost:1337/"
         this.group = domain+"group/:code";
+        this.exitGroup = domain+"group/:code/exit"
         this.login = domain+"auth/local";
         this.logout = domain+"logout"
         this.register = domain+"auth/local/register"

@@ -6,8 +6,8 @@ angular.module('login.controllers')
     $scope.myUser = new User();
     $("[id='errorCo']").hide();
 
-    $scope.myUser.identifier = "t.u@you.com"
-    $scope.myUser.password = "123456789"
+    $scope.myUser.identifier = "romain2.gaillard@ynov.com"
+    $scope.myUser.password = "mdpRomain2"
 
     $scope.gotoRegister = function() {
         $state.go("register");

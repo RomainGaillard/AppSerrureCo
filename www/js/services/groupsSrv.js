@@ -27,16 +27,9 @@ angular.module('groups.services')
 
 
     .factory('Group',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
-        return $resource(ConstantsSrv.group,{code:'@code'});
-    }]);
-/*
-    .factory('Group',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
-        return $resource(null,null,{
-            create:{
-                method:'POST', url: ConstantsSrv.group
-            },
+        return $resource(ConstantsSrv.group,{code:'@code'},{
+            exit:{
+                method:'DELETE',url:"http://localhost:1337/group/:code/exit",params:{code:'@code'}
+            }
         });
-    }])
-        
-
-*/
+    }]);

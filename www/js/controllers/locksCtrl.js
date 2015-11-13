@@ -4,7 +4,7 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group','$http', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group,$http) {
 
         $scope.groups = GroupsSrv.getGroups();
         
@@ -135,8 +135,15 @@ angular.module("locks.controllers")
         };
 
         $scope.doExitGroup = function(){
-            //$scope.group.$save
-            //$scope.exitGroupModal.hide();
+            $scope.group.code = $scope.groupExit.code;
+            //console.log($scope.groupExit);
+            $http.defaults.headers.post["Authorization"] = AuthSrv.getUser().token;
+            $scope.group.$exit(),function(group){
+                console.log(group);
+                this.closeExitGroup();
+            },function(err){
+                console.log(err);
+            }
         }
 
         // ===== POPUP - NEW LOCK! =====
@@ -169,6 +176,7 @@ angular.module("locks.controllers")
 
     }])
 
+
 .directive('lockGroup', ['AuthSrv','GroupsSrv',function (AuthSrv,GroupsSrv) {
     return {
         restrict: 'E',
@@ -180,9 +188,7 @@ angular.module("locks.controllers")
             io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
                 $scope.$apply(function(){
                     $scope.locks = locks;
-                    console.log($scope.locks);
                 })
-
             })
         }
     }
