@@ -9,7 +9,6 @@ Desktop.ini
 $RECYCLE.BIN/
 
 node_modules/
-www
 .tmp
 .sass-cache
 <%= appPath %>/bower_components

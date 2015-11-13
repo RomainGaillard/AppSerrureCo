@@ -1,0 +1,25 @@
+<div class="row item" ng-repeat="lock in locks" >
+    <div class="col col-80 cursor-point" ng-mousedown="changeColor($event,'#D9E5F3')" ng-mouseleave="changeColor($event,'')" ng-click="gotoLock()">
+        <i ng-hide="{{!lock.has_micro}}" class="ion-ios-mic"></i>
+        <i ng-hide="{{lock.has_micro}}" class="ion-ios-mic-outline"></i>
+
+        <i ng-hide="{{!lock.has_bell}}" class="ion-ios-bell"></i>
+        <i ng-hide="{{lock.has_bell}}" class="ion-ios-bell-outline"></i>
+
+        <i ng-hide="{{!lock.has_camera}}" class="ion-ios-videocam"></i>
+        <i ng-hide="{{lock.has_camera}}" class="ion-ios-videocam-outline"></i>
+
+        <span class="lock-margin">{{lock.name}}</span>
+    </div>
+    <div class="col col-10">
+        <label class="toggle toggle-balanced cursor-point">
+            <input type="checkbox" onchange=""; ng-checked="{{lock.state}}">
+            <div class="track">
+                <div class="handle"></div>
+            </div>
+        </label>
+    </div>
+    <div class="col col-10">
+        <span ng-click="" class="badge badge-energized l-margin">{{lock.id}}</span>
+    </div>
+</div>
