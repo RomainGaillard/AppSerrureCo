@@ -18,14 +18,9 @@ angular.module('groups.services')
         this.getLocks = function(){
             return LocksSrv.getLocks();
         }
-
-        this.createGroup = function(name){
-            $http.get("http://localhost:1337/groups/create").then(function(resp) {
-                console.log('Success', resp);
-                // For JSON responses, resp.data contains the result
-            }, function(err) {
-                console.error('ERR', err);
-                // err.status will contain the status code
-            })
-        }
 }]);
+
+
+    .factory('Group',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
+        return $resource(ConstantsSrv.group,{code:'@code'});
+    }])

@@ -4,9 +4,11 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','LoginSrv', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,LoginSrv) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','LoginSrv','Group', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,LoginSrv, Group) {
         $scope.groups = GroupsSrv.getGroups();
         $scope.locks = LocksSrv.getLocks();
+
+        $scope.group = new Group();
 
         $scope.gotoLock = function(){
             //$state.go("app");
@@ -102,8 +104,9 @@ angular.module("locks.controllers")
 
         $scope.createGroup = function(task) {
             //TodolistService.addItem(task.title);
+            //group.name 
+            alert('coucou')
             $scope.newGroupModal.hide();
-            GroupsSrv.createGroup("Test");
         };
 
         // ===== POPUP - EXIT GROUP ! =====
