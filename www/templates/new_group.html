@@ -8,9 +8,8 @@
 
     <!-- Modal content area -->
     <ion-content>
-
-        <div class="list">
-            <form ng-submit="createGroup(group)">
+        <form ng-submit="createGroup()">
+            <div class="list">
                 <label class="item item-input">
                     <input type="text" placeholder="Nom" ng-model="group.name">
                 </label>
@@ -23,37 +22,38 @@
                     </label>
                     {{lock.title}}
                 </li>
-            </form>
-            <label class="item font-bold">Membres:</label>
-            <div class="item item-input-inset">
-                <label class="item-input-wrapper">
-                    <input type="text" placeholder="Email" ng-model="group.members">
-                </label>
-                <button class="button button-icon" ng-click="">
-                    <i class="ion-android-add-circle">  Ajouter</i>
+
+                <label class="item font-bold">Membres:</label>
+                <div class="item item-input-inset">
+                    <label class="item-input-wrapper">
+                        <input type="text" placeholder="Email" ng-model="group.members">
+                    </label>
+                    <button class="button button-icon" ng-click="">
+                        <i class="ion-android-add-circle">  Ajouter</i>
+                    </button>
+                </div>
+                <div class="row">
+                    <label class="col col-70">
+                        <button class="button button-small button-icon new-group-bt" ng-click="removeTask($index)">
+                            <i class="icon ion-android-cancel color-red"></i>
+                        </button>
+                        <span>romain.gaillard@ynov.com</span>
+                    </label>
+                    <label class="item item-select col col-30">
+                        <select>
+                            <option selected>Membre</option>
+                            <option>Admin</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="button-bar">
+                <button class="button button-full button-balanced" type="submit">
+                    <i class="ion-android-add-circle"></i>
+                    <span>  Créer le groupe</span>
                 </button>
             </div>
-            <div class="row">
-                <label class="col col-70">
-                    <button class="button button-small button-icon new-group-bt" ng-click="removeTask($index)">
-                        <i class="icon ion-android-cancel color-red"></i>
-                    </button>
-                    <span>romain.gaillard@ynov.com</span>
-                </label>
-                <label class="item item-select col col-30">
-                    <select>
-                        <option selected>Membre</option>
-                        <option>Admin</option>
-                    </select>
-                </label>
-            </div>
-        </div>
-
-        <div class="button-bar">
-            <button class="button button-full button-balanced" type="submit">
-                <i class="ion-android-add-circle"></i>
-                <span>  Créer le groupe</span>
-            </button>
-        </div>
+        </form>
     </ion-content>
 </div>

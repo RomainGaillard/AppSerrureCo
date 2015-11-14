@@ -8,13 +8,13 @@
 
     <!-- Modal content area -->
     <ion-content>
-        <label class="item">Etes vous sûr de vouloir quitter le groupe #{{groupExit.code}} - {{groupExit.name}} ?</label>
+        <label class="item">Etes vous sûr de vouloir quitter le groupe #{{groups[i].code}} - {{groups[i].name}} ?</label>
         <div class="button-bar">
             <button class="button button-full button-outline button-assertive" ng-click="closeExitGroup()">
                 <i class="ion-android-arrow-back"></i>
                 <span>  Annuler</span>
             </button>
-            <button class="button button-full button-assertive" ng-click="doExitGroup()">
+            <button class="button button-full button-assertive" ng-click="doExitGroup(i)">
                 <i class="ion-ios-trash"></i>
                 <span>  Confirmer</span>
             </button>

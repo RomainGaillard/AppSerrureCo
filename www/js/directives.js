@@ -2,22 +2,39 @@
  * Created by Romain Gaillard on 13/11/2015.
  */
 
-angular.module('directives', ['authentification.services','groups.services'])
+angular.module('directives', ['authentification.services'])
 
-    .directive('lock-group', ['AuthSrv','GroupsSrv',function (AuthSrv,GroupsSrv) {
+    .directive('lockGroup', ['AuthSrv',function (AuthSrv) {
         return {
             restrict: 'E',
             scope: true,
-            templateUrl: 'templates/lock_group.html',
+            templateUrl: 'templates/directives/lock_group.html',
             link: function ($scope, element, attributes) {
-                console.log('mydirective');
+                $scope.locks = {};
                 var code = attributes.code;
-                console.log(code);
-                io.socket.get('/group/'+group.code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    console.log(group.id);
-                    GroupsSrv.addLock(group.id,locks);
-                    $scope.locks = GroupsSrv.getLocks(group.id);
+                io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                    $scope.$apply(function(){
+                        $scope.locks = locks;
+                    })
                 })
             }
         }
-    }]);
+    }])
+
+    .directive('editLockGroup',['AuthSrv',function(AuthSrv){
+        return {
+            restrict: 'E',
+            scope: true,
+            templateUrl: 'templates/directives/edit_lock_group.html',
+            link: function ($scope, element, attributes) {
+                $scope.locks = {};
+                var code = attributes.code;
+                io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                    $scope.$apply(function(){
+                        $scope.locks = locks;
+                    })
+                })
+            }
+        }
+    }])
+

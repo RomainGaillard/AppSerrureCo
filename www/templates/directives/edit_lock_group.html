@@ -1,0 +1,9 @@
+<li class="item" ng-repeat="lock in locks">
+    <button class="button button-small button-icon group-list" ng-click="removeTask($index)">
+        <i class="icon ion-android-cancel assertive"></i>
+    </button>
+    <i class="ion-ios-mic"></i>
+    <i class="ion-ios-bell"></i>
+    <i class="ion-ios-videocam"></i>
+    <span class="group-marginitem-title">{{lock.name}}</span>
+</li>

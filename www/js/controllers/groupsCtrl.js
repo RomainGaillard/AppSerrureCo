@@ -5,9 +5,9 @@
 
 angular.module("groups.controllers")
 
-    .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope', function($scope, $state, GroupsSrv,$ionicModal,$rootScope) {
+    .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, GroupsSrv,$ionicModal,$rootScope, $stateParams,Group) {
         $scope.locks = GroupsSrv.getLocks();
-        $scope.group = new Array();
+        $scope.group =  new Group($stateParams.group);
 
         $scope.gotoLocks = function(){
             $state.go("locks")
@@ -26,7 +26,7 @@ angular.module("groups.controllers")
             animation: 'slide-in-up'
         })
 
-        $scope.deleteGroup = function(group){
+        $scope.deleteGroup = function(){
             $scope.deleteGroupModal.show();
         }
 
@@ -35,7 +35,13 @@ angular.module("groups.controllers")
         }
 
         $scope.doDeleteGroup = function(){
-            LocksCtrl.newLock()
+            var t = $scope.group.$delete();
+            t.then(function(data){
+                $scope.closeDeleteGroup();
+                $state.go("locks", {}, { reload: true });
+            },function(err){
+                console.log(err);
+            })
         }
 
         // ===== POPUP - ASK LOCK! ====

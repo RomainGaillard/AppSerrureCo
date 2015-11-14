@@ -9,7 +9,7 @@ angular.module('authentification.services')
         this.getUser = function(){
             if($localStorage.user)
                 return $localStorage.user;
-            return false;s
+            return false;
         }
 
         this.removeUser = function(){

@@ -56,7 +56,8 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 url:'/editGroup',
                 templateUrl: 'templates/edit_group.html',
                 controller: 'GroupsCtrl',
-                authenticate:true
+                authenticate:true,
+                params: {'group':{code:"XXXXX",name:"Undefined"}}
             })
 
             .state('account', {

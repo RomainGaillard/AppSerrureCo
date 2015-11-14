@@ -16,13 +16,6 @@ angular.module('groups.services')
             return groups;
         }
 
-        this.getLocks = function(id){
-            return LocksSrv.getLocks(id);
-        }
-
-        this.addLock = function(id,locks){
-            LocksSrv.addLock(id,locks);
-        }
     }])
 
 
@@ -32,6 +25,22 @@ angular.module('groups.services')
                 method:'DELETE',
                 url:ConstantsSrv.exitGroup,
                 params:{code:'@code'},
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            delete:{
+                method:'DELETE',
+                url:ConstantsSrv.destroyGroup,
+                params:{code:'@code'},
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            save:{
+                methode:'POST',
+                url:ConstantsSrv.createGroup,
+                params:{name:'@name'},
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }

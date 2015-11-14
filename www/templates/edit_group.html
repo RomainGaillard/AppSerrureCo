@@ -10,21 +10,15 @@
         <div class="item item-divider">
 
             <label class="item item-input">
-                <span class="input-label group-title">#G25R:</span>
-                <input type="text" placeholder="Nom du groupe" value="Groupe 1">
+                <span class="input-label group-title">#{{group.code}}:</span>
+                <input type="text" placeholder="Nom du groupe" value="{{group.name}}">
             </label>
         </div>
 
-        <li class="item" ng-repeat="lock in locks">
-            <button class="button button-small button-icon group-list" ng-click="removeTask($index)">
-                <i class="icon ion-android-cancel group_color"></i>
-            </button>
-            {{lock.id}} -
-            <i class="ion-ios-mic"></i>
-            <i class="ion-ios-bell"></i>
-            <i class="ion-ios-videocam"></i>
-            <span class="group-marginitem-title">{{lock.title}}</span>
-        </li>
+
+        <edit-lock-group code="{{group.code}}" id="{{group.code}}" class="block"> </edit-lock-group>
+
+
         <br>
 
     </ion-content>
