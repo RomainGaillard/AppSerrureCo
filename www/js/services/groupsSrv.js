@@ -8,14 +8,20 @@ angular.module('groups.services')
     .service('GroupsSrv',['LocksSrv', function(LocksSrv) {
         var groups = new Array();
 
-        this.addGroup = function(id,code,name,admin,validate){
-            groups[groups.length] =  {id:id,code:code,name:name,admin:admin,validate:validate};
+        this.addGroup = function(group){
+            groups[groups.length] = group;
+            return groups;
         }
 
         this.getGroups = function(){
             return groups;
         }
 
+        this.removeGroup = function(group){
+            var index = groups.indexOf(group);
+            groups.splice(index,1);
+            return groups;
+        }
     }])
 
 

@@ -6,8 +6,7 @@ angular.module("locks.controllers")
 
     .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group) {
 
-        //$scope.groups = GroupsSrv.getGroups();
-        $scope.groups = new Array();
+        $scope.groups = GroupsSrv.getGroups();
 
         $scope.group = new Group();
 
@@ -31,11 +30,7 @@ angular.module("locks.controllers")
 
         io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
             for(var i=0;i<groups.length;i++){
-                var admin = groups[i].admin;
-                var validate = groups[i].validate;
-                var grp = groups[i].group;
-                var id = grp.id;
-                GroupsSrv.addGroup(id,grp.code,grp.name,admin,validate);
+                GroupsSrv.addGroup(groups[i]);
             }
             $scope.groups = GroupsSrv.getGroups();
         })
@@ -112,7 +107,8 @@ angular.module("locks.controllers")
             else{
                 var t = $scope.group.$save();
                 t.then(function(data){
-                    $scope.groups.push($scope.group);
+                    var grp = {admin:true,group:{code:data.created.code,name:data.created.name}};
+                    $scope.groups = GroupsSrv.addGroup(grp);
                     $scope.newGroupModal.hide();
                 },function(err){
                     console.log(err);
@@ -139,11 +135,9 @@ angular.module("locks.controllers")
 
         $scope.doExitGroup = function(i){
             $scope.group.code = $scope.groups[i].code;
-            //console.log($scope.groupExit);
             var t = $scope.group.$exit();
             t.then(function(data){
-                var index = $scope.groups.indexOf($scope.groupExit);
-                $scope.groups.splice(index,1);
+                $scope.groups = GroupsSrv.removeGroup($scope.group);
                 $scope.closeExitGroup();
             },function(err){
                 console.log(err);

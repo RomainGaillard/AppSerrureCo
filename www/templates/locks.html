@@ -9,19 +9,19 @@
     <ion-content>
         <div class="list">
             <div ng-repeat="group in groups">
-                <div class="item item-divider" ng-click="showLocks('{{group.code}}')">
-                    #{{group.code}}: {{group.name}}
+                <div class="item item-divider" ng-click="showLocks('{{group.group.code}}')">
+                    #{{group.group.code}}: {{group.group.name}}
                     <div class="right">
                         <button ng-hide="!group.admin" class="button-clear ion-wrench black" ng-click="gotoEditGroup({{$index}})"> Editer </button>
                         <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="exitGroup({{$index}})"> Quitter </button>
                     </div>
                 </div>
-                <lock-group code="{{group.code}}" id="{{group.code}}" class="block"></lock-group>
+                <lock-group code="{{group.group.code}}" id="{{group.group.code}}" class="block"></lock-group>
 
                 </div>
             </div>
             <div class="item item-divider">
-                Serrures sans groupe:
+                Groupe en attente de validation:
             </div>
         </div>
         <br><br><br>

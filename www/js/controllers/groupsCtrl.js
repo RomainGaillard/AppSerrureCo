@@ -6,8 +6,7 @@
 angular.module("groups.controllers")
 
     .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, GroupsSrv,$ionicModal,$rootScope, $stateParams,Group) {
-        $scope.locks = GroupsSrv.getLocks();
-        $scope.group =  new Group($stateParams.group);
+        $scope.group =  new Group($stateParams.group.group);
 
         $scope.gotoLocks = function(){
             $state.go("locks")
@@ -38,6 +37,7 @@ angular.module("groups.controllers")
             var t = $scope.group.$delete();
             t.then(function(data){
                 $scope.closeDeleteGroup();
+                GroupsSrv.removeGroup($stateParams.group);
                 $state.go("locks", {}, { reload: true });
             },function(err){
                 console.log(err);
