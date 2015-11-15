@@ -44,9 +44,17 @@ angular.module('groups.services')
                 }
             },
             save:{
-                methode:'POST',
+                method:'POST',
                 url:ConstantsSrv.createGroup,
                 params:{name:'@name'},
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            removeLock:{
+                method:"POST",
+                url:ConstantsSrv.removeLock,
+                params:{code:'@code',id:'@lockId'},
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }

@@ -12,6 +12,7 @@ angular.module("locks.controllers")
 
         $scope.gotoEditGroup = function(i){
             //alert(i);
+            $scope.showLocks($scope.groups[i].group.code); // Annule le clic simultanné sur la barre + bouton.
             $state.go("editGroup",{group: $scope.groups[i]},{reload:true});
         };
 
@@ -175,10 +176,9 @@ angular.module("locks.controllers")
             var t = $scope.lock.$save();
             t.then(function(data){
                 for(var i=0;i<groups.length;i++){
-                    console.log($scope.lock.lock);
                     $("#"+groups[i].code).scope().locks.push($scope.lock.lock);
+                    $rootScope.$emit("majLock",$scope.lock.lock)
                 }
-                console.log(data);
                 $rootScope.newLockModal.hide();
             },function(err){
                 console.log(err);

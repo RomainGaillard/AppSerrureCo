@@ -24,7 +24,7 @@ angular.module('directives', ['authentification.services'])
     .directive('editLockGroup',['AuthSrv',function(AuthSrv){
         return {
             restrict: 'E',
-            scope: true,
+            scope: false,
             templateUrl: 'templates/directives/edit_lock_group.html',
             link: function ($scope, element, attributes) {
                 $scope.locks = {};

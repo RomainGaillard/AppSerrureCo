@@ -7,11 +7,22 @@ angular.module("groups.controllers")
 
     .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, GroupsSrv,$ionicModal,$rootScope, $stateParams,Group) {
         $scope.group =  new Group($stateParams.group.group);
+        $scope.locks = {}
 
         $scope.gotoLocks = function(){
             $state.go("locks")
         }
 
+        $scope.removeLock = function(i){
+            $scope.group.lockId = $("#"+$scope.group.code).scope().locks[i].id;
+            alert($scope.group.lockId);
+            $scope.group.$removeLock().then(function(data){
+                console.log(data);
+                $("#"+$scope.group.code).scope().locks.splice(i,1);
+            },function(err){
+                console.log(err);
+            })
+        }
         // ===== MANAGE MEMBER ====
         $scope.goToManageMembers = function() {
             $state.go("member");
@@ -94,5 +105,9 @@ angular.module("groups.controllers")
             $scope.closeAskLock()
             $rootScope.$emit("callNewLock");
         };
+
+        $rootScope.$on("majLock",function(event,lock){
+            $("#"+$scope.group.code).scope().locks.push(lock);
+        })
 
     }])
