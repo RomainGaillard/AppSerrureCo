@@ -28,4 +28,16 @@ angular.module('locks.services')
             }
         }
 
-    });
+    })
+
+    .factory('Lock',['$resource','ConstantsSrv','AuthSrv', function ($resource,ConstantsSrv,AuthSrv) {
+        return $resource(null,null,{
+            save:{
+                method:"POST",
+                url:ConstantsSrv.createLock,
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            }
+        });
+    }]);

@@ -4,14 +4,15 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group','Lock', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group,Lock) {
 
         $scope.groups = GroupsSrv.getGroups();
-
         $scope.group = new Group();
+        $scope.lock = new Lock();
 
         $scope.gotoEditGroup = function(i){
-            $state.go("editGroup",{group: $scope.groups[i]});
+            //alert(i);
+            $state.go("editGroup",{group: $scope.groups[i]},{reload:true});
         };
 
         $scope.gotoAccount = function(){
@@ -149,7 +150,7 @@ angular.module("locks.controllers")
         $ionicModal.fromTemplateUrl('templates/new_lock.html', function(modal) {
             $rootScope.newLockModal = modal;
         }, {
-            scope: $rootScope,
+            scope: $scope,
             animation: 'slide-in-up'
         });
 
@@ -161,11 +162,27 @@ angular.module("locks.controllers")
             $rootScope.newLockModal.hide();
         };
 
-        $rootScope.createLock = function(task) {
-            //TodolistService.addItem(task.title);
-            $rootScope.newLockModal.hide();
-            task.title = "";
-            //$scope.todolist = TodolistService.getTodolist();
+        $rootScope.createLock = function() {
+            $scope.lock.groups = new Array();
+            var groups = new Array();
+            for(var i=0;i<$scope.groups.length;i++){
+                if($scope.groups[i].selected){
+                    $scope.lock.groups.push($scope.groups[i].group.code);
+                    groups.push($scope.groups[i].group);
+                }
+            }
+
+            var t = $scope.lock.$save();
+            t.then(function(data){
+                for(var i=0;i<groups.length;i++){
+                    console.log($scope.lock.lock);
+                    $("#"+groups[i].code).scope().locks.push($scope.lock.lock);
+                }
+                console.log(data);
+                $rootScope.newLockModal.hide();
+            },function(err){
+                console.log(err);
+            })
         };
 
         $rootScope.$on("callNewLock", function (event) {
