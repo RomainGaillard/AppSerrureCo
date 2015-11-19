@@ -5,7 +5,7 @@
 
 angular.module("groups.controllers")
 
-    .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, GroupsSrv,$ionicModal,$rootScope, $stateParams,Group) {
+    .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, GroupsSrv,$ionicModal,$rootScope, $stateParams, Group) {
         $scope.group =  new Group($stateParams.group.group);
         $scope.locks = {}
 
@@ -15,7 +15,6 @@ angular.module("groups.controllers")
 
         $scope.removeLock = function(i){
             $scope.group.lockId = $("#"+$scope.group.code).scope().locks[i].id;
-            alert($scope.group.lockId);
             $scope.group.$removeLock().then(function(data){
                 console.log(data);
                 $("#"+$scope.group.code).scope().locks.splice(i,1);
@@ -25,7 +24,7 @@ angular.module("groups.controllers")
         }
         // ===== MANAGE MEMBER ====
         $scope.goToManageMembers = function() {
-            $state.go("member");
+            $state.go("member", {group:$scope.group});
         }
 
         // ===== POPUP - DELETE GROUP! ====
@@ -48,8 +47,7 @@ angular.module("groups.controllers")
             var t = $scope.group.$delete();
             t.then(function(data){
                 $scope.closeDeleteGroup();
-                GroupsSrv.removeGroup($stateParams.group);
-                $state.go("locks", {}, { reload: true });
+                $state.go("locks");
             },function(err){
                 console.log(err);
             })
@@ -107,7 +105,8 @@ angular.module("groups.controllers")
         };
 
         $rootScope.$on("majLock",function(event,lock){
-            $("#"+$scope.group.code).scope().locks.push(lock);
+            if($("#"+$scope.group.code).scope())
+                $("#"+$scope.group.code).scope().locks.push(lock);
         })
 
     }])

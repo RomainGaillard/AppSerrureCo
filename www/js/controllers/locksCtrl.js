@@ -5,10 +5,15 @@
 angular.module("locks.controllers")
 
     .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group','Lock', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group,Lock) {
-
+        $scope.user = AuthSrv.getUser();
         $scope.groups = GroupsSrv.getGroups();
+
         $scope.group = new Group();
         $scope.lock = new Lock();
+
+        $scope.gotoLock = function(lock){
+            $state.go("tab.lock", {lock: lock},{reload:true});
+        };
 
         $scope.gotoEditGroup = function(i){
             //alert(i);
@@ -29,7 +34,6 @@ angular.module("locks.controllers")
             $("#"+code).slideToggle();
         }
 
-
         io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
             for(var i=0;i<groups.length;i++){
                 GroupsSrv.addGroup(groups[i]);
@@ -38,7 +42,13 @@ angular.module("locks.controllers")
         })
 
         io.socket.on('group',function(msg){
-            console.log(msg);
+            switch(msg.verb){
+                case "destroyed":
+                    $scope.$apply(function(){
+                        $scope.groups = GroupsSrv.removeById(msg.id);
+                    })
+                    break;
+            }
         })
 
         // ===== POPUP - ASK GROUP! ====
@@ -72,11 +82,14 @@ angular.module("locks.controllers")
             $scope.closeAskGroup();
         };
 
-        $scope.requestJoinGroup = function(task) {
-            //TodolistService.addItem(task.title);
+        $scope.requestJoinGroup = function() {
+            $scope.group.$askAccess().then(function(data){
+                alert("demande enregistrée");
+            },function(err){
+                console.log(err);
+            })
+
             $scope.joinGroupModal.hide();
-            task.title = "";
-            //$scope.todolist = TodolistService.getTodolist();
         };
 
         $scope.closeJoinGroup = function() {

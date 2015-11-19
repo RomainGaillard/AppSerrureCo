@@ -1,0 +1,67 @@
+<ion-view cache-view="false" view-title="Lock">
+    <ion-header-bar>
+        <div class="buttons">
+            <a ng-click="gotoLocks()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div class="item item-avatar">
+            <img src="../img/Lock.svg">
+            <h2>{{lock.name}}</h2>
+            <p>{{lock.address_mac}}</p>
+        </div>
+        <!--<div class="row">-->
+        <div class="list">
+            <li class="item item-toggle">
+                <label class="toggle toggle-balanced cursor-point">
+                    <input type="checkbox" onchange=""; ng-checked="{{lock.state}}">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+                <i ng-hide="{{!lock.state}}">Serrure verrouilée</i>
+                <i ng-hide="{{lock.state}}">Serrure déverrouillée</i>
+
+            </li>
+        </div>
+
+
+        <ul class="list">
+
+            <p class="item item-icon-left">
+                <i ng-hide="{{!lock.has_micro}}" class="icon ion-ios-checkmark"></i>
+                <i ng-hide="{{lock.has_micro}}" class="icon ion-ios-circle-outline"></i>
+                <i ng-hide="{{!lock.has_micro}}" class="ion-ios-mic"></i>
+                <i ng-hide="{{lock.has_micro}}" class="ion-ios-mic-outline"></i>
+                Microphone
+            </p>
+
+            <p class="item item-icon-left">
+                <i ng-hide="{{!lock.has_bell}}" class="icon ion-ios-checkmark"></i>
+                <i ng-hide="{{lock.has_bell}}" class="icon ion-ios-circle-outline"></i>
+                <i ng-hide="{{!lock.has_bell}}" class="ion-ios-bell"></i>
+                <i ng-hide="{{lock.has_bell}}" class="ion-ios-bell-outline"></i>
+                Sonette
+            </p>
+            <p class="item item-icon-left">
+                <i ng-hide="{{!lock.has_camera}}" class="icon ion-ios-checkmark"></i>
+                <i ng-hide="{{lock.has_camera}}" class="icon ion-ios-circle-outline"></i>
+                <i ng-hide="{{!lock.has_camera}}" class="ion-ios-videocam"></i>
+                <i ng-hide="{{lock.has_camera}}" class="ion-ios-videocam-outline"></i>
+                Camera
+            </p>
+            <p class="item item-icon-left">
+                <i ng-hide="{{!lock.is_register}}" class="icon ion-ios-checkmark"></i>
+                <i ng-hide="{{lock.is_register}}" class="icon ion-ios-circle-outline"></i>
+                <i ng-hide="{{!lock.is_register}}" class="ion-ios-paper"></i>
+                <i ng-hide="{{lock.is_register}}" class="ion-ios-paper-outline"></i>
+                Logs
+            </p>
+        </ul>
+
+        <ul class="list ">
+            <li class="item"> Mise à jour le : {{lock.updatedAt}}</li>
+            <li class="item"> Créer le : {{lock.createdAt}} </li>
+        </ul>
+    </ion-content>
+</ion-view>
