@@ -17,6 +17,7 @@ angular.module('constants.services')
         this.updateAccount = domain+"user/update"
 
         this.createLock = domain+"lock";
+        this.updateLock = domain+"lock/:id/update"
 
         this.login = domain+"auth/local";
         this.logout = domain+"logout"

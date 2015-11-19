@@ -38,6 +38,14 @@ angular.module('locks.services')
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }
+            },
+            update:{
+                method:"PUT",
+                url:ConstantsSrv.updateLock,
+                params:{id:'@id'},
+                headers:{
+                    'Authorization': AuthSrv.getUser().token
+                }
             }
         });
     }]);
