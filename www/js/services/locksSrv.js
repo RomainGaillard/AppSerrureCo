@@ -31,7 +31,7 @@ angular.module('locks.services')
     })
 
     .factory('Lock',['$resource','ConstantsSrv','AuthSrv', function ($resource,ConstantsSrv,AuthSrv) {
-        return $resource(null,null,{
+        return $resource(ConstantsSrv.lock ,null,{
             save:{
                 method:"POST",
                 url:ConstantsSrv.createLock,
