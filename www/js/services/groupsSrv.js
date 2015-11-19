@@ -22,7 +22,7 @@ angular.module('groups.services')
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }
-            },
+            }/*,
             save:{
                 method:'POST',
                 url:ConstantsSrv.createGroup,
@@ -30,7 +30,7 @@ angular.module('groups.services')
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }
-            },
+            }*/,
             removeLock:{
                 method:"POST",
                 url:ConstantsSrv.removeLock,

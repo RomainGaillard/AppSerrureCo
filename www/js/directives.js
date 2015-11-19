@@ -13,7 +13,6 @@ angular.module('directives', ['authentification.services'])
                 $scope.locks = {};
                 var code = attributes.code;
                 io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    console.log(locks);
                     $scope.$apply(function(){
                         for(var i=0;i<locks.length;i++){
                             if(locks[i].state == 1)

@@ -4,7 +4,7 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','$ionicModal','$rootScope','AuthSrv','Group','Lock','$filter', function($scope, $state,$ionicModal,$rootScope,AuthSrv, Group,Lock,$filter) {
+    .controller('LocksCtrl', ['$scope','$state','$ionicModal','$rootScope','AuthSrv','Group','Lock','$filter','ConstantsSrv', function($scope, $state,$ionicModal,$rootScope,AuthSrv, Group,Lock,$filter,ConstantsSrv) {
         $scope.user = AuthSrv.getUser();
         $scope.groups = new Array();
 
@@ -33,7 +33,7 @@ angular.module("locks.controllers")
             $("#"+code).slideToggle();
         }
 
-        io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
+        io.socket.get(ConstantsSrv.group,{token:AuthSrv.getUser().token},function(groups,jwres){
             $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
             $scope.groups = groups;
         })
@@ -43,6 +43,7 @@ angular.module("locks.controllers")
                 case "destroyed":
                     $scope.$apply(function(){
                         for(var i=0;i<$scope.groups.length;i++){
+                            console.log($scope.groups[i].group.id);
                             if($scope.groups[i].group.id == msg.id){
                                 $scope.groups.splice(i,1);
                             }
@@ -125,12 +126,16 @@ angular.module("locks.controllers")
                 showError();
             }
             else{
-                $scope.group.$save().then(function(data){
-                    var grp = {validate:true,admin:true,group:{code:data.created.code,name:data.created.name}};
-                    $scope.groups.push(grp);
-                    $scope.newGroupModal.hide();
-                },function(err){
-                    console.log(err);
+
+                io.socket.post(ConstantsSrv.createGroup,{token:AuthSrv.getUser().token,name:$scope.group.name},function(group,jwres){
+                    if(jwres.statusCode == 201){
+                        var grp = {validate:true,admin:true,group:{code:jwres.body.created.code,name:jwres.body.created.name,id:jwres.body.created.id}};
+                        $scope.groups.push(grp);
+                        $scope.newGroupModal.hide();
+                    }
+                    else{
+                        alert('Erreur'+jwres.body.err);
+                    }
                 })
             }
         };
@@ -191,6 +196,20 @@ angular.module("locks.controllers")
                 }
             }
 
+            io.socket.post(ConstantsSrv.createLock,{token:AuthSrv.getUser().token,lock:$scope.lock},function(lock,jwres){
+                if(jwres.statusCode == 201){
+                    for(var i=0;i<groups.length;i++){
+                        $("#"+groups[i].code).scope().locks.push(jwres.body.lock);
+                        $rootScope.$emit("majLock",{lock:jwres.body.lock,group:groups[i].code});
+                    }
+                    $rootScope.newLockModal.hide();
+                }
+                else{
+                    alert('Erreur'+jwres.body.err);
+                }
+            })
+
+            /*
             $scope.lock.$save().then(function(data){
                 for(var i=0;i<groups.length;i++){
                     $("#"+groups[i].code).scope().locks.push(data.lock);
@@ -200,14 +219,11 @@ angular.module("locks.controllers")
             },function(err){
                 console.log(err);
             })
+            */
         };
 
         $rootScope.$on("callNewLock", function (event) {
             $rootScope.newLock();
         });
-
-        $rootScope.$on("destroyGroup",function(event,group){
-            $scope.groups.splice($scope.groups.indexOf(group),1);
-        })
 
     }])
