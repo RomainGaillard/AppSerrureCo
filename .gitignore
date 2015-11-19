@@ -20,6 +20,7 @@ plugins
 *.log
 *.DS_Store
 
+
 # Windows Installer files
 *.cab
 *.msi
