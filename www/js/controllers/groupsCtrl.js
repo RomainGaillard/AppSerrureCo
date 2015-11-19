@@ -5,7 +5,7 @@
 
 angular.module("groups.controllers")
 
-    .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, GroupsSrv,$ionicModal,$rootScope, $stateParams,Group) {
+    .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, GroupsSrv,$ionicModal,$rootScope, $stateParams, Group) {
         $scope.group =  new Group($stateParams.group.group);
         $scope.locks = {}
 

@@ -31,11 +31,19 @@ angular.module('locks.services')
     })
 
     .factory('Lock',['$resource','ConstantsSrv','AuthSrv', function ($resource,ConstantsSrv,AuthSrv) {
-        return $resource(null,null,{
+        return $resource(ConstantsSrv.lock ,null,{
             save:{
                 method:"POST",
                 url:ConstantsSrv.createLock,
                 headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            update:{
+                method:"PUT",
+                url:ConstantsSrv.updateLock,
+                params:{id:'@id'},
+                headers:{
                     'Authorization': AuthSrv.getUser().token
                 }
             }

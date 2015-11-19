@@ -102,7 +102,8 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                         templateUrl: 'templates/lock.html',
                         controller: 'LockCtrl'
                     }
-                }
+                },
+                params: {'lock':{}}
             })
 
             .state('tab.log', {

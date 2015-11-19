@@ -11,8 +11,8 @@ angular.module("locks.controllers")
         $scope.group = new Group();
         $scope.lock = new Lock();
 
-        $scope.gotoLock = function(){
-            $state.go("tab.lock");
+        $scope.gotoLock = function(lock){
+            $state.go("tab.lock", {lock: lock},{reload:true});
         };
 
         $scope.gotoEditGroup = function(i){
@@ -33,7 +33,6 @@ angular.module("locks.controllers")
         $scope.showLocks = function(code){
             $("#"+code).slideToggle();
         }
-
 
         io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
             for(var i=0;i<groups.length;i++){

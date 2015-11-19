@@ -20,12 +20,13 @@ plugins
 *.log
 *.DS_Store
 
+
 # Windows Installer files
 *.cab
 *.msi
 *.msm
 *.msp
-
+.idea
 # Windows shortcuts
 *.lnk
 

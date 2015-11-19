@@ -17,7 +17,7 @@ angular.module('authentification.services')
         }
     })
 
-    .factory('User',['$resource','ConstantsSrv', function ($resource,ConstantsSrv) {
+    .factory('User',['$resource','ConstantsSrv','AuthSrv', function ($resource,ConstantsSrv,AuthSrv) {
         return $resource(null,null,{
             login:{
                 method:'POST', url: ConstantsSrv.login
@@ -27,6 +27,13 @@ angular.module('authentification.services')
             },
             register:{
                 method:'POST', url: ConstantsSrv.register
+            },
+            update:{
+                method:'PUT',
+                url: ConstantsSrv.updateAccount,
+                headers:{
+                    'Authorization':AuthSrv.getUser().token
+                }
             }
         });
     }])
