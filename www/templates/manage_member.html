@@ -10,22 +10,21 @@
 
       <ion-list>
 
-        <ion-item ng-repeat="item in items" 
-                  item="item">
+        <ion-item ng-repeat="user in users" item="user">
 
             <div class="row">
                 <label class="col col-70">   
-                <span>{{ item.title }}</span>
+                <span>{{ user.email }}</span>
                 </label>
                 <label class=" reduce item item-select">
                     <select>
-                        <option selected>Membre</option>
-                        <option>Admin</option>
+                        <option ng-hide="{{user.admin}}">Membre</option>
+                        <option ng-hide="{{!user.admin}}">Admin</option>
                     </select>
                 </label>
                 <button class="button button-small button-icon new-group-bt" ng-click="removeMember($index)">
                         <i class="icon ion-android-cancel color-red"></i>
-                    </button>
+                </button>
             </div>
 
       </ion-list>
@@ -33,7 +32,7 @@
 
     <div class="footer">
       <div class="buttons">
-            <a class="button button-full button-balanced ion-checkmark" ng-controller="LoginCtrl" ng-click="saveMember()"> Ok </a>
+            <a class="button button-full button-balanced ion-checkmark" ng-click="gotoEditGroup()"> Ok </a>
         </div>
     </div>
 </ion-view>

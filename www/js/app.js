@@ -71,7 +71,9 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 url:'/member',
                 templateUrl: 'templates/manage_member.html',
                 controller: 'MemberCtrl',
-                authenticate:true
+                authenticate:true,
+                params: {'group':{code:"XXXXX",name:"Undefined"}}
+                
             })
 
 // if none of the above states are matched, use this as the fallback

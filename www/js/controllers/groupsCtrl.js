@@ -25,7 +25,7 @@ angular.module("groups.controllers")
         }
         // ===== MANAGE MEMBER ====
         $scope.goToManageMembers = function() {
-            $state.go("member");
+            $state.go("member", {group:$scope.group});
         }
 
         // ===== POPUP - DELETE GROUP! ====

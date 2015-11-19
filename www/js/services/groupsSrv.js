@@ -58,6 +58,31 @@ angular.module('groups.services')
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }
-            }
+            },
+
+            user:{
+                method:'GET',
+                url:ConstantsSrv.user,
+                params:{code:'@code'},
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            giveAccess:{
+                method:'PUT',
+                url:ConstantsSrv.giveAccess,
+                params:{code:'@code'},
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            exclude:{
+                method:"DELETE",
+                url:ConstantsSrv.exclude,
+                params:{code:'@code'},
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
         });
     }]);
