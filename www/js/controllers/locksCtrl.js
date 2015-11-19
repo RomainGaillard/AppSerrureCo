@@ -4,9 +4,9 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group','Lock', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group,Lock) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','AuthSrv','Group','Lock','$filter', function($scope, $state, LocksSrv,$ionicModal,$rootScope,AuthSrv, Group,Lock,$filter) {
         $scope.user = AuthSrv.getUser();
-        $scope.groups = GroupsSrv.getGroups();
+        $scope.groups = new Array();
 
         $scope.group = new Group();
         $scope.lock = new Lock();
@@ -35,17 +35,19 @@ angular.module("locks.controllers")
         }
 
         io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
-            for(var i=0;i<groups.length;i++){
-                GroupsSrv.addGroup(groups[i]);
-            }
-            $scope.groups = GroupsSrv.getGroups();
+            $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
+            $scope.groups = groups;
         })
 
         io.socket.on('group',function(msg){
             switch(msg.verb){
                 case "destroyed":
                     $scope.$apply(function(){
-                        $scope.groups = GroupsSrv.removeById(msg.id);
+                        for(var i=0;i<$scope.groups.length;i++){
+                            if($scope.groups[i].group.id == msg.id){
+                                $scope.groups.splice(i,1);
+                            }
+                        }
                     })
                     break;
             }
@@ -123,7 +125,7 @@ angular.module("locks.controllers")
                 var t = $scope.group.$save();
                 t.then(function(data){
                     var grp = {admin:true,group:{code:data.created.code,name:data.created.name}};
-                    $scope.groups = GroupsSrv.addGroup(grp);
+                    $scope.groups.push(grp);
                     $scope.newGroupModal.hide();
                 },function(err){
                     console.log(err);
@@ -152,12 +154,13 @@ angular.module("locks.controllers")
             $scope.group.code = $scope.groups[i].code;
             var t = $scope.group.$exit();
             t.then(function(data){
-                $scope.groups = GroupsSrv.removeGroup($scope.group);
+                $scope.groups.splice($scope.groups.indexOf($scope.group),1);
                 $scope.closeExitGroup();
             },function(err){
                 console.log(err);
             })
         },
+
 
         // ===== POPUP - NEW LOCK! =====
 

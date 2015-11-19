@@ -5,35 +5,6 @@
 
 angular.module('groups.services')
 
-    .service('GroupsSrv',['LocksSrv', function(LocksSrv) {
-        var groups = new Array();
-
-        this.addGroup = function(group){
-            groups[groups.length] = group;
-            return groups;
-        }
-
-        this.getGroups = function(){
-            return groups;
-        }
-
-        this.removeGroup = function(group){
-            var index = groups.indexOf(group);
-            groups.splice(index,1);
-            return groups;
-        }
-
-        this.removeById = function(id){
-            for(var i=0;i<groups.length;i++){
-                if(groups[i].group.id == id){
-                    groups.splice(i,1);
-                }
-            }
-            return groups;
-        }
-    }])
-
-
     .factory('Group',['$resource','ConstantsSrv','AuthSrv', function ($resource,ConstantsSrv,AuthSrv) {
         return $resource(ConstantsSrv.group,{code:'@code'},{
             exit:{

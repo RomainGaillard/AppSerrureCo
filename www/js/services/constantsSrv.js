@@ -13,6 +13,7 @@ angular.module('constants.services')
         this.exitGroup = domain+"group/:code/exit";
         this.destroyGroup = domain+"group/:code/destroy";
         this.removeLock = domain+"group/:code/lock/remove/:id";
+        this.askAccess = domain+"group/:code/askAccess"
 
         this.updateAccount = domain+"user/update"
 
