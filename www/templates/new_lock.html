@@ -10,21 +10,21 @@
     <ion-content>
 
         <div class="list">
-            <form ng-submit="createLock(lock)">
+            <form ng-submit="createLock()">
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Nom:</span>
                     <input type="text" placeholder="Nom" ng-model="lock.name">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Adresse Mac:</span>
-                    <input type="text" placeholder="Adresse Mac " ng-model="lock.addressMac">
+                    <input type="text" placeholder="Adresse Mac " ng-model="lock.address_mac">
                 </label>
 
                 <div class="row item">
                     <div class="col">Caméra:</div>
                     <div class="col">
                         <label class="toggle toggle-balanced right">
-                            <input type="checkbox" ng-model="lock.camera">
+                            <input type="checkbox" ng-model="lock.has_camera">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -36,7 +36,7 @@
                     <div class="col">Microphone:</div>
                     <div class="col">
                         <label class="toggle toggle-balanced right">
-                            <input type="checkbox" ng-model="lock.micro">
+                            <input type="checkbox" ng-model="lock.has_micro">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -48,7 +48,7 @@
                     <div class="col">Sonnette:</div>
                     <div class="col">
                         <label class="toggle toggle-balanced right">
-                            <input type="checkbox" ng-model="lock.bell">
+                            <input type="checkbox" ng-model="lock.has_bell">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -60,7 +60,7 @@
                     <div class="col">Enregistrer les logs:</div>
                     <div class="col">
                         <label class="toggle toggle-balanced right">
-                            <input type="checkbox" ng-model="lock.isRegister">
+                            <input type="checkbox" ng-model="lock.is_register" ng-checked="true">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -70,11 +70,11 @@
                 <label class="item font-bold">
                     Associer aux groupes:
                 </label>
-                <li class="item item-checkbox" > <!-- ng-repeat="group in groups" -->
+                <li class="item item-checkbox" ng-repeat="group in groups" ng-show="group.admin">
                     <label class="checkbox">
-                        <input type="checkbox">
+                        <input type="checkbox" ng-model="group.selected">
                     </label>
-                    Groupe 1
+                    {{group.group.name}}
                 </li>
 
                 <div class="button-bar">

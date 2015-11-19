@@ -18,7 +18,6 @@ angular.module('login.controllers')
         //get(), query(), save() post, et delete() (ou remove() au choix)
         if(verifCase()){
             myUser.$login(function(user){
-                $http.defaults.headers.post["Authorization"] = user.token;
                 AuthSrv.setUser(user);
                 $state.go("locks");
             },function(err){
@@ -45,8 +44,7 @@ angular.module('login.controllers')
 
         */
         /*
-
-        var data = {identifier:loginData.email,password:loginData.password};
+         var data = {identifier:loginData.email,password:loginData.password};
         $http.post(ConstantsSrv.login,data,{
             headers:{
                 'Content-Type':'application/json'
@@ -110,8 +108,7 @@ angular.module('login.controllers')
 
     $scope.logout = function(){
         $scope.myUser.$logout(function(user){
-            $http.defaults.headers.post["Authorization"] = "";
-            //LoginSrv.removeUser();
+            AuthSrv.removeUser();
             $state.go("app");
         },function(err){
             alert(err);

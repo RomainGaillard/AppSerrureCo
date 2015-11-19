@@ -4,20 +4,16 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group','$http', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group,$http) {
+    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','GroupsSrv','AuthSrv','Group','Lock', function($scope, $state, LocksSrv,$ionicModal,$rootScope,GroupsSrv,AuthSrv, Group,Lock) {
 
         $scope.groups = GroupsSrv.getGroups();
-        
-        $scope.locks = new Array();
-
         $scope.group = new Group();
+        $scope.lock = new Lock();
 
-        $scope.gotoLock = function(){
-            //$state.go("app");
-        };
-
-        $scope.gotoEditGroup = function(){
-            $state.go("editGroup");
+        $scope.gotoEditGroup = function(i){
+            //alert(i);
+            $scope.showLocks($scope.groups[i].group.code); // Annule le clic simultanné sur la barre + bouton.
+            $state.go("editGroup",{group: $scope.groups[i]},{reload:true});
         };
 
         $scope.gotoAccount = function(){
@@ -36,11 +32,7 @@ angular.module("locks.controllers")
 
         io.socket.get('/group',{token:AuthSrv.getUser().token},function(groups,jwres){
             for(var i=0;i<groups.length;i++){
-                var admin = groups[i].admin;
-                var validate = groups[i].validate;
-                var grp = groups[i].group;
-                var id = grp.id;
-                GroupsSrv.addGroup(id,grp.code,grp.name,admin,validate);
+                GroupsSrv.addGroup(groups[i]);
             }
             $scope.groups = GroupsSrv.getGroups();
         })
@@ -110,11 +102,20 @@ angular.module("locks.controllers")
             $scope.newGroupModal.hide();
         };
 
-        $scope.createGroup = function(task) {
-            //TodolistService.addItem(task.title);
-            //group.name 
-            alert('coucou')
-            $scope.newGroupModal.hide();
+        $scope.createGroup = function() {
+            if($scope.group.name == ""){
+                showError();
+            }
+            else{
+                var t = $scope.group.$save();
+                t.then(function(data){
+                    var grp = {admin:true,group:{code:data.created.code,name:data.created.name}};
+                    $scope.groups = GroupsSrv.addGroup(grp);
+                    $scope.newGroupModal.hide();
+                },function(err){
+                    console.log(err);
+                })
+            }
         };
 
         // ===== POPUP - EXIT GROUP ! =====
@@ -125,8 +126,8 @@ angular.module("locks.controllers")
             animation: 'slide-in-up'
         });
 
-        $scope.exitGroup = function(group){
-            $scope.groupExit = group;
+        $scope.exitGroup = function(i){
+            $scope.i = i;
             $scope.exitGroupModal.show();
         };
 
@@ -134,24 +135,23 @@ angular.module("locks.controllers")
             $scope.exitGroupModal.hide();
         };
 
-        $scope.doExitGroup = function(){
-            $scope.group.code = $scope.groupExit.code;
-            //console.log($scope.groupExit);
-            $http.defaults.headers.post["Authorization"] = AuthSrv.getUser().token;
-            $scope.group.$exit(),function(group){
-                console.log(group);
-                this.closeExitGroup();
+        $scope.doExitGroup = function(i){
+            $scope.group.code = $scope.groups[i].code;
+            var t = $scope.group.$exit();
+            t.then(function(data){
+                $scope.groups = GroupsSrv.removeGroup($scope.group);
+                $scope.closeExitGroup();
             },function(err){
                 console.log(err);
-            }
-        }
+            })
+        },
 
         // ===== POPUP - NEW LOCK! =====
 
         $ionicModal.fromTemplateUrl('templates/new_lock.html', function(modal) {
             $rootScope.newLockModal = modal;
         }, {
-            scope: $rootScope,
+            scope: $scope,
             animation: 'slide-in-up'
         });
 
@@ -163,11 +163,26 @@ angular.module("locks.controllers")
             $rootScope.newLockModal.hide();
         };
 
-        $rootScope.createLock = function(task) {
-            //TodolistService.addItem(task.title);
-            $rootScope.newLockModal.hide();
-            task.title = "";
-            //$scope.todolist = TodolistService.getTodolist();
+        $rootScope.createLock = function() {
+            $scope.lock.groups = new Array();
+            var groups = new Array();
+            for(var i=0;i<$scope.groups.length;i++){
+                if($scope.groups[i].selected){
+                    $scope.lock.groups.push($scope.groups[i].group.code);
+                    groups.push($scope.groups[i].group);
+                }
+            }
+
+            var t = $scope.lock.$save();
+            t.then(function(data){
+                for(var i=0;i<groups.length;i++){
+                    $("#"+groups[i].code).scope().locks.push($scope.lock.lock);
+                    $rootScope.$emit("majLock",$scope.lock.lock)
+                }
+                $rootScope.newLockModal.hide();
+            },function(err){
+                console.log(err);
+            })
         };
 
         $rootScope.$on("callNewLock", function (event) {
@@ -175,21 +190,3 @@ angular.module("locks.controllers")
         });
 
     }])
-
-
-.directive('lockGroup', ['AuthSrv','GroupsSrv',function (AuthSrv,GroupsSrv) {
-    return {
-        restrict: 'E',
-        scope: true,
-        templateUrl: 'templates/lock_group.html',
-        link: function ($scope, element, attributes) {
-            $scope.locks = {};
-            var code = attributes.code;
-            io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                $scope.$apply(function(){
-                    $scope.locks = locks;
-                })
-            })
-        }
-    }
-}])
