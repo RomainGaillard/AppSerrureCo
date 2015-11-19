@@ -72,7 +72,9 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 url:'/member',
                 templateUrl: 'templates/manage_member.html',
                 controller: 'MemberCtrl',
-                authenticate:true
+                authenticate:true,
+                params: {'group':{code:"XXXXX",name:"Undefined"}}
+                
             })
 
             // .state('lock', {
