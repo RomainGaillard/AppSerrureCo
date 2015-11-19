@@ -30,6 +30,10 @@ angular.module('groups.services')
         return $resource(ConstantsSrv.group,{code:'@code'},{
             exit:{
                 method:'DELETE',url:"http://localhost:1337/group/:code/exit",params:{code:'@code'}
+            },
+            create:{
+                method:'POST',url:"http://localhost:1337/group/create/:code",params:{code:'@code'}
+                alerte('ok')
             }
         });
     }]);

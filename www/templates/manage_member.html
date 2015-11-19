@@ -12,18 +12,22 @@
 
         <ion-item ng-repeat="item in items" 
                   item="item">
-        <button class="button button-small button-icon new-group-bt" ng-click="removeMember($index)">
+
+            <div class="row">
+                <label class="col col-70">   
+                <span>{{ item.title }}</span>
+                </label>
+                <label class=" reduce item item-select">
+                    <select>
+                        <option selected>Membre</option>
+                        <option>Admin</option>
+                    </select>
+                </label>
+                <button class="button button-small button-icon new-group-bt" ng-click="removeMember($index)">
                         <i class="icon ion-android-cancel color-red"></i>
                     </button>
-        {{ item.title }}
-        <div class="col-28">
-            <label class=" reduce item item-select">
-                <select>
-                    <option selected>Membre</option>
-                    <option>Admin</option>
-                </select>
-            </label>
-        </div>        
+            </div>
+
       </ion-list>
     </ion-content>
 
