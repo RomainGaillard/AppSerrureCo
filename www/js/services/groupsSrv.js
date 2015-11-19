@@ -22,6 +22,15 @@ angular.module('groups.services')
             groups.splice(index,1);
             return groups;
         }
+
+        this.removeById = function(id){
+            for(var i=0;i<groups.length;i++){
+                if(groups[i].group.id == id){
+                    groups.splice(i,1);
+                }
+            }
+            return groups;
+        }
     }])
 
 
@@ -57,6 +66,14 @@ angular.module('groups.services')
                 params:{code:'@code',id:'@lockId'},
                 headers: {
                     'Authorization': AuthSrv.getUser().token
+                }
+            },
+            askAccess:{
+                method:"POST",
+                url:ConstantsSrv.askAccess,
+                params:{code:'@code'},
+                headers:{
+                    'Authorization':AuthSrv.getUser().token
                 }
             }
         });
