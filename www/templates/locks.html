@@ -12,8 +12,9 @@
                 <div class="item item-divider" ng-click="showLocks('{{group.group.code}}')">
                     #{{group.group.code}}: {{group.group.name}}
                     <div class="right">
-                        <button ng-hide="!group.admin" class="button-clear ion-wrench black" ng-click="gotoEditGroup({{$index}})"> Editer </button>
-                        <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="exitGroup({{$index}})"> Quitter </button>
+                        <button class="button-clear ion-person-add black"> 1 demande(s) d'accès</button>
+                        <button ng-hide="!group.admin" class="button-clear ion-wrench black" ng-click="gotoEditGroup(group)"> Editer </button>
+                        <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="exitGroup(group)"> Quitter </button>
                     </div>
                 </div>
                 <lock-group code="{{group.group.code}}" id="{{group.group.code}}" class="block"></lock-group>
@@ -24,9 +25,9 @@
             </div>
             <div data-ng-repeat="group in groups" ng-if="!groups[$index].validate">
                 <div class="item item-divider">
-                    #{{group.group.code}}: {{group.group.name}}
+                    #{{group.group.code}}
                     <div class="right">
-                        <button class="button-clear ion-android-walk black"> Annuler</button>
+                        <button class="button-clear ion-close black">  Annuler</button>
                     </div>
                 </div>
             </div>

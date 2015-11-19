@@ -4,7 +4,7 @@
 
 angular.module("locks.controllers")
 
-    .controller('LocksCtrl', ['$scope','$state','LocksSrv','$ionicModal','$rootScope','AuthSrv','Group','Lock','$filter', function($scope, $state, LocksSrv,$ionicModal,$rootScope,AuthSrv, Group,Lock,$filter) {
+    .controller('LocksCtrl', ['$scope','$state','$ionicModal','$rootScope','AuthSrv','Group','Lock','$filter', function($scope, $state,$ionicModal,$rootScope,AuthSrv, Group,Lock,$filter) {
         $scope.user = AuthSrv.getUser();
         $scope.groups = new Array();
 
@@ -15,10 +15,9 @@ angular.module("locks.controllers")
             $state.go("tab.lock", {lock: lock},{reload:true});
         };
 
-        $scope.gotoEditGroup = function(i){
-            //alert(i);
-            $scope.showLocks($scope.groups[i].group.code); // Annule le clic simultanné sur la barre + bouton.
-            $state.go("editGroup",{group: $scope.groups[i]},{reload:true});
+        $scope.gotoEditGroup = function(group){
+            $scope.showLocks(group.group.code); // Annule le clic simultanné sur la barre + bouton.
+            $state.go("editGroup",{group: group},{reload:true});
         };
 
         $scope.gotoAccount = function(){
@@ -82,11 +81,14 @@ angular.module("locks.controllers")
         $scope.joinGroup = function(){
             $scope.joinGroupModal.show();
             $scope.closeAskGroup();
+            $scope.group = new Group();
         };
 
         $scope.requestJoinGroup = function() {
+            var code = $scope.group.code;
             $scope.group.$askAccess().then(function(data){
-                alert("demande enregistrée");
+                console.log(data);
+                $scope.groups.push({validate:false,admin:false,group:{code:code}})
             },function(err){
                 console.log(err);
             })
@@ -109,6 +111,7 @@ angular.module("locks.controllers")
         });
 
         $scope.newGroup = function(){
+            $scope.group = new Group();
             $scope.newGroupModal.show();
             $scope.closeAskGroup();
         };
@@ -122,9 +125,8 @@ angular.module("locks.controllers")
                 showError();
             }
             else{
-                var t = $scope.group.$save();
-                t.then(function(data){
-                    var grp = {admin:true,group:{code:data.created.code,name:data.created.name}};
+                $scope.group.$save().then(function(data){
+                    var grp = {validate:true,admin:true,group:{code:data.created.code,name:data.created.name}};
                     $scope.groups.push(grp);
                     $scope.newGroupModal.hide();
                 },function(err){
@@ -141,8 +143,9 @@ angular.module("locks.controllers")
             animation: 'slide-in-up'
         });
 
-        $scope.exitGroup = function(i){
-            $scope.i = i;
+        $scope.exitGroup = function(group){
+            $scope.group = group;
+            $scope.showLocks(group.group.code);
             $scope.exitGroupModal.show();
         };
 
@@ -150,10 +153,9 @@ angular.module("locks.controllers")
             $scope.exitGroupModal.hide();
         };
 
-        $scope.doExitGroup = function(i){
-            $scope.group.code = $scope.groups[i].code;
-            var t = $scope.group.$exit();
-            t.then(function(data){
+        $scope.doExitGroup = function(group){
+            $scope.group = group;
+            $scope.group.$exit().then(function(data){
                 $scope.groups.splice($scope.groups.indexOf($scope.group),1);
                 $scope.closeExitGroup();
             },function(err){
@@ -189,11 +191,10 @@ angular.module("locks.controllers")
                 }
             }
 
-            var t = $scope.lock.$save();
-            t.then(function(data){
+            $scope.lock.$save().then(function(data){
                 for(var i=0;i<groups.length;i++){
-                    $("#"+groups[i].code).scope().locks.push($scope.lock.lock);
-                    $rootScope.$emit("majLock",$scope.lock.lock)
+                    $("#"+groups[i].code).scope().locks.push(data.lock);
+                    $rootScope.$emit("majLock",{lock:data.lock,group:groups[i].code});
                 }
                 $rootScope.newLockModal.hide();
             },function(err){
@@ -204,5 +205,9 @@ angular.module("locks.controllers")
         $rootScope.$on("callNewLock", function (event) {
             $rootScope.newLock();
         });
+
+        $rootScope.$on("destroyGroup",function(event,group){
+            $scope.groups.splice($scope.groups.indexOf(group),1);
+        })
 
     }])

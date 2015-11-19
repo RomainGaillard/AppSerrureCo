@@ -44,9 +44,9 @@ angular.module("groups.controllers")
         }
 
         $scope.doDeleteGroup = function(){
-            var t = $scope.group.$delete();
-            t.then(function(data){
+            $scope.group.$delete().then(function(data){
                 $scope.closeDeleteGroup();
+                $rootScope.$emit("destroyGroup",$scope.group)
                 $state.go("locks");
             },function(err){
                 console.log(err);
@@ -104,9 +104,11 @@ angular.module("groups.controllers")
             $rootScope.$emit("callNewLock");
         };
 
-        $rootScope.$on("majLock",function(event,lock){
-            if($("#"+$scope.group.code).scope())
-                $("#"+$scope.group.code).scope().locks.push(lock);
+        $rootScope.$on("majLock",function(event,data){
+            if(data.group == $scope.group.code){
+                if($("#"+data.group).scope()){
+                    // chez pas comment modifier le scope de la directive !
+                }
+            }
         })
-
     }])
