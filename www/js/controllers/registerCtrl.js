@@ -25,7 +25,7 @@ angular.module("register.controllers")
                     showError("Inscription refusée: Identifiant existant !");
                 });
             }
-        }
+        };
         
         var test_email = function validateEmail(email) {
             alert(email);

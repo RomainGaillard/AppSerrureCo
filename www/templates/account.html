@@ -9,19 +9,19 @@
         </div>
     </ion-header-bar>
     <ion-content>
-        <form ng-submit="doRegister()">
+        <form ng-submit="updateUser()">
             <div class="list">
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Prénom</span>
-                    <input type="text" placeholder="Prenom" ng-model="registerData.firstname">
+                    <input type="text" placeholder="Prenom" ng-model="myNewUser.firstname">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Nom</span>
-                    <input type="text" placeholder="Nom" ng-model="registerData.name">
+                    <input type="text" placeholder="Nom" ng-model="myNewUser.lastname">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Email</span>
-                    <input type="text" placeholder="Email" ng-model="registerData.email">
+                    <input type="text" placeholder="Email" ng-model="myNewUser.email">
                 </label>
                 <br>
                 <button class="button button-outline button-positive block-center" ng-click="editPassword()">
