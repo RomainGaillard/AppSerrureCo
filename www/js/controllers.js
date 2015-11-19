@@ -11,3 +11,5 @@ angular.module('locks.controllers',['locks.services','groups.services','authenti
 angular.module('login.controllers', ['authentification.services','constants.services'])
 angular.module('member.controllers',['member.services'])
 angular.module('register.controllers',['authentification.services'])
+angular.module('lock.controllers', [])
+angular.module('logs.controllers', [])

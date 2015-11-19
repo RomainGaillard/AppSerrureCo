@@ -10,6 +10,10 @@ angular.module("locks.controllers")
         $scope.group = new Group();
         $scope.lock = new Lock();
 
+        $scope.gotoLock = function(){
+            $state.go("tab.lock");
+        };
+
         $scope.gotoEditGroup = function(i){
             //alert(i);
             $scope.showLocks($scope.groups[i].group.code); // Annule le clic simultanné sur la barre + bouton.
