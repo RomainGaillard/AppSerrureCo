@@ -5,7 +5,7 @@
         </div>
         <h1 class="title">Mon compte</h1>
         <div class="buttons">
-            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logOut()"> Déconnexion </a>
+            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logout()"> Déconnexion </a>
         </div>
     </ion-header-bar>
     <ion-content>
@@ -13,15 +13,15 @@
             <div class="list">
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Prénom</span>
-                    <input type="text" placeholder="Prenom" ng-model="myNewUser.firstname">
+                    <input type="text" placeholder="Prénom" ng-model="myNewUser.firstname " ng-focus="reinitCase($event)">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Nom</span>
-                    <input type="text" placeholder="Nom" ng-model="myNewUser.lastname">
+                    <input type="text" placeholder="Nom" ng-model="myNewUser.lastname" ng-focus="reinitCase($event)">
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Email</span>
-                    <input type="text" placeholder="Email" ng-model="myNewUser.email">
+                    <input type="text" placeholder="Email" ng-model="myNewUser.email" ng-focus="reinitCase($event)">
                 </label>
                 <br>
                 <button class="button button-outline button-positive block-center" ng-click="editPassword()">
@@ -29,9 +29,17 @@
                     <span>  Modifier mot de passe</span>
                 </button>
                 <br>
-                <button class="button button-full button-balanced " type="submit">
-                    <i class="ion-checkmark"></i>
-                    <span>  Sauvegarder</span>
+                <button id="btSave" class="button button-full button-balanced " type="submit">
+                    <div id="successSave">
+                        <i class="ion-checkmark"></i>
+                        <span>   Sauvegarder</span>
+                    </div>
+                    <div id="errorSave">
+                        <i class="ion-alert-circled"></i>
+                        <span>   {{msgBtSave}}</span>
+                    </div>
+                    <!--<i class="ion-checkmark"></i>-->
+                    <!--<span>  Sauvegarder</span>-->
                 </button>
 
             </div>

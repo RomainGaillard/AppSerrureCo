@@ -104,7 +104,7 @@ angular.module('login.controllers')
                 })
             })
         }
-    }
+    };
 
     $scope.logout = function(){
         $scope.myUser.$logout(function(user){

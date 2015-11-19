@@ -25,7 +25,7 @@ plugins
 *.msi
 *.msm
 *.msp
-
+.idea
 # Windows shortcuts
 *.lnk
 
