@@ -10,30 +10,19 @@
     <ion-content>
 
         <div class="list">
-            <form ng-submit="requestJoinGroup(group)">
+            <form ng-submit="requestJoinGroup()">
                 <label class="item item-input">
-                    <input type="text" placeholder="#TAG du groupe" ng-model="group.tag">
+                    <input type="text" placeholder="#TAG du groupe" ng-model="group.code">
                 </label>
-            </form>
-            <button class="button button-full button-positive">
-                <i class="ion-android-search"></i>
-                <span>  Rechercher le groupe</span>
-            </button>
-            <label class="item item-radio">
-                <input type="radio" name="group">
-                <div class="item-content">
-                    #G25R
+
+                <div class="button-bar">
+                    <button class="button button-full button-balanced" type="submit">
+                        <i class="ion-android-unlock"></i>
+                        <span>  Demander l'accès</span>
+                    </button>
                 </div>
-                <i class="radio-icon ion-checkmark"></i>
-            </label>
+
+            </form>
         </div>
     </ion-content>
-    <div class="footer">
-        <div class="button-bar">
-            <button class="button button-full button-balanced" disabled>
-                <i class="ion-android-unlock"></i>
-                <span>  Demander l'accès</span>
-            </button>
-        </div>
-    </div>
 </div>

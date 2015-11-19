@@ -17,6 +17,11 @@ angular.module('directives', ['authentification.services'])
                         $scope.locks = locks;
                     })
                 })
+
+                io.socket.on('lock',function(msg){
+                    alert('EVENT LOCK RECU');
+                    console.log(msg);
+                })
             }
         }
     }])
@@ -33,6 +38,11 @@ angular.module('directives', ['authentification.services'])
                     $scope.$apply(function(){
                         $scope.locks = locks;
                     })
+                })
+
+                io.socket.on('lock',function(msg){
+                    alert('EVENT LOCK RECU');
+                    console.log(msg);
                 })
             }
         }

@@ -1,7 +1,7 @@
 <ion-view>
     <ion-header-bar>
         <a class="button button-icon icon ion-settings" ng-click="gotoAccount()"></a>
-        <h1 class="title">Accueil</h1>
+        <h1 class="title">Accueil - {{user.email}}</h1>
         <div class="buttons">
             <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logout()"> Déconnexion </a>
         </div>
@@ -17,8 +17,6 @@
                     </div>
                 </div>
                 <lock-group code="{{group.group.code}}" id="{{group.group.code}}" class="block"></lock-group>
-
-                </div>
             </div>
             <div class="item item-divider">
                 Groupe en attente de validation:
