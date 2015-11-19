@@ -10,21 +10,19 @@
             <h2>{{lock.name}}</h2>
             <p>{{lock.address_mac}}</p>
         </div>
-        <!--<div class="row">-->
         <div class="list">
             <li class="item item-toggle">
                 <label class="toggle toggle-balanced cursor-point">
-                    <input type="checkbox" onchange=""; ng-checked="{{lock.state}}">
+                    <input type="checkbox" ng-model="lock.state" ng-change="updateLock(lock);">
                     <div class="track">
                         <div class="handle"></div>
                     </div>
                 </label>
-                <i ng-hide="{{!lock.state}}">Serrure verrouilée</i>
-                <i ng-hide="{{lock.state}}">Serrure déverrouillée</i>
+                <i ng-hide="!lock.state">Serrure verrouilée</i>
+                <i ng-hide="lock.state">Serrure déverrouillée</i>
 
             </li>
         </div>
-
 
         <ul class="list">
 
