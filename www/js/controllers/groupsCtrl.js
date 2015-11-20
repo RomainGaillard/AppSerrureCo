@@ -6,7 +6,10 @@ angular.module("groups.controllers")
     .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group) {
         $scope.group = new Group($stateParams.group.group);
 
-        console.log("oooooooooooooooo ",$stateParams)
+
+        $scope.$on('$ionicView.beforeEnter', function() {
+            $rootScope.selectGroup = $scope.group;
+        });
 
         $scope.gotoLocks = function(){
             $state.go("locks")

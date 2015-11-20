@@ -1,8 +1,6 @@
 /**
  * Created by Romain Gaillard on 23/10/2015.
  */
-
-
 angular.module('locks.services')
 
     .factory('Lock',['$resource','ConstantsSrv','AuthSrv', function ($resource,ConstantsSrv,AuthSrv) {

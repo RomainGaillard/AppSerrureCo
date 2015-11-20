@@ -1,8 +1,18 @@
 angular.module("member.controllers")
 
   .controller('MemberCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, $ionicModal,$rootScope, $stateParams, Group) {
-  $scope.group =  new Group($stateParams.group);
-  var myGroup = ($stateParams.group);
+
+  
+     $scope.group =  new Group($rootScope.selectGroup);
+
+
+  var myGroup = ($scope.group);
+
+
+ 
+ 
+  
+
   $scope.users = {};
 
   $scope.group.$user().then(function(data){
@@ -36,6 +46,10 @@ angular.module("member.controllers")
 
   $scope.gotoEditGroup = function(){
       $state.go("editGroup", {group:{group:myGroup}});
+  }
+
+  $scope.gotoWaiting = function(){
+      $state.go("mwm.waiting", {group:myGroup});
   }
 
   $scope.saveMember = function(){

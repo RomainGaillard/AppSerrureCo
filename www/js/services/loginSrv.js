@@ -1,4 +1,3 @@
-
 angular.module('authentification.services')
 
     .service('AuthSrv',function($localStorage){

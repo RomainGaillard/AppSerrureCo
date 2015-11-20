@@ -8,6 +8,7 @@ angular.module("locks.controllers")
 .controller('LocksCtrl', ['$scope','$state','$ionicModal','$rootScope','AuthSrv','Group','Lock','$filter','ConstantsSrv', function($scope, $state,$ionicModal,$rootScope,AuthSrv, Group,Lock,$filter,ConstantsSrv) {
     $scope.user = AuthSrv.getUser();
     $scope.groups = new Array();
+    $rootScope.selectGroup = {};
 
     $scope.group = new Group();
     $scope.lock = new Lock();

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.controllers', 'account.controllers',
-    'groups.controllers', 'locks.controllers', 'member.controllers', 'waiting.controllers',
+    'groups.controllers', 'locks.controllers', 'member.controllers', 'waiting.controllers','groups.controllers.tabmwm',
     'groups.services', 'logs.controllers', 'lock.controllers', 'locks.services','constants.services', 'member.services','authentification.services','ngStorage','directives'])
 
 
@@ -71,7 +71,8 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
             .state('mwm', {
                 url: '/tabmwm',
                 abstract: true,
-                templateUrl: 'templates/manage_waiting_member.html'
+                templateUrl: 'templates/manage_waiting_member.html',
+                controller: 'TabMwmCtrl',
             })
 
             .state('mwm.waiting', {
@@ -82,7 +83,9 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                         controller: 'WaitingCtrl'
                     }
                 },
-                params: {'group':{code:"XXXXX",name:"Undefined"}},
+                params: {
+                    'group':''
+                },
                 authenticate:true
             })
 
@@ -94,7 +97,9 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                         controller: 'MemberCtrl'
                     }
                 },
-                params: {'group':{code:"XXXXX",name:"Undefined"}},
+                params: {
+                    'group':''
+                },
                 authenticate:true
             })
             

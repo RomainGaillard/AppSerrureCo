@@ -1,23 +1,35 @@
 angular.module("waiting.controllers")
 
   .controller('WaitingCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, $ionicModal, $rootScope, $stateParams, Group) {
-  $scope.group =  new Group($stateParams.group);
+ 
+
   $scope.users = {};
+$scope.group =  new Group($rootScope.selectGroup);
+  var myGroup = ($rootScope.selectGroup);
 
-  console.log($stateParams.group);
 
-  $scope.group.$user().then(function(data){
-    $scope.users = data.tabUser;
-  },function(err){
-    console.log('--error *%no%* member get  ---');
-  })
+       $scope.group.$user().then(function(data){
+        $scope.users = data.tabUser;
+      },function(err){
+        console.log('--error *%no%* member get  ---');
+   })
 
+  
+  
+  //$rootScope.selectGroup = $stateParams.group;
+
+
+ 
   $scope.logOut = function(){
      $state.go("app");
   }
 
   $scope.gotoEditGroup = function(){
-      $state.go("editGroup");
+      $state.go("editGroup", {group:{group:myGroup}});
+  }
+
+  $scope.gotoMember = function(){
+      $state.go("mwm.member", {group:myGroup});
   }
 
   $scope.removeMember = function(i){
