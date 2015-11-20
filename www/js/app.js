@@ -36,6 +36,7 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
 
             .state('app', {
                 url: '',
+                cache: false,
                 templateUrl: 'templates/login.html',
                 controller: 'LoginCtrl'
             })

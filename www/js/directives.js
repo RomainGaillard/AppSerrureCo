@@ -32,7 +32,7 @@ angular.module('directives', ['authentification.services'])
 
                 getLocks();
 
-                
+
                 io.socket.on('lock',function(msg){
                     switch(msg.verb){
                         case "updated":
