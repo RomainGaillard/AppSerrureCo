@@ -43,7 +43,6 @@ angular.module("locks.controllers")
                 case "destroyed":
                     $scope.$apply(function(){
                         for(var i=0;i<$scope.groups.length;i++){
-                            console.log($scope.groups[i].group.id);
                             if($scope.groups[i].group.id == msg.id){
                                 $scope.groups.splice(i,1);
                             }
@@ -199,8 +198,7 @@ angular.module("locks.controllers")
             io.socket.post(ConstantsSrv.createLock,{token:AuthSrv.getUser().token,lock:$scope.lock},function(lock,jwres){
                 if(jwres.statusCode == 201){
                     for(var i=0;i<groups.length;i++){
-                        $("#"+groups[i].code).scope().locks.push(jwres.body.lock);
-                        $rootScope.$emit("majLock",{lock:jwres.body.lock,group:groups[i].code});
+                        $rootScope.$emit("majLock",{lock:jwres.body.lock,groupCode:groups[i].code});
                     }
                     $rootScope.newLockModal.hide();
                 }

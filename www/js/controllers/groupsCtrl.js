@@ -13,16 +13,7 @@ angular.module("groups.controllers")
             $state.go("locks")
         }
 
-        $scope.removeLock = function(lock){
-            $scope.group.lockId = lock.id;
-            $scope.group.$removeLock().then(function(data){
-                console.log(lock)
-                var index = $("#"+$scope.group.code).scope().locks.indexOf(lock);
-                $("#"+$scope.group.code).scope().locks.splice(index,1);
-            },function(err){
-                console.log(err);
-            })
-        }
+
         // ===== MANAGE MEMBER ====
         $scope.goToManageMembers = function() {
             $state.go("member", {group:$scope.group});
