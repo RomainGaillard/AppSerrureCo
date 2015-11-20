@@ -32,19 +32,21 @@ angular.module('directives', ['authentification.services'])
 
                 getLocks();
 
+                
                 io.socket.on('lock',function(msg){
-                    switch(msg.verb) {
+                    switch(msg.verb){
                         case "updated":
-                            var lock = $filter('filter')($scope.locks, {id: msg.id})[0];
-                            if(lock){
-                                $scope.$apply(function() {
-                                    lock.state = msg.data.lock.state;
-                                })
-                            }
+                            $scope.$apply(function(){
+                                for(var i=0;i<$scope.locks.length;i++){
+                                    if($scope.locks[i].id == msg.data.lock.id){
+                                        $scope.locks[i] = msg.data.lock;
+                                    }
+                                }
+                            })
 
                             break;
                     }
-                })
+                });
 
                 $scope.$on('$destroy', function(){
                     io.socket.removeAllListeners();
@@ -90,21 +92,6 @@ angular.module('directives', ['authentification.services'])
                             break;
                     }
                 })
-
-                io.socket.on('lock',function(msg){
-                    switch(msg.verb){
-                        case "updated":
-                            $scope.$apply(function(){
-                                for(var i=0;i<$scope.locks.length;i++){
-                                    if($scope.locks[i].id == msg.data.lock.id){
-                                        $scope.locks[i] = msg.data.lock;
-                                    }
-                                }
-                            })
-
-                            break;
-                    }
-                });
             }
         }
     }])
