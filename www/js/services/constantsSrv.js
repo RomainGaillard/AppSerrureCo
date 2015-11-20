@@ -22,4 +22,9 @@ angular.module('constants.services')
         this.login = domain+"auth/local";
         this.logout = domain+"logout"
         this.register = domain+"auth/local/register"
+
+        this.user = domain+"group/:code/user"
+        this.giveAccess = domain+"group/:code/giveAccess"
+        this.exclude = domain+"group/:code/exclude"
+
     });
