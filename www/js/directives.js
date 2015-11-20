@@ -2,26 +2,29 @@
  * Created by Romain Gaillard on 13/11/2015.
  */
 
-angular.module('directives', ['authentification.services'])
+angular.module('directives', ['authentification.services','groups.services'])
 
-    .directive('lockGroup', ['AuthSrv','Lock','$filter',function (AuthSrv,Lock,$filter) {
+    .directive('lockGroup', ['AuthSrv','Lock','$filter','$rootScope',function (AuthSrv,Lock,$filter,$rootScope) {
         return {
             restrict: 'E',
             scope: true,
             templateUrl: 'templates/directives/lock_group.html',
             link: function ($scope, element, attributes) {
-                $scope.locks = {};
+                $scope.locks = new Array();
                 var code = attributes.code;
                 io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    $scope.$apply(function(){
-                        for(var i=0;i<locks.length;i++){
-                            if(locks[i].state == 1)
-                                locks[i].state = true;
-                            else
-                                locks[i].state = false;
-                        }
-                        $scope.locks = locks;
-                    })
+                    if(jwres.statusCode == 200)
+                    {
+                        $scope.$apply(function(){
+                            for(var i=0;i<locks.length;i++){
+                                if(locks[i].state == 1)
+                                    locks[i].state = true;
+                                else
+                                    locks[i].state = false;
+                            }
+                            $scope.locks = locks;
+                        })
+                    }
                 })
 
                 io.socket.on('lock',function(msg){
@@ -43,11 +46,19 @@ angular.module('directives', ['authentification.services'])
                         console.log(err);
                     })
                 }
+
+                $rootScope.$on("majLock",function(event,data){
+                    if(data.groupCode == code){
+                        $scope.$apply(function() {
+                            $scope.locks.push(data.lock);
+                        })
+                    }
+                })
             }
         }
     }])
 
-    .directive('editLockGroup',['AuthSrv',function(AuthSrv){
+    .directive('editLockGroup',['AuthSrv','Group','$rootScope',function(AuthSrv,Group,$rootScope){
         return {
             restrict: 'E',
             scope: false,
@@ -56,14 +67,36 @@ angular.module('directives', ['authentification.services'])
                 $scope.locks = {};
                 var code = attributes.code;
                 io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    $scope.$apply(function(){
-                        $scope.locks = locks;
-                    })
+                    if(jwres.statusCode == 200){
+                        $scope.$apply(function(){
+                            $scope.locks = locks;
+                        })
+                    }
+
                 })
 
                 io.socket.on('lock',function(msg){
                     alert('EVENT LOCK RECU');
                     console.log(msg);
+                })
+
+                $scope.removeLock = function(lock,index){
+                    var group = new Group();
+                    group.code = code
+                    group.lockId = lock.id;
+                    group.$removeLock().then(function(data){
+                        $scope.locks.splice(index,1);
+                    },function(err){
+                        console.log(err);
+                    })
+                }
+
+                $rootScope.$on("majLock",function(event,data){
+                    if(data.groupCode == code){
+                        $scope.$apply(function() {
+                            $scope.locks.push(data.lock);
+                        })
+                    }
                 })
             }
         }
