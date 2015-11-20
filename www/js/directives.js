@@ -48,7 +48,6 @@ angular.module('directives', ['authentification.services','groups.services'])
                 }
 
                 $rootScope.$on("majLock",function(event,data){
-                    console.log($scope.locks);
                     if(data.groupCode == code){
                         $scope.$apply(function() {
                             $scope.locks.push(data.lock);
@@ -59,7 +58,7 @@ angular.module('directives', ['authentification.services','groups.services'])
         }
     }])
 
-    .directive('editLockGroup',['AuthSrv','Group',function(AuthSrv,Group){
+    .directive('editLockGroup',['AuthSrv','Group','$rootScope',function(AuthSrv,Group,$rootScope){
         return {
             restrict: 'E',
             scope: false,
@@ -68,9 +67,12 @@ angular.module('directives', ['authentification.services','groups.services'])
                 $scope.locks = {};
                 var code = attributes.code;
                 io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    $scope.$apply(function(){
-                        $scope.locks = locks;
-                    })
+                    if(jwres.statusCode == 200){
+                        $scope.$apply(function(){
+                            $scope.locks = locks;
+                        })
+                    }
+
                 })
 
                 io.socket.on('lock',function(msg){
@@ -78,17 +80,24 @@ angular.module('directives', ['authentification.services','groups.services'])
                     console.log(msg);
                 })
 
-                $scope.group = new Group();
-
                 $scope.removeLock = function(lock,index){
-                    $scope.group.code = code
-                    $scope.group.lockId = lock.id;
-                    $scope.group.$removeLock().then(function(data){
+                    var group = new Group();
+                    group.code = code
+                    group.lockId = lock.id;
+                    group.$removeLock().then(function(data){
                         $scope.locks.splice(index,1);
                     },function(err){
                         console.log(err);
                     })
                 }
+
+                $rootScope.$on("majLock",function(event,data){
+                    if(data.groupCode == code){
+                        $scope.$apply(function() {
+                            $scope.locks.push(data.lock);
+                        })
+                    }
+                })
             }
         }
     }])

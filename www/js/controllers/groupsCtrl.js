@@ -6,8 +6,7 @@
 angular.module("groups.controllers")
 
     .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group) {
-        $scope.group =  new Group($stateParams.group.group);
-        $scope.locks = {}
+        $scope.group = new Group($stateParams.group.group);
 
         $scope.gotoLocks = function(){
             $state.go("locks")
@@ -95,11 +94,4 @@ angular.module("groups.controllers")
             $rootScope.$emit("callNewLock");
         };
 
-        $rootScope.$on("majLock",function(event,data){
-            if(data.group == $scope.group.code){
-                if($("#"+data.group).scope()){
-                    // chez pas comment modifier le scope de la directive !
-                }
-            }
-        })
     }])
