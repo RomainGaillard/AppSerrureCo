@@ -6,10 +6,16 @@
         <div class="title">Serrure : {{lock.name}}</div>
     </ion-header-bar>
     <ion-content>
-        <div class="item item-avatar">
-            <img src="../img/Lock.svg">
-            <h2>{{lock.name}}</h2>
-            <p>{{lock.address_mac}}</p>
+        <div class="list list-inset">
+            <label class="item item-input">
+               Nom : &nbsp;
+               <input type="text" value="{{lock.name}}">
+           </label>
+           <label> </label>
+           <label class="item item-input">
+               Adresse MAC : &nbsp;
+               <input type="text" value="{{lock.address_mac}}">
+           </label>
         </div>
         <div class="list">
             <li class="item item-toggle">

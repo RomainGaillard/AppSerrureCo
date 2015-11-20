@@ -77,18 +77,6 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 
             })
 
-            // .state('lock', {
-            //    url:'/lock',
-            //    templateUrl: 'templates/lock.html',
-            //    controller: 'LockCtrl'
-            //})
-            //
-            //.state('logs', {
-            //    url:'/logs',
-            //    templateUrl: 'templates/logs.html',
-            //    controller: 'LogsCtrl'
-            //})
-
             .state('tab', {
                 url: '/tab',
                 abstract: true,
