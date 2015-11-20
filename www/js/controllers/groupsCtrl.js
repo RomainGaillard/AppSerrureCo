@@ -10,7 +10,6 @@ angular.module("groups.controllers")
             $state.go("locks")
         }
 
-
         // ===== MANAGE MEMBER ====
         $scope.goToManageMembers = function() {
             $state.go("mwm.member", {group:$scope.group});

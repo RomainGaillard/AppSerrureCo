@@ -31,11 +31,18 @@ angular.module('directives', ['authentification.services'])
                     switch(msg.verb) {
                         case "updated":
                             var lock = $filter('filter')($scope.locks, {id: msg.id})[0];
-                            $scope.$apply(function() {
-                                lock.state = msg.data.lock.state;
-                            })
+                            if(lock){
+                                $scope.$apply(function() {
+                                    lock.state = msg.data.lock.state;
+                                })
+                            }
+
                             break;
                     }
+                })
+
+                $scope.$on('$destroy', function(){
+                    io.socket.removeAllListeners();
                 })
 
                 $scope.updateLock = function(lock){
@@ -54,6 +61,41 @@ angular.module('directives', ['authentification.services'])
                         })
                     }
                 })
+
+                io.socket.on('group',function(msg){
+                    switch(msg.verb){
+                        case "updated":
+                            if(msg.data.lockRemove){
+                                $scope.$apply(function(){
+                                    if(code == msg.data.group.code){
+                                        for(var i=0;i<$scope.locks.length;i++){
+                                            if($scope.locks[i].id == msg.data.lockRemove.id){
+                                                $scope.locks.splice(i,1);
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                            break;
+                    }
+                })
+            }
+        }
+    }])
+
+    .directive('nbUsersWait',['AuthSrv','Group',function(AuthSrv,Group){
+        return{
+            restrict:'E',
+            scope:true,
+            template:"<button class='button-clear ion-person-add black' ng-hide='nbUsersWait == 0'> {{nbUsersWait}} demande(s) d'accès</button>",
+            link:function($scope,element,attributes){
+                var group = new Group();
+                group.code = attributes.code;
+                group.$usersWait().then(function(data){
+                    $scope.nbUsersWait = data.usersWait.length;
+                },function(err){
+                    console.log(err);
+                })
             }
         }
     }])
@@ -61,7 +103,7 @@ angular.module('directives', ['authentification.services'])
     .directive('editLockGroup',['AuthSrv','Group','$rootScope',function(AuthSrv,Group,$rootScope){
         return {
             restrict: 'E',
-            scope: false,
+            scope: true,
             templateUrl: 'templates/directives/edit_lock_group.html',
             link: function ($scope, element, attributes) {
                 $scope.locks = {};
@@ -78,6 +120,10 @@ angular.module('directives', ['authentification.services'])
                 io.socket.on('lock',function(msg){
                     alert('EVENT LOCK RECU');
                     console.log(msg);
+                });
+
+                $scope.$on('$destroy', function(){
+                    io.socket.removeAllListeners();
                 })
 
                 $scope.removeLock = function(lock,index){

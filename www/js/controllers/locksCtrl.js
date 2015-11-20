@@ -38,17 +38,6 @@ angular.module("locks.controllers")
         if(jwres.statusCode == 200){
             $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
             $scope.groups = groups;
-            var groupUsersWait = $filter('filter')(groups,{admin:true});
-            for(var i=0;i<groupUsersWait.length;i++){
-                var group = new Group();
-                group.code = groupUsersWait[i].group.code;
-                group.$usersWait().then(function(data){
-                    alert("ok");
-                    console.log(data);
-                },function(err){
-                    console.log(err);
-                })
-            }
         }
     })
 
@@ -64,9 +53,14 @@ angular.module("locks.controllers")
                     }
                 })
                 break;
+            case "updated":
+                break;
         }
     })
 
+    $scope.$on('$destroy', function(){
+        io.socket.removeAllListeners();
+    })
 
 
     // ===== POPUP - ASK GROUP! ====
@@ -104,7 +98,6 @@ angular.module("locks.controllers")
     $scope.requestJoinGroup = function() {
         var code = $scope.group.code;
         $scope.group.$askAccess().then(function(data){
-            console.log(data);
             $scope.groups.push({validate:false,admin:false,group:{code:code}})
         },function(err){
             console.log(err);
@@ -223,18 +216,6 @@ angular.module("locks.controllers")
                 alert('Erreur'+jwres.body.err);
             }
         })
-
-        /*
-         $scope.lock.$save().then(function(data){
-         for(var i=0;i<groups.length;i++){
-         $("#"+groups[i].code).scope().locks.push(data.lock);
-         $rootScope.$emit("majLock",{lock:data.lock,group:groups[i].code});
-         }
-         $rootScope.newLockModal.hide();
-         },function(err){
-         console.log(err);
-         })
-         */
     };
 
     $rootScope.$on("callNewLock", function (event) {
