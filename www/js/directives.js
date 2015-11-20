@@ -58,6 +58,23 @@ angular.module('directives', ['authentification.services'])
         }
     }])
 
+    .directive('nbUsersWait',['AuthSrv','Group',function(AuthSrv,Group){
+        return{
+            restrict:'E',
+            scope:true,
+            template:"<button class='button-clear ion-person-add black'> {{nbUsersWait}} demande(s) d'accès</button>",
+            link:function($scope,element,attributes){
+                var group = new Group();
+                group.code = attributes.code;
+                group.$usersWait().then(function(data){
+                    $scope.nbUsersWait = data.usersWait.length;
+                },function(err){
+                    console.log(err);
+                })
+            }
+        }
+    }])
+
     .directive('editLockGroup',['AuthSrv','Group','$rootScope',function(AuthSrv,Group,$rootScope){
         return {
             restrict: 'E',
