@@ -1,5 +1,5 @@
 <div class="row item" ng-repeat="lock in locks" >
-    <div class="col col-90 cursor-point" ng-mousedown="changeColor($event,'#D9E5F3')" ng-mouseleave="changeColor($event,'')" ng-click="gotoLock(lock)">
+    <div class="col col-90 cursor-point" ng-mousedown="changeColor($event,'#D9E5F3')" ng-mouseleave="changeColor($event,'')" ng-click="gotoLock(lock, group)">
         <i ng-hide="{{!lock.has_micro}}" class="ion-ios-mic"></i>
         <i ng-hide="{{lock.has_micro}}" class="ion-ios-mic-outline"></i>
 

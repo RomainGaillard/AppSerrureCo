@@ -13,8 +13,8 @@ angular.module("locks.controllers")
     $scope.group = new Group();
     $scope.lock = new Lock();
 
-    $scope.gotoLock = function(lock){
-        $state.go("tab.lock", {lock: lock},{reload:true});
+    $scope.gotoLock = function(lock, group){
+        $state.go("tab.lock", {lock: lock, group: group},{reload:true});
     };
 
     $scope.gotoEditGroup = function(group){
@@ -54,8 +54,11 @@ angular.module("locks.controllers")
                     }
                 })
                 break;
+            case "updated":
+                break;
         }
     })
+
 
     $scope.$on('$destroy', function(){
         io.socket.removeAllListeners();
@@ -206,9 +209,6 @@ angular.module("locks.controllers")
 
         io.socket.post(ConstantsSrv.createLock,{token:AuthSrv.getUser().token,lock:$scope.lock},function(lock,jwres){
             if(jwres.statusCode == 201){
-                for(var i=0;i<groups.length;i++){
-                    $rootScope.$emit("majLock",{lock:jwres.body.lock,groupCode:groups[i].code});
-                }
                 $rootScope.newLockModal.hide();
             }
             else{

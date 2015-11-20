@@ -12,34 +12,41 @@ angular.module('directives', ['authentification.services'])
             link: function ($scope, element, attributes) {
                 $scope.locks = new Array();
                 var code = attributes.code;
-                io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    if(jwres.statusCode == 200)
-                    {
-                        $scope.$apply(function(){
-                            for(var i=0;i<locks.length;i++){
-                                if(locks[i].state == 1)
-                                    locks[i].state = true;
-                                else
-                                    locks[i].state = false;
-                            }
-                            $scope.locks = locks;
-                        })
-                    }
-                })
 
+                var getLocks = function(){
+                    io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                        if(jwres.statusCode == 200)
+                        {
+                            $scope.$apply(function(){
+                                for(var i=0;i<locks.length;i++){
+                                    if(locks[i].state == 1)
+                                        locks[i].state = true;
+                                    else
+                                        locks[i].state = false;
+                                }
+                                $scope.locks = locks;
+                            })
+                        }
+                    })
+                }
+
+                getLocks();
+
+                
                 io.socket.on('lock',function(msg){
-                    switch(msg.verb) {
+                    switch(msg.verb){
                         case "updated":
-                            var lock = $filter('filter')($scope.locks, {id: msg.id})[0];
-                            if(lock){
-                                $scope.$apply(function() {
-                                    lock.state = msg.data.lock.state;
-                                })
-                            }
+                            $scope.$apply(function(){
+                                for(var i=0;i<$scope.locks.length;i++){
+                                    if($scope.locks[i].id == msg.data.lock.id){
+                                        $scope.locks[i] = msg.data.lock;
+                                    }
+                                }
+                            })
 
                             break;
                     }
-                })
+                });
 
                 $scope.$on('$destroy', function(){
                     io.socket.removeAllListeners();
@@ -59,6 +66,30 @@ angular.module('directives', ['authentification.services'])
                         $scope.$apply(function() {
                             $scope.locks.push(data.lock);
                         })
+                    }
+                })
+
+                io.socket.on('group',function(msg){
+                    switch(msg.verb){
+                        case "updated":
+                            if(msg.data.lockRemove){
+                                $scope.$apply(function(){
+                                    if(code == msg.data.group.code){
+                                        for(var i=0;i<$scope.locks.length;i++){
+                                            if($scope.locks[i].id == msg.data.lockRemove.id){
+                                                $scope.locks.splice(i,1);
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                            if(msg.data.lockAdd){
+                                $scope.$apply(function(){
+                                    if(code == msg.data.group.code)
+                                        $scope.locks.push(msg.data.lockAdd);
+                                })
+                            }
+                            break;
                     }
                 })
             }
@@ -99,11 +130,6 @@ angular.module('directives', ['authentification.services'])
 
                 })
 
-                io.socket.on('lock',function(msg){
-                    alert('EVENT LOCK RECU');
-                    console.log(msg);
-                });
-
                 $scope.$on('$destroy', function(){
                     io.socket.removeAllListeners();
                 })
@@ -119,6 +145,31 @@ angular.module('directives', ['authentification.services'])
                     })
                 }
 
+                io.socket.on('group',function(msg){
+                    switch(msg.verb){
+                        case "updated":
+                            if(msg.data.lockRemove){
+                                $scope.$apply(function(){
+                                    if(code == msg.data.group.code){
+                                        for(var i=0;i<$scope.locks.length;i++){
+                                            if($scope.locks[i].id == msg.data.lockRemove.id){
+                                                $scope.locks.splice(i,1);
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                            if(msg.data.lockAdd){
+                                $scope.$apply(function(){
+                                    if(code == msg.data.group.code)
+                                        $scope.locks.push(msg.data.lockAdd);
+                                })
+                            }
+                            break;
+                    }
+                })
+
+
                 $rootScope.$on("majLock",function(event,data){
                     if(data.groupCode == code){
                         $scope.$apply(function() {
@@ -126,6 +177,21 @@ angular.module('directives', ['authentification.services'])
                         })
                     }
                 })
+
+                io.socket.on('lock',function(msg){
+                    switch(msg.verb){
+                        case "updated":
+                            $scope.$apply(function(){
+                                for(var i=0;i<$scope.locks.length;i++){
+                                    if($scope.locks[i].id == msg.data.lock.id){
+                                        $scope.locks[i] = msg.data.lock;
+                                    }
+                                }
+                            })
+
+                            break;
+                    }
+                });
             }
         }
     }])
