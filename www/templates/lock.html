@@ -3,6 +3,7 @@
         <div class="buttons">
             <a ng-click="gotoLocks()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
         </div>
+        <div class="title">Serrure : {{lock.name}}</div>
     </ion-header-bar>
     <ion-content>
         <div class="item item-avatar">
@@ -18,46 +19,81 @@
                         <div class="handle"></div>
                     </div>
                 </label>
-                <i ng-hide="!lock.state">Serrure verrouilée</i>
-                <i ng-hide="lock.state">Serrure déverrouillée</i>
-
+                <i ng-hide="lock.state">Serrure verrouilée</i>
+                <i ng-hide="!lock.state">Serrure déverrouillée</i>
             </li>
         </div>
 
         <ul class="list">
+            <li class="item item-toggle">
+                <label class="toggle toggle-balanced cursor-point">
+                    <input type="checkbox" ng-model="lock.has_micro" ng-change="updateLock(lock);">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+                <p class="item-icon-left">
+                    <i ng-hide="!lock.has_micro" class="icon ion-ios-mic"></i>
+                    <i ng-hide="lock.has_micro" class="icon ion-ios-mic-outline"></i>
+                    Microphone
+                </p>
+            </li>
 
-            <p class="item item-icon-left">
-                <i ng-hide="{{!lock.has_micro}}" class="icon ion-ios-checkmark"></i>
-                <i ng-hide="{{lock.has_micro}}" class="icon ion-ios-circle-outline"></i>
-                <i ng-hide="{{!lock.has_micro}}" class="ion-ios-mic"></i>
-                <i ng-hide="{{lock.has_micro}}" class="ion-ios-mic-outline"></i>
-                Microphone
-            </p>
+            <li class="item item-toggle">
+                <label class="toggle toggle-balanced cursor-point">
+                    <input type="checkbox" ng-model="lock.has_bell" ng-change="updateLock(lock);">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+                <p class="item-icon-left">
+                    <i ng-hide="!lock.has_bell" class="icon ion-ios-bell"></i>
+                    <i ng-hide="lock.has_bell" class="icon ion-ios-bell-outline"></i>
+                    Sonette
+                </p>
+            </li>
 
-            <p class="item item-icon-left">
-                <i ng-hide="{{!lock.has_bell}}" class="icon ion-ios-checkmark"></i>
-                <i ng-hide="{{lock.has_bell}}" class="icon ion-ios-circle-outline"></i>
-                <i ng-hide="{{!lock.has_bell}}" class="ion-ios-bell"></i>
-                <i ng-hide="{{lock.has_bell}}" class="ion-ios-bell-outline"></i>
-                Sonette
-            </p>
-            <p class="item item-icon-left">
-                <i ng-hide="{{!lock.has_camera}}" class="icon ion-ios-checkmark"></i>
-                <i ng-hide="{{lock.has_camera}}" class="icon ion-ios-circle-outline"></i>
-                <i ng-hide="{{!lock.has_camera}}" class="ion-ios-videocam"></i>
-                <i ng-hide="{{lock.has_camera}}" class="ion-ios-videocam-outline"></i>
-                Camera
-            </p>
-            <p class="item item-icon-left">
-                <i ng-hide="{{!lock.is_register}}" class="icon ion-ios-checkmark"></i>
-                <i ng-hide="{{lock.is_register}}" class="icon ion-ios-circle-outline"></i>
-                <i ng-hide="{{!lock.is_register}}" class="ion-ios-paper"></i>
-                <i ng-hide="{{lock.is_register}}" class="ion-ios-paper-outline"></i>
-                Logs
-            </p>
+            <li class="item item-toggle">
+                <label class="toggle toggle-balanced cursor-point">
+                    <input type="checkbox" ng-model="lock.has_camera" ng-change="updateLock(lock);">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+                <p class="item-icon-left">
+                    <i ng-hide="!lock.has_camera" class="icon ion-ios-videocam"></i>
+                    <i ng-hide="lock.has_camera" class="icon ion-ios-videocam-outline"></i>
+                    Camera
+                </p>
+            </li>
+
+            <li class="item item-toggle">
+                <label class="toggle toggle-balanced cursor-point">
+                    <input type="checkbox" ng-model="lock.is_register" ng-init="" ng-change="updateLock(lock);">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+                <p class="item-icon-left">
+                    <i ng-hide="!lock.is_register" class="icon ion-ios-paper"></i>
+                    <i ng-hide="lock.is_register" class="icon ion-ios-paper-outline"></i>
+                    Logs
+                </p>
+            </li>
+
         </ul>
 
-        <ul class="list ">
+        <label class="item font-bold">
+            Associer aux groupes :
+        </label>
+        <li class="item item-checkbox" ng-repeat="group in groups" ng-show="group.admin">
+            <label class="checkbox">
+                <input type="checkbox" ng-model="group.selected">
+            </label>
+            {{group.group.name}}
+        </li>
+
+        <ul class="list">
             <li class="item"> Mise à jour le : {{lock.updatedAt}}</li>
             <li class="item"> Créer le : {{lock.createdAt}} </li>
         </ul>
