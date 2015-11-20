@@ -4,11 +4,12 @@ angular.module("member.controllers")
   $scope.group =  new Group($stateParams.group);
   $scope.users = {};
 
+  console.log($stateParams.group);
+
   $scope.group.$user().then(function(data){
-    console.log(data);
-    $scope.users = data.users;
+    $scope.users = data.tabUser;
   },function(err){
-    console.log('error *%coucou%* member');
+    console.log('--error *%no%* member get  ---');
   })
 
   $scope.editRight = function(){

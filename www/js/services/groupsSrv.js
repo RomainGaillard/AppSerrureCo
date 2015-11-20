@@ -70,6 +70,14 @@ angular.module('groups.services')
                 headers:{
                     'Authorization':AuthSrv.getUser().token
                 }
+            },
+            usersWait:{
+                method:"POST",
+                url:ConstantsSrv.groupUsersWait,
+                params:{code:'@code'},
+                headers:{
+                    'Authorization':AuthSrv.getUser().token
+                }
             }
         });
     }]);

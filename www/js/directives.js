@@ -2,7 +2,7 @@
  * Created by Romain Gaillard on 13/11/2015.
  */
 
-angular.module('directives', ['authentification.services','groups.services'])
+angular.module('directives', ['authentification.services'])
 
     .directive('lockGroup', ['AuthSrv','Lock','$filter','$rootScope',function (AuthSrv,Lock,$filter,$rootScope) {
         return {
