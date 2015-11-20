@@ -21,6 +21,7 @@ angular.module('locks.services')
                 headers:{
                     'Authorization': AuthSrv.getUser().token
                 }
-            }
+            },
+
         });
     }]);

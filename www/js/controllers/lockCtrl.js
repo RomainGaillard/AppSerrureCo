@@ -1,6 +1,6 @@
 angular.module("lock.controllers")
 
-.controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', function($scope, $state, $stateParams, Lock){
+.controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', function($scope, $state, $stateParams, Lock, $http){
     $scope.lock =  new Lock($stateParams.lock);
         /* $scope.gotoLogs = function(){
              $state.go("lock");
@@ -15,4 +15,5 @@ angular.module("lock.controllers")
 
         //save la lock
     };
+
 }])
