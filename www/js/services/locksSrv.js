@@ -6,14 +6,14 @@
 angular.module('locks.services')
 
     .factory('Lock',['$resource','ConstantsSrv','AuthSrv', function ($resource,ConstantsSrv,AuthSrv) {
-        return $resource(ConstantsSrv.lock ,null,{
-            save:{
+        return $resource(null ,null,{
+            /*save:{
                 method:"POST",
                 url:ConstantsSrv.createLock,
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }
-            },
+            },*/
             update:{
                 method:"PUT",
                 url:ConstantsSrv.updateLock,
