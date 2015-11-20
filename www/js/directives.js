@@ -12,20 +12,25 @@ angular.module('directives', ['authentification.services'])
             link: function ($scope, element, attributes) {
                 $scope.locks = new Array();
                 var code = attributes.code;
-                io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
-                    if(jwres.statusCode == 200)
-                    {
-                        $scope.$apply(function(){
-                            for(var i=0;i<locks.length;i++){
-                                if(locks[i].state == 1)
-                                    locks[i].state = true;
-                                else
-                                    locks[i].state = false;
-                            }
-                            $scope.locks = locks;
-                        })
-                    }
-                })
+
+                var getLocks = function(){
+                    io.socket.get('/group/'+code+'/lock',{token:AuthSrv.getUser().token},function(locks,jwres){
+                        if(jwres.statusCode == 200)
+                        {
+                            $scope.$apply(function(){
+                                for(var i=0;i<locks.length;i++){
+                                    if(locks[i].state == 1)
+                                        locks[i].state = true;
+                                    else
+                                        locks[i].state = false;
+                                }
+                                $scope.locks = locks;
+                            })
+                        }
+                    })
+                }
+
+                getLocks();
 
                 io.socket.on('lock',function(msg){
                     switch(msg.verb) {
@@ -74,6 +79,12 @@ angular.module('directives', ['authentification.services'])
                                             }
                                         }
                                     }
+                                })
+                            }
+                            if(msg.data.lockAdd){
+                                $scope.$apply(function(){
+                                    if(code == msg.data.group.code)
+                                        $scope.locks.push(msg.data.lockAdd);
                                 })
                             }
                             break;

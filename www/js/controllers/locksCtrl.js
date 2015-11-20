@@ -207,9 +207,6 @@ angular.module("locks.controllers")
 
         io.socket.post(ConstantsSrv.createLock,{token:AuthSrv.getUser().token,lock:$scope.lock},function(lock,jwres){
             if(jwres.statusCode == 201){
-                for(var i=0;i<groups.length;i++){
-                    $rootScope.$emit("majLock",{lock:jwres.body.lock,groupCode:groups[i].code});
-                }
                 $rootScope.newLockModal.hide();
             }
             else{
