@@ -53,6 +53,8 @@ angular.module("locks.controllers")
                     }
                 })
                 break;
+            case "updated":
+                break;
         }
     })
 

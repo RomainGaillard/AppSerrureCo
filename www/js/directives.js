@@ -61,6 +61,24 @@ angular.module('directives', ['authentification.services'])
                         })
                     }
                 })
+
+                io.socket.on('group',function(msg){
+                    switch(msg.verb){
+                        case "updated":
+                            if(msg.data.lockRemove){
+                                $scope.$apply(function(){
+                                    if(code == msg.data.group.code){
+                                        for(var i=0;i<$scope.locks.length;i++){
+                                            if($scope.locks[i].id == msg.data.lockRemove.id){
+                                                $scope.locks.splice(i,1);
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                            break;
+                    }
+                })
             }
         }
     }])
