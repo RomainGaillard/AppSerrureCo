@@ -68,14 +68,43 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 authenticate:true
             })
 
-            .state('member', {
-                url:'/member',
-                templateUrl: 'templates/manage_member.html',
-                controller: 'MemberCtrl',
-                authenticate:true,
-                params: {'group':{code:"XXXXX",name:"Undefined"}}
-                
+            .state('mwm', {
+                url: '/tabmwm',
+                abstract: true,
+                templateUrl: 'templates/manage_waiting_member.html'
             })
+
+            .state('mwm.waiting', {
+                url: '/waiting',
+                views: {
+                    'tab-waiting': {
+                        templateUrl: 'templates/waiting_user.html'
+                    }
+                },
+                params: {'group':{code:"XXXXX",name:"Undefined"}},
+                authenticate:true
+            })
+
+            .state('mwm.member', {
+                url: '/member',
+                views: {
+                    'tab-validate': {
+                        templateUrl: 'templates/manage_member.html'
+                    }
+                },
+                params: {'group':{code:"XXXXX",name:"Undefined"}},
+                authenticate:true
+            })
+            
+
+            //.state('member', {
+            //    url:'/member',
+            //    templateUrl: 'templates/manage_member.html',
+            //    controller: 'MemberCtrl',
+            //    authenticate:true,
+            //    params: {'group':{code:"XXXXX",name:"Undefined"}}
+                
+            //})
 
             // .state('lock', {
             //    url:'/lock',
