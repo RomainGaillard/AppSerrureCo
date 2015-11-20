@@ -9162,3 +9162,6 @@ a.button {
 .reduce {
   width: 15% !important;
   margin-right: 1%; }
+
+.bgEnergized {
+  background-color: #ffc900; }

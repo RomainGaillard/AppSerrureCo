@@ -5,7 +5,7 @@
 
 angular.module("groups.controllers")
 
-    .controller('GroupsCtrl', ['$scope','$state','GroupsSrv','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, GroupsSrv,$ionicModal,$rootScope, $stateParams, Group) {
+    .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group) {
         $scope.group =  new Group($stateParams.group.group);
         $scope.locks = {}
 
@@ -13,11 +13,12 @@ angular.module("groups.controllers")
             $state.go("locks")
         }
 
-        $scope.removeLock = function(i){
-            $scope.group.lockId = $("#"+$scope.group.code).scope().locks[i].id;
+        $scope.removeLock = function(lock){
+            $scope.group.lockId = lock.id;
             $scope.group.$removeLock().then(function(data){
-                console.log(data);
-                $("#"+$scope.group.code).scope().locks.splice(i,1);
+                console.log(lock)
+                var index = $("#"+$scope.group.code).scope().locks.indexOf(lock);
+                $("#"+$scope.group.code).scope().locks.splice(index,1);
             },function(err){
                 console.log(err);
             })
@@ -44,8 +45,7 @@ angular.module("groups.controllers")
         }
 
         $scope.doDeleteGroup = function(){
-            var t = $scope.group.$delete();
-            t.then(function(data){
+            $scope.group.$delete().then(function(data){
                 $scope.closeDeleteGroup();
                 $state.go("locks");
             },function(err){
@@ -104,9 +104,11 @@ angular.module("groups.controllers")
             $rootScope.$emit("callNewLock");
         };
 
-        $rootScope.$on("majLock",function(event,lock){
-            if($("#"+$scope.group.code).scope())
-                $("#"+$scope.group.code).scope().locks.push(lock);
+        $rootScope.$on("majLock",function(event,data){
+            if(data.group == $scope.group.code){
+                if($("#"+data.group).scope()){
+                    // chez pas comment modifier le scope de la directive !
+                }
+            }
         })
-
     }])

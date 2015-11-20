@@ -7,7 +7,7 @@
 //angular.module('starter.controllers',[])
 angular.module('account.controllers' ,['authentification.services'])
 angular.module('groups.controllers',['groups.services'])
-angular.module('locks.controllers',['locks.services','groups.services','authentification.services','directives'])
+angular.module('locks.controllers',['locks.services','groups.services','authentification.services','directives','constants.services'])
 angular.module('login.controllers', ['authentification.services','constants.services'])
 angular.module('member.controllers',['groups.services'])
 angular.module('register.controllers',['authentification.services'])
