@@ -56,6 +56,9 @@ angular.module("locks.controllers")
         }
     })
 
+    $scope.$on('$destroy', function(){
+        io.socket.removeAllListeners();
+    })
 
 
     // ===== POPUP - ASK GROUP! ====

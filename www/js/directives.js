@@ -31,11 +31,18 @@ angular.module('directives', ['authentification.services'])
                     switch(msg.verb) {
                         case "updated":
                             var lock = $filter('filter')($scope.locks, {id: msg.id})[0];
-                            $scope.$apply(function() {
-                                lock.state = msg.data.lock.state;
-                            })
+                            if(lock){
+                                $scope.$apply(function() {
+                                    lock.state = msg.data.lock.state;
+                                })
+                            }
+
                             break;
                     }
+                })
+
+                $scope.$on('$destroy', function(){
+                    io.socket.removeAllListeners();
                 })
 
                 $scope.updateLock = function(lock){
@@ -62,7 +69,7 @@ angular.module('directives', ['authentification.services'])
         return{
             restrict:'E',
             scope:true,
-            template:"<button class='button-clear ion-person-add black'> {{nbUsersWait}} demande(s) d'accès</button>",
+            template:"<button class='button-clear ion-person-add black' ng-hide='nbUsersWait == 0'> {{nbUsersWait}} demande(s) d'accès</button>",
             link:function($scope,element,attributes){
                 var group = new Group();
                 group.code = attributes.code;
@@ -78,7 +85,7 @@ angular.module('directives', ['authentification.services'])
     .directive('editLockGroup',['AuthSrv','Group','$rootScope',function(AuthSrv,Group,$rootScope){
         return {
             restrict: 'E',
-            scope: false,
+            scope: true,
             templateUrl: 'templates/directives/edit_lock_group.html',
             link: function ($scope, element, attributes) {
                 $scope.locks = {};
@@ -95,6 +102,10 @@ angular.module('directives', ['authentification.services'])
                 io.socket.on('lock',function(msg){
                     alert('EVENT LOCK RECU');
                     console.log(msg);
+                });
+
+                $scope.$on('$destroy', function(){
+                    io.socket.removeAllListeners();
                 })
 
                 $scope.removeLock = function(lock,index){
