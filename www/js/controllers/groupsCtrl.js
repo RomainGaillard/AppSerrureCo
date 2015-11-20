@@ -6,23 +6,13 @@
 angular.module("groups.controllers")
 
     .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group) {
-        $scope.group =  new Group($stateParams.group.group);
-        $scope.locks = {}
+        $scope.group = new Group($stateParams.group.group);
 
         $scope.gotoLocks = function(){
             $state.go("locks")
         }
 
-        $scope.removeLock = function(lock){
-            $scope.group.lockId = lock.id;
-            $scope.group.$removeLock().then(function(data){
-                console.log(lock)
-                var index = $("#"+$scope.group.code).scope().locks.indexOf(lock);
-                $("#"+$scope.group.code).scope().locks.splice(index,1);
-            },function(err){
-                console.log(err);
-            })
-        }
+
         // ===== MANAGE MEMBER ====
         $scope.goToManageMembers = function() {
             $state.go("member", {group:$scope.group});
@@ -104,11 +94,4 @@ angular.module("groups.controllers")
             $rootScope.$emit("callNewLock");
         };
 
-        $rootScope.$on("majLock",function(event,data){
-            if(data.group == $scope.group.code){
-                if($("#"+data.group).scope()){
-                    // chez pas comment modifier le scope de la directive !
-                }
-            }
-        })
     }])
