@@ -20,6 +20,17 @@ angular.module("member.controllers")
     })
   }
 
+  $scope.removeMember = function(i){
+    $scope.group.User_Id = $("#"+$scope.group.code).scope().user[i].id;
+    alert($scope.group.Userid);
+    $scope.group.$exclude().then(function(data){
+        console.log(data);
+        $("#"+$scope.group.code).scope().user.splice(i,1);
+    },function(err){
+        console.log(err);
+    })
+  }
+
   $scope.logOut = function(){
      $state.go("app");
   }
@@ -32,27 +43,5 @@ angular.module("member.controllers")
   	var conf = 1;
         $state.go("editGroup");
   }
-
-  $scope.removeMember = function(i){
-    $scope.group.User_Id = $("#"+$scope.group.code).scope().user[i].id;
-    alert($scope.group.Userid);
-    $scope.group.$removeLock().then(function(data){
-        console.log(data);
-        $("#"+$scope.group.code).scope().user.splice(i,1);
-    },function(err){
-        console.log(err);
-    })
-  }
-
-/*
-  $scope.items = [
-     { title: 'Jean Ingesup', id: 1 },
-     { title: 'Entre ManBon', id: 2 },
-     { title: 'Jeau Boiteaulettre', id: 3},
-     { title: 'Sanchez Juepe', id:4},
-     { title: 'Elte Bon', id:5 },
-     { title: 'Jean Boulettre', id: 6},
-     { title: 'Sanchezty Juepeioio', id: 7}
-  ]; */
 
   }]);

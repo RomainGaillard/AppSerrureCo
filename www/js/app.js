@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.controllers', 'account.controllers',
-    'groups.controllers', 'locks.controllers', 'member.controllers',
+    'groups.controllers', 'locks.controllers', 'member.controllers', 'waiting.controllers',
     'groups.services', 'logs.controllers', 'lock.controllers', 'locks.services','constants.services', 'member.services','authentification.services','ngStorage','directives'])
 
 
@@ -78,7 +78,8 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 url: '/waiting',
                 views: {
                     'tab-waiting': {
-                        templateUrl: 'templates/waiting_user.html'
+                        templateUrl: 'templates/waiting_user.html',
+                        controller: 'WaitingCtrl'
                     }
                 },
                 params: {'group':{code:"XXXXX",name:"Undefined"}},
@@ -89,7 +90,8 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 url: '/member',
                 views: {
                     'tab-validate': {
-                        templateUrl: 'templates/manage_member.html'
+                        templateUrl: 'templates/manage_member.html',
+                        controller: 'MemberCtrl'
                     }
                 },
                 params: {'group':{code:"XXXXX",name:"Undefined"}},
