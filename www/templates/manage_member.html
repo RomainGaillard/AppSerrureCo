@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view cache-view="false" view-title="manageMember">
     <ion-header-bar>
         <a ng-click="gotoEditGroup()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
         <h1 class="title">Edition des membres</h1>
@@ -18,8 +18,8 @@
                 </label>
                 <label class=" reduce item item-select">
                     <select>
-                        <option ng-hide="{{user.admin}}">Membre</option>
-                        <option ng-hide="{{!user.admin}}">Admin</option>
+                        <option ng-selected="{{user.admin}}">Membre</option>
+                        <option ng-selected="{{!user.admin}}">Admin</option>
                     </select>
                 </label>
                 <button class="button button-small button-icon new-group-bt" ng-click="removeMember($index)">

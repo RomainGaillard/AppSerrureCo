@@ -4,7 +4,7 @@
 
 angular.module("register.controllers")
 
-    .controller('RegisterCtrl',['$scope','$state','$http','User', function($scope,$state,$http, User) {
+    .controller('RegisterCtrl',['$scope','$state','$http','User','AuthSrv', function($scope,$state,$http, User,AuthSrv) {
 
         $scope.myNewUser = new User();
         $("[id='errorRegister']").hide();
@@ -17,7 +17,7 @@ angular.module("register.controllers")
             $scope.doRegister = function(confirmPassword) {
             if(verifCase()){
                 $scope.myNewUser.$register(function(user){
-                    $http.defaults.headers.post["Authorization"] = user.token;
+                    AuthSrv.setUser(user)
                     $state.go("locks");
                 },function(err) {
                     ErrorCase($("[ng-model='myNewUser.email']"));
@@ -28,7 +28,6 @@ angular.module("register.controllers")
         };
         
         var test_email = function validateEmail(email) {
-            alert(email);
             var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
             return re.test(email);
         }

@@ -1,8 +1,6 @@
 /**
  * Created by Romain Gaillard on 25/10/2015.
  */
-
-
 angular.module("groups.controllers")
 
     .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group) {
@@ -15,7 +13,7 @@ angular.module("groups.controllers")
 
         // ===== MANAGE MEMBER ====
         $scope.goToManageMembers = function() {
-            $state.go("member", {group:$scope.group});
+            $state.go("mwm.member", {group:$scope.group});
         }
 
         // ===== POPUP - DELETE GROUP! ====
