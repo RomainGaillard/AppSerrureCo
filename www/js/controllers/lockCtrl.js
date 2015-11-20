@@ -3,7 +3,6 @@ angular.module("lock.controllers")
 .controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group', function($scope, $state, $stateParams, Lock, Group){
     $scope.lock     = new Lock($stateParams.lock);
     $scope.group    = new Group($stateParams.group);
-        console.log($scope.group);
     //Récupération des groupes
     var lock =  new Lock($scope.lock);
     lock.$lockById().then(function(data){

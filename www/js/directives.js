@@ -90,6 +90,21 @@ angular.module('directives', ['authentification.services'])
                             break;
                     }
                 })
+
+                io.socket.on('lock',function(msg){
+                    switch(msg.verb){
+                        case "updated":
+                            $scope.$apply(function(){
+                                for(var i=0;i<$scope.locks.length;i++){
+                                    if($scope.locks[i].id == msg.data.lock.id){
+                                        $scope.locks[i] = msg.data.lock;
+                                    }
+                                }
+                            })
+
+                            break;
+                    }
+                });
             }
         }
     }])
@@ -127,11 +142,6 @@ angular.module('directives', ['authentification.services'])
                     }
 
                 })
-
-                io.socket.on('lock',function(msg){
-                    alert('EVENT LOCK RECU');
-                    console.log(msg);
-                });
 
                 $scope.$on('$destroy', function(){
                     io.socket.removeAllListeners();
@@ -172,6 +182,7 @@ angular.module('directives', ['authentification.services'])
                     }
                 })
 
+
                 $rootScope.$on("majLock",function(event,data){
                     if(data.groupCode == code){
                         $scope.$apply(function() {
@@ -179,6 +190,21 @@ angular.module('directives', ['authentification.services'])
                         })
                     }
                 })
+
+                io.socket.on('lock',function(msg){
+                    switch(msg.verb){
+                        case "updated":
+                            $scope.$apply(function(){
+                                for(var i=0;i<$scope.locks.length;i++){
+                                    if($scope.locks[i].id == msg.data.lock.id){
+                                        $scope.locks[i] = msg.data.lock;
+                                    }
+                                }
+                            })
+
+                            break;
+                    }
+                });
             }
         }
     }])
