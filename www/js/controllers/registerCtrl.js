@@ -9,7 +9,7 @@ angular.module("register.controllers")
         $scope.myNewUser = new User();
         $("[id='errorRegister']").hide();
 
-        $scope.gotoLogin = function() {
+        $scope.goToLogin = function() {
             $state.go("app");
         };
 

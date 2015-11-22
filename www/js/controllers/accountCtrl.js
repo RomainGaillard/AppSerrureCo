@@ -10,7 +10,7 @@ angular.module("account.controllers")
 
         $scope.myNewUser = new User();
         var finVerif = true;
-        $scope.gotoLocks = function(){
+        $scope.goToLocks = function(){
             $state.go("locks")
         };
 

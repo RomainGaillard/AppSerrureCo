@@ -16,8 +16,10 @@ angular.module("locks.controllers")
     var getGroups = function(){
         io.socket.get(ConstantsSrv.group,{token:AuthSrv.getUser().token},function(groups,jwres){
             if(jwres.statusCode == 200){
-                $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
-                $scope.groups = groups;
+                $scope.$apply(function(){
+                    $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
+                    $scope.groups = groups;
+                })
             }
         })
     }
@@ -29,16 +31,16 @@ angular.module("locks.controllers")
 
     // ========= LES ROUTES ======================================
 
-    $scope.gotoLock = function(lock, group){
+    $scope.goToLock = function(lock, group){
         $state.go("tab.lock", {lock: lock, group: group},{reload:true});
     };
 
-    $scope.gotoEditGroup = function(group){
+    $scope.goToEditGroup = function(group){
         $scope.showLocks(group.group.code); // Annule le clic simultanné sur la barre + bouton.
         $state.go("editGroup",{group: group},{reload:true});
     };
 
-    $scope.gotoAccount = function(){
+    $scope.goToAccount = function(){
         $state.go("account");
     };
 

@@ -3,7 +3,7 @@ angular.module("member.controllers")
   .controller('MemberCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group','AuthSrv', function($scope, $state, $ionicModal,$rootScope, $stateParams, Group,AuthSrv) {
 
       var myGroup = new Group($stateParams.group);
-      $scope.group =  new Group(myGroup);
+      $scope.group =  $stateParams.group;
 
       $scope.users = new Array();
 
@@ -15,12 +15,12 @@ angular.module("member.controllers")
 
       // ========= LES ROUTES ======================================
 
-      $scope.gotoEditGroup = function(){
+      $scope.goToEditGroup = function(){
           removeListener();
-          $state.go("editGroup", {group:{group:myGroup}});
+          $state.go("editGroup", {group:{group:$scope.group}});
       }
 
-      $scope.gotoLocks = function(){
+      $scope.goToLocks = function(){
           removeListener();
           $state.go("locks");
       }
@@ -32,7 +32,6 @@ angular.module("member.controllers")
           myGroup.email = user.email;
           myGroup.admin = user.admin;
           myGroup.$giveAccess().then(function(data){
-          console.log(data);
         },function(err){
           console.log(err);
         })
@@ -45,11 +44,6 @@ angular.module("member.controllers")
         },function(err){
             console.log(err);
         })
-      }
-
-      $scope.saveMember = function(){
-        var conf = 1;
-            $state.go("editGroup");
       }
 
       // =========== GESTION DES LISTENERS ROOTSCOPE ========================
@@ -67,7 +61,7 @@ angular.module("member.controllers")
                       $scope.$apply(function(){
                           $scope.users[i].admin = data.msg.data.admin;
                           if(data.msg.data.email == AuthSrv.getUser().email)
-                            $scope.gotoLocks();
+                            $scope.goToLocks();
                       })
                   }
               }
@@ -82,7 +76,7 @@ angular.module("member.controllers")
                           $scope.users.splice(i,1);
                       })
                       if(data.msg.data.email == AuthSrv.getUser().email)
-                          $scope.gotoLocks();
+                          $scope.goToLocks();
                   }
               }
           }

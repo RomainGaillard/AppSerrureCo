@@ -4,7 +4,7 @@ angular.module("logs.controllers")
     /* $scope.gotoLogs = function(){
      $state.go("lock");
      };*/
-    $scope.gotoLock = function(){
+    $scope.goToLock = function(){
         $state.go("locks")
     };
 

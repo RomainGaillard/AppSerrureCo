@@ -8,7 +8,7 @@ angular.module("groups.controllers")
 
         // ===== ROUTES ========
 
-        $scope.gotoLocks = function(){
+        $scope.goToLocks = function(){
             $rootScope.removeListenerEditGroup();
             removeListener();
             $state.go("locks")
@@ -30,14 +30,14 @@ angular.module("groups.controllers")
         var giveAccessListener = $rootScope.$on("giveAccess",function(event,data){
             if($scope.group.code == data.msg.data.codeGroup) {
                 if (data.msg.data.email == AuthSrv.getUser().email)
-                    $scope.gotoLocks();
+                    $scope.goToLocks();
             }
         })
 
         var excludeListener = $rootScope.$on("exclude",function(event,data){
             if($scope.group.code == data.msg.data.codeGroup){
                 if (data.msg.data.email == AuthSrv.getUser().email)
-                    $scope.gotoLocks();
+                    $scope.goToLocks();
             }
         })
 

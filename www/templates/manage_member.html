@@ -1,17 +1,12 @@
 <ion-view cache-view="false" view-title="manageMember">
     <ion-header-bar>
-        <a ng-click="gotoEditGroup()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
+        <a ng-click="goToEditGroup()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
         <h1 class="title">Edition des membres</h1>
         <div class="buttons">
-            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logOut()"> Déconnexion </a>
+            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logout()"> Déconnexion </a>
         </div>
     </ion-header-bar>
     <ion-content>
-
-        <div class="button-bar">
-
-        </div>
-
       <ion-list>
         <ion-item class="bgDark light">
             <span style="display:inline;line-height:3em;">#{{group.code}}: {{group.name}} -  {{users.length}} Membre(s)</span>

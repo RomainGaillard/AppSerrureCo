@@ -15,11 +15,11 @@ angular.module("lock.controllers")
 
     // ========= LES ROUTES ======================================
 
-    $scope.gotoLocks = function(){
+    $scope.goToLocks = function(){
         removeListener();
         $state.go("locks");
     };
-    $scope.gotoLogs = function(){
+    $scope.goToLogs = function(){
         removeListener();
         $state.go("logs");
     };
@@ -68,7 +68,7 @@ angular.module("lock.controllers")
     var excludeListener = $rootScope.$on("exclude",function(event,data){
         if($scope.group.group.code == data.msg.data.codeGroup){
             if(data.msg.data.email == AuthSrv.getUser().email)
-                $scope.gotoLocks();
+                $scope.goToLocks();
         }
     })
 
