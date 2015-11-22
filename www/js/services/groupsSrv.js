@@ -63,6 +63,14 @@ angular.module('groups.services')
                     'Authorization': AuthSrv.getUser().token
                 }
             },
+            join:{
+                method:"POST",
+                url:ConstantsSrv.join,
+                params:{code:'@code',email:"@email",admin:"@admin"},
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
             askAccess:{
                 method:"POST",
                 url:ConstantsSrv.askAccess,

@@ -15,6 +15,7 @@ angular.module('constants.services')
         this.removeLock = domain+"group/:code/lock/remove/:id";
         this.askAccess = domain+"group/:code/askAccess";
         this.groupUsersWait = domain+"group/:code/usersWait"
+        this.join = domain+"group/:code/join";
 
         this.updateAccount = domain+"user/update";
 
@@ -26,6 +27,7 @@ angular.module('constants.services')
         this.logout = domain+"logout"
         this.register = domain+"auth/local/register"
         this.user = domain+"group/:code/user"
+        this.myUser = domain+"user"
         this.giveAccess = domain+"group/:code/giveAccess"
         this.exclude = domain+"group/:code/exclude"
     });

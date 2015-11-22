@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.controllers', 'account.controllers',
-    'groups.controllers', 'locks.controllers', 'member.controllers', 'waiting.controllers','groups.controllers.tabmwm',
+    'groups.controllers', 'locks.controllers', 'member.controllers', 'waiting.controllers',
     'groups.services', 'logs.controllers', 'lock.controllers', 'locks.services','constants.services', 'member.services','authentification.services','ngStorage','directives'])
 
 

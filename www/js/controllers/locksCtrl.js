@@ -13,11 +13,18 @@ angular.module("locks.controllers")
     $scope.group = new Group();
     $scope.lock = new Lock();
 
-    io.socket.get(ConstantsSrv.group,{token:AuthSrv.getUser().token},function(groups,jwres){
-        if(jwres.statusCode == 200){
-            $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
-            $scope.groups = groups;
-        }
+    var getGroups = function(){
+        io.socket.get(ConstantsSrv.group,{token:AuthSrv.getUser().token},function(groups,jwres){
+            if(jwres.statusCode == 200){
+                $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
+                $scope.groups = groups;
+            }
+        })
+    }
+    getGroups();
+
+    io.socket.get(ConstantsSrv.myUser,{token:AuthSrv.getUser().token},function(user,jwres){
+        // Permet d'établir une socket d'écoute sur l'user.
     })
 
     // ========= LES ROUTES ======================================
@@ -53,7 +60,7 @@ angular.module("locks.controllers")
                 })
             }
         }
-    })
+    });
 
     $rootScope.$on("groupDestroyed",function(event,data){
         $scope.$apply(function(){
@@ -63,6 +70,22 @@ angular.module("locks.controllers")
                 }
             }
         })
+    });
+
+    $rootScope.$on("userJoin",function(event,data){
+        getGroups();
+    });
+
+    $rootScope.$on("exclude",function(event,data){
+        if (data.msg.data.email == AuthSrv.getUser().email){
+            for(var i=0;i<$scope.groups.length;i++){
+                if($scope.groups[i].group.code == data.msg.data.codeGroup){
+                    $scope.$apply(function(){
+                        $scope.groups.splice(i,1);
+                    })
+                }
+            }
+        }
     })
 
     $rootScope.$on("callNewLock", function (event) {
@@ -83,7 +106,9 @@ angular.module("locks.controllers")
                 if(msg.data.giveAccess)
                     $rootScope.$emit("giveAccess",{msg:msg});
                 if(msg.data.exclude)
-                    $rootScope.$emit("exclude",{msg:msg})
+                    $rootScope.$emit("exclude",{msg:msg});
+                if(msg.data.join)
+                    $rootScope.$emit("join",{msg:msg});
                 break;
         }
     })
@@ -99,6 +124,14 @@ angular.module("locks.controllers")
         }
     });
 
+    io.socket.on('user',function(msg){
+        switch(msg.verb){
+            case "updated":
+                if(msg.data.join)
+                    $rootScope.$emit("userJoin",{msg:msg});
+                break;
+        }
+    })
 
     // ===== POPUP - ASK GROUP! ====
 

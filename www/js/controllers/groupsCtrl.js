@@ -3,21 +3,43 @@
  */
 angular.module("groups.controllers")
 
-    .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group) {
+    .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group','AuthSrv', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group,AuthSrv) {
         $scope.group = new Group($stateParams.group.group);
 
         // ===== ROUTES ========
 
         $scope.gotoLocks = function(){
             $rootScope.removeListenerEditGroup();
+            removeListener();
             $state.go("locks")
         }
 
         $scope.goToManageMembers = function() {
             $rootScope.removeListenerEditGroup();
+            removeListener();
             $state.go("mwm.member", {group:$scope.group});
         }
 
+        // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+
+        var removeListener = function(){
+            giveAccessListener();
+            excludeListener();
+        }
+
+        var giveAccessListener = $rootScope.$on("giveAccess",function(event,data){
+            if($scope.group.code == data.msg.data.codeGroup) {
+                if (data.msg.data.email == AuthSrv.getUser().email)
+                    $scope.gotoLocks();
+            }
+        })
+
+        var excludeListener = $rootScope.$on("exclude",function(event,data){
+            if($scope.group.code == data.msg.data.codeGroup){
+                if (data.msg.data.email == AuthSrv.getUser().email)
+                    $scope.gotoLocks();
+            }
+        })
 
         // ===== POPUP - DELETE GROUP! ====
         $ionicModal.fromTemplateUrl('templates/delete_group.html', function(modal) {

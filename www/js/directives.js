@@ -29,8 +29,9 @@ angular.module('directives', ['authentification.services'])
                         }
                     })
                 }
-
                 getLocks();
+
+                // ========= LES ACTIONS DU SCOPE =====================================
 
                 $scope.updateLock = function(lock){
                     var lock = new Lock(lock);
@@ -132,8 +133,9 @@ angular.module('directives', ['authentification.services'])
                         }
                     })
                 }
-
                 getLocks();
+
+                // ========= LES ACTIONS DU SCOPE =====================================
 
                 $scope.removeLock = function(lock,index){
                     var group = new Group();
