@@ -6,19 +6,18 @@ angular.module("groups.controllers")
     .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group) {
         $scope.group = new Group($stateParams.group.group);
 
-
-        $scope.$on('$ionicView.beforeEnter', function() {
-            $rootScope.selectGroup = $scope.group;
-        });
+        // ===== ROUTES ========
 
         $scope.gotoLocks = function(){
+            $rootScope.removeListenerEditGroup();
             $state.go("locks")
         }
 
-        // ===== MANAGE MEMBER ====
         $scope.goToManageMembers = function() {
+            $rootScope.removeListenerEditGroup();
             $state.go("mwm.member", {group:$scope.group});
         }
+
 
         // ===== POPUP - DELETE GROUP! ====
         $ionicModal.fromTemplateUrl('templates/delete_group.html', function(modal) {

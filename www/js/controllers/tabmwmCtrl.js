@@ -6,9 +6,7 @@ angular.module("groups.controllers.tabmwm")
     .controller('TabMwmCtrl', ['$scope','$stateParams', '$rootScope', function($scope,$stateParams,$rootScope) {
         
       $scope.$on('$ionicView.beforeEnter', function() {
-        
             $scope.group = $rootScope.selectGroup;
-
         });   
 
         $scope.getGroup = function(){

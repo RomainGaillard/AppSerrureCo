@@ -74,6 +74,9 @@ $m_left: 10px;
 	color:$dark !important;
 }
 
+.ligth{
+	color:white !important;
+}
 .lock-divright{
 	float:right;
 }
@@ -82,6 +85,9 @@ $m_left: 10px;
 	cursor:pointer;
 }
 
+.no-cursor-point{
+	cursor:default;
+}
 .lock-margin{
 	margin-left:$m_left;
 }
@@ -124,4 +130,30 @@ $m_left: 10px;
 
 .bgEnergized{
 	background-color:$energized;
+}
+
+.bgDark{
+	background-color:$dark;
+}
+
+.infoAdminOrMember{
+	padding:2px 4px 1px;
+	min-width: 28px;
+	min-height: 30px;
+	font-size: 12px;
+	line-height: 26px;
+	color:white;
+	border-color:#111;
+	background-color:#444;
+	text-decoration:none;
+	position: relative;
+	display: inline-block;
+	margin:0;
+	border-width: 1px;
+	border-style: solid;
+	border-radius:2px;
+	vertical-align: top;
+	text-align:center;
+	text-overflow:ellipsis;
+	margin-left:10px;
 }

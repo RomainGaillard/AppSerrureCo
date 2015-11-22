@@ -8,31 +8,41 @@
     </ion-header-bar>
     <ion-content>
 
-      <ion-list>
+        <div class="button-bar">
 
-        <ion-item ng-repeat="user in users" item="user">    
+        </div>
+
+      <ion-list>
+        <ion-item class="bgDark light">
+            <span style="display:inline;line-height:3em;">#{{group.code}}: {{group.name}} -  {{users.length}} Membre(s)</span>
+            <button class="button button-balanced right" ng-click="addMember();">
+                <i class="ion-android-add-circle"></i>
+                <span>  Ajouter un membre</span>
+            </button>
+        </ion-item>
+        <ion-item ng-repeat="user in users" item="user">
 
             <div class="row">
-                <label class="col col-70">   
+                <label class="col col-50">
                 <span>{{ user.email }}</span>
                 </label>
-                <label class=" reduce item item-select">
-                    <select>
-                        <option ng-selected="{{user.admin}}">Membre</option>
-                        <option ng-selected="{{!user.admin}}">Admin</option>
-                    </select>
-                </label>
-                <button class="button button-small button-icon new-group-bt" ng-click="removeMember($index)">
-                        <i class="icon ion-android-cancel color-red"></i>
-                </button>
-            </div>
+                <div class="col col-30" >
+                    <label class="toggle toggle-balanced cursor-point">
+                        <input type="checkbox" ng-model="user.admin" ng-change="editRight(user)">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                    <i class="infoAdminOrMember" ng-hide="!user.admin">Admin</i>
+                    <i  class="infoAdminOrMember" ng-hide="user.admin"> Membre</i>
+                </div>
 
+                <button class="col col-20 button button-small button-icon new-group-bt" ng-click="excludeMember(user)" ng-disabled="user.admin">
+                    <i class="icon ion-android-cancel color-red"></i>
+                </button>
+
+            </div>
+        </ion-item>
       </ion-list>
     </ion-content>
-
-    <div class="footer">
-      <div class="buttons">
-            <a class="button button-full button-balanced ion-checkmark" ng-click="gotoEditGroup()"> Ok </a>
-        </div>
-    </div>
 </ion-view>

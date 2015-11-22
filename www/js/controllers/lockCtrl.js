@@ -1,8 +1,9 @@
 angular.module("lock.controllers")
 
-.controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group', function($scope, $state, $stateParams, Lock, Group){
+.controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group','$rootScope', function($scope, $state, $stateParams, Lock, Group,$rootScope){
     $scope.lock     = new Lock($stateParams.lock);
     $scope.group    = new Group($stateParams.group);
+
     //Récupération des groupes
     var lock =  new Lock($scope.lock);
     lock.$lockById().then(function(data){
@@ -11,27 +12,28 @@ angular.module("lock.controllers")
         console.log(err);
     });
 
-    io.socket.on('lock',function(msg){
-        switch(msg.verb){
-            case "destroyed":
-                    $state.go("locks");
-                break;
-            case "updated":
-                $scope.$apply(function(){
-                    $scope.lock = msg.data.lock;
-                })
-                break;
-        }
-    })
-        /* $scope.gotoLogs = function(){
-             $state.go("lock");
-         };*/
+
+    // ========= LES ROUTES ======================================
+
     $scope.gotoLocks = function(){
         $state.go("locks");
     };
     $scope.gotoLogs = function(){
         $state.go("logs");
     };
+
+    // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+    $rootScope.$on("lockUpdated",function(event,data){
+        $scope.$apply(function(){
+            $scope.lock = data.msg.data.lock;
+        })
+    })
+
+    $rootScope.$on("lockDestroyed",function(event,data){
+        if(data.msg.id == $scope.lock.id)
+            $scope.gotoLocks();
+    })
+
     $scope.updateLock = function(lock){
         var lock = new Lock(lock);
         lock.$update().then(function(data){

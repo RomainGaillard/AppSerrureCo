@@ -35,7 +35,6 @@ angular.module("account.controllers")
         };
 
         $scope.updateUser = function() {
-            console.log("test")
             if(verifCase()){
                 $scope.myNewUser.$update().then(function (data) {
                     $state.go("locks")

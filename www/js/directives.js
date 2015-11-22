@@ -32,22 +32,6 @@ angular.module('directives', ['authentification.services'])
 
                 getLocks();
 
-
-                io.socket.on('lock',function(msg){
-                    switch(msg.verb){
-                        case "updated":
-                            $scope.$apply(function(){
-                                for(var i=0;i<$scope.locks.length;i++){
-                                    if($scope.locks[i].id == msg.data.lock.id){
-                                        $scope.locks[i] = msg.data.lock;
-                                    }
-                                }
-                            })
-
-                            break;
-                    }
-                });
-
                 $scope.updateLock = function(lock){
                     var lock = new Lock(lock);
                     lock.$update().then(function(data){
@@ -57,14 +41,36 @@ angular.module('directives', ['authentification.services'])
                     })
                 }
 
-                $rootScope.$on("majLock",function(event,data){
-                    if(data.groupCode == code){
-                        $scope.$apply(function() {
-                            $scope.locks.push(data.lock);
-                        })
-                    }
+                // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+
+                $rootScope.$on("lockUpdated",function(event,data){
+                    $scope.$apply(function(){
+                        for(var i=0;i<$scope.locks.length;i++){
+                            if($scope.locks[i].id == data.msg.data.lock.id){
+                                $scope.locks[i] = data.msg.data.lock;
+                            }
+                        }
+                    })
                 })
 
+                $rootScope.$on("removeLock",function(event,data){
+                    $scope.$apply(function(){
+                        if(code == data.msg.data.group.code){
+                            for(var i=0;i<$scope.locks.length;i++){
+                                if($scope.locks[i].id == data.msg.data.lock.id){
+                                    $scope.locks.splice(i,1);
+                                }
+                            }
+                        }
+                    })
+                })
+
+                $rootScope.$on("addLock",function(event,data){
+                    if(code == data.msg.data.group.code)
+                        getLocks();
+                })
+
+                /*
                 io.socket.on('group',function(msg){
                     switch(msg.verb){
                         case "updated":
@@ -86,7 +92,7 @@ angular.module('directives', ['authentification.services'])
                             }
                             break;
                     }
-                })
+                })*/
             }
         }
     }])
@@ -129,7 +135,6 @@ angular.module('directives', ['authentification.services'])
 
                 getLocks();
 
-
                 $scope.removeLock = function(lock,index){
                     var group = new Group();
                     group.code = code
@@ -141,71 +146,40 @@ angular.module('directives', ['authentification.services'])
                     })
                 }
 
-                $rootScope.$on("majLock",function(event,data){
-                    if(data.groupCode == code){
-                        $scope.$apply(function() {
-                            $scope.locks.push(data.lock);
-                        })
-                    }
+                // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+
+                var majLockListener = $rootScope.$on("lockUpdated",function(event,data){
+                    $scope.$apply(function(){
+                        for(var i=0;i<$scope.locks.length;i++){
+                            if($scope.locks[i].id == data.msg.data.lock.id){
+                                $scope.locks[i] = data.msg.data.lock;
+                            }
+                        }
+                    })
                 })
 
-
-                var socket = io.sails.connect();
-
-                function onLock (msg){
-                    switch(msg.verb){
-                        case "updated":
-                            $scope.$apply(function(){
-                                for(var i=0;i<$scope.locks.length;i++){
-                                    if($scope.locks[i].id == msg.data.lock.id){
-                                        $scope.locks[i] = msg.data.lock;
-                                    }
+                var lockRemoveListener = $rootScope.$on("removeLock",function(event,data){
+                    $scope.$apply(function(){
+                        if(code == data.msg.data.group.code){
+                            for(var i=0;i<$scope.locks.length;i++){
+                                if($scope.locks[i].id == data.msg.data.lock.id){
+                                    $scope.locks.splice(i,1);
                                 }
-                            })
-
-                            break;
-                    }
-                }
-
-                function onGroup(msg){
-                    switch(msg.verb){
-                        case "updated":
-                            if(msg.data.lockRemove){
-                                $scope.$apply(function(){
-                                    if(code == msg.data.group.code){
-                                        for(var i=0;i<$scope.locks.length;i++){
-                                            if($scope.locks[i].id == msg.data.lockRemove.id){
-                                                $scope.locks.splice(i,1);
-                                            }
-                                        }
-                                    }
-                                })
                             }
-                            if(msg.data.lockAdd){
-                                $scope.$apply(function(){
-                                    if(code == msg.data.group.code)
-                                        getLocks();
-                                })
-                            }
-                            break;
-                    }
-                }
-
-                socket.on('lock',onLock);
-                socket.on('group',onGroup);
-
-                $scope.$on('$destroy', function(){
-                    socket.removeListener('group',onGroup);
-                    socket.removeListener('lock',onLock);
+                        }
+                    })
                 })
 
+                var addLockListener = $rootScope.$on("addLock",function(event,data){
+                    if(code == data.msg.data.group.code)
+                        getLocks();
+                })
 
-
-
-
-
-
-
+                $rootScope.removeListenerEditGroup = function(){
+                    majLockListener();
+                    lockRemoveListener();
+                    addLockListener();
+                }
             }
         }
     }])

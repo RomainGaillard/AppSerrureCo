@@ -13,6 +13,15 @@ angular.module("locks.controllers")
     $scope.group = new Group();
     $scope.lock = new Lock();
 
+    io.socket.get(ConstantsSrv.group,{token:AuthSrv.getUser().token},function(groups,jwres){
+        if(jwres.statusCode == 200){
+            $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
+            $scope.groups = groups;
+        }
+    })
+
+    // ========= LES ROUTES ======================================
+
     $scope.gotoLock = function(lock, group){
         $state.go("tab.lock", {lock: lock, group: group},{reload:true});
     };
@@ -35,29 +44,61 @@ angular.module("locks.controllers")
         $("#"+code).slideToggle();
     }
 
-    io.socket.get(ConstantsSrv.group,{token:AuthSrv.getUser().token},function(groups,jwres){
-        if(jwres.statusCode == 200){
-            $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
-            $scope.groups = groups;
+    // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+    $rootScope.$on("giveAccess",function(event,data){
+        for(var i=0;i<$scope.groups.length;i++){
+            if($scope.groups[i].group.code == data.msg.data.codeGroup){
+                $scope.$apply(function(){
+                    $scope.groups[i].admin = data.msg.data.admin;
+                })
+            }
         }
     })
 
+    $rootScope.$on("groupDestroyed",function(event,data){
+        $scope.$apply(function(){
+            for(var i=0;i<$scope.groups.length;i++){
+                if($scope.groups[i].group.id == data.msg.id){
+                    $scope.groups.splice(i,1);
+                }
+            }
+        })
+    })
 
+    $rootScope.$on("callNewLock", function (event) {
+        $rootScope.newLock();
+    });
+
+    // =========== GESTION DES LISTENERS SOCKET ========================
     io.socket.on('group',function(msg){
         switch(msg.verb){
             case "destroyed":
-                $scope.$apply(function(){
-                    for(var i=0;i<$scope.groups.length;i++){
-                        if($scope.groups[i].group.id == msg.id){
-                            $scope.groups.splice(i,1);
-                        }
-                    }
-                })
+                $rootScope.$emit("groupDestroyed",{msg:msg});
                 break;
             case "updated":
+                if(msg.data.removeLock)
+                    $rootScope.$emit("removeLock",{msg:msg})
+                if(msg.data.addLock)
+                    $rootScope.$emit("addLock",{msg:msg})
+                if(msg.data.giveAccess)
+                    $rootScope.$emit("giveAccess",{msg:msg});
+                if(msg.data.exclude)
+                    $rootScope.$emit("exclude",{msg:msg})
                 break;
         }
     })
+
+    io.socket.on('lock',function(msg){
+        switch(msg.verb){
+            case "updated":
+                $rootScope.$emit("lockUpdated",{msg:msg});
+                break;
+            case "destroyed":
+                $rootScope.$emit("lockDestroyed",{msg:msg});
+                break;
+        }
+    });
+
 
     // ===== POPUP - ASK GROUP! ====
 
@@ -176,7 +217,7 @@ angular.module("locks.controllers")
 
         // ===== POPUP - NEW LOCK! =====
 
-        $ionicModal.fromTemplateUrl('templates/new_lock.html', function(modal) {
+    $ionicModal.fromTemplateUrl('templates/new_lock.html', function(modal) {
             $rootScope.newLockModal = modal;
         }, {
             scope: $scope,
@@ -210,10 +251,6 @@ angular.module("locks.controllers")
             }
         })
     };
-
-    $rootScope.$on("callNewLock", function (event) {
-        $rootScope.newLock();
-    });
 
 }])
 
