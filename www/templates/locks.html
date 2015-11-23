@@ -23,11 +23,11 @@
             <div class="item item-divider bgEnergized" ng-if="nbGroupWait > 0">
                 Groupe en attente de validation:
             </div>
-            <div data-ng-repeat="group in groups" ng-if="!groups[$index].validate">
+            <div data-ng-repeat="group in groups" ng-if="!group.validate">
                 <div class="item item-divider">
                     #{{group.group.code}}
                     <div class="right">
-                        <button class="button-clear ion-close black">  Annuler</button>
+                        <button class="button-clear ion-close black" ng-click="cancelAskAccess(group);">  Annuler</button>
                     </div>
                 </div>
             </div>

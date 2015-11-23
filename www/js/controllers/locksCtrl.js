@@ -53,6 +53,16 @@ angular.module("locks.controllers")
         $("#"+code).slideToggle();
     }
 
+    // ========= LES ACTIONS DU SCOPE =====================================
+
+    $scope.cancelAskAccess = function(group){
+        $scope.group = new Group(group.group);
+        $scope.group.$exit().then(function(data){
+        },function(err){
+            console.log(err);
+        })
+    }
+
     // =========== GESTION DES LISTENERS ROOTSCOPE ========================
     $rootScope.$on("giveAccess",function(event,data){
         for(var i=0;i<$scope.groups.length;i++){
@@ -110,8 +120,12 @@ angular.module("locks.controllers")
         for(var i=0;i<$scope.groups.length;i++){
             if($scope.groups[i].group.code == data.msg.data.codeGroup){
                 if(AuthSrv.getUser().email == data.msg.data.email){
-                    $scope.groups.splice(i,1);
+                    $scope.$apply(function(){
+                        $scope.groups.splice(i,1);
+                        $scope.nbGroupWait = $filter('filter')($scope.groups, {validate: false}).length;
+                    })
                 }
+                $rootScope.$emit("updateNbUsersWait",{code:data.msg.data.codeGroup});
             }
         }
     })
@@ -146,7 +160,6 @@ angular.module("locks.controllers")
     })
 
     io.socket.on('lock',function(msg){
-        alert("lock");
         switch(msg.verb){
             case "updated":
                 $rootScope.$emit("lockUpdated",{msg:msg});
