@@ -8,7 +8,8 @@ angular.module("logs.controllers")
         $state.go("locks")
     };
 
-    var lock = new Lock($scope.lock);
+    var lock = new Lock($stateParams.lock);
+    console.log(lock);
     lock.$logs().then(function(data){
         console.log(data);
         $scope.logs = data.logs;

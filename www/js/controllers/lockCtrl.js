@@ -12,24 +12,6 @@ angular.module("lock.controllers")
         console.log(err);
     });
 
-//<<<<<<< HEAD
-//    io.socket.on('lock',function(msg){
-//        switch(msg.verb){
-//            case "destroyed":
-//                    $state.go("locks");
-//                break;
-//            case "updated":
-//                $scope.$apply(function(){
-//                    $scope.lock = msg.data.lock;
-//                })
-//                break;
-//        }
-//    })
-//    $scope.gotoLocks = function(){
-//        $state.go("locks");
-//    };
-//=======
-
     // ========= LES ROUTES ======================================
 
     $scope.goToLocks = function(){
