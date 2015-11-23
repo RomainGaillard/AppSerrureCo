@@ -23,7 +23,7 @@
                 </label>
                 <div class="col col-30" >
                     <label class="toggle toggle-balanced cursor-point">
-                        <input type="checkbox" ng-model="user.admin" ng-change="editRight(user)">
+                        <input type="checkbox" ng-model="user.admin" ng-change="editRight(user)" ng-disabled="user.admin && (nbAdmin == 1)">
                         <div class="track">
                             <div class="handle"></div>
                         </div>

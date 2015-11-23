@@ -57,9 +57,11 @@ angular.module("locks.controllers")
     $rootScope.$on("giveAccess",function(event,data){
         for(var i=0;i<$scope.groups.length;i++){
             if($scope.groups[i].group.code == data.msg.data.codeGroup){
-                $scope.$apply(function(){
-                    $scope.groups[i].admin = data.msg.data.admin;
-                })
+                if(data.msg.data.email == AuthSrv.getUser().email){
+                    $scope.$apply(function(){
+                        $scope.groups[i].admin = data.msg.data.admin;
+                    })
+                }
             }
         }
     });
