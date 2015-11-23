@@ -30,6 +30,7 @@ angular.module('locks.services')
             },
             logs:{
                 method:"GET",
+                //isArray:true,
                 url:ConstantsSrv.logs,
                 params:{id:'@id'},
                 headers:{

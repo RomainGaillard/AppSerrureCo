@@ -1,4 +1,4 @@
-<ion-view view-title="Logs">
+<ion-view cache-view="false" view-title="Logs">
     <ion-header-bar>
         <div class="buttons">
             <a ng-click="goToLock()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
@@ -12,7 +12,7 @@
                 <div class="col col-40">
                     Date :
                     <label class="item-input-wrapper">
-                        <input type="date">
+                        <input type="date" ng-click="logs(lock)">
                     </label>
                 </div>
                 <div class="col col-40">
