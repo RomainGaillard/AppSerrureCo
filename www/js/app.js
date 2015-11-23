@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.controllers', 'account.controllers',
     'groups.controllers', 'locks.controllers', 'member.controllers', 'waiting.controllers','groups.controllers.tabmwm',
-    'groups.services', 'logs.controllers', 'lock.controllers', 'locks.services','constants.services', 'member.services','authentification.services','ngStorage','directives'])
+    'groups.services', 'logs.controllers', 'lock.controllers', 'locks.services','constants.services', 'member.services','authentification.services','ngStorage','directives',
+    'tab.controllers', 'logs.services'])
 
 
     .run(function ($ionicPlatform,$rootScope,$http,$state,AuthSrv) {
@@ -117,7 +118,9 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
             .state('tab', {
                 url: '/tab',
                 abstract: true,
-                templateUrl: 'templates/tabs.html'
+                templateUrl: 'templates/tabs.html',
+                controller: 'tabCtrl',
+                params:{'lock':{}}
             })
 
             .state('tab.lock', {

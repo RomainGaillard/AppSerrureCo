@@ -27,6 +27,14 @@ angular.module('locks.services')
                 headers:{
                     'Authorization': AuthSrv.getUser().token
                 }
+            },
+            logs:{
+                method:"GET",
+                url:ConstantsSrv.logs,
+                params:{id:'@id'},
+                headers:{
+                    'Authorization': AuthSrv.getUser().token
+                }
             }
         });
     }]);

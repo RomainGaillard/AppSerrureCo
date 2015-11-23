@@ -23,14 +23,8 @@ angular.module("lock.controllers")
                 break;
         }
     })
-        /* $scope.gotoLogs = function(){
-             $state.go("lock");
-         };*/
     $scope.gotoLocks = function(){
         $state.go("locks");
-    };
-    $scope.gotoLogs = function(){
-        $state.go("logs");
     };
     $scope.updateLock = function(lock){
         var lock = new Lock(lock);

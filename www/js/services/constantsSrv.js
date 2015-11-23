@@ -28,4 +28,8 @@ angular.module('constants.services')
         this.user = domain+"group/:code/user"
         this.giveAccess = domain+"group/:code/giveAccess"
         this.exclude = domain+"group/:code/exclude"
+
+        this.logs           = domain+"lock/:id/log";
+        this.logsByDate     = domain+"lock/:id/log/date";
+        this.logsByDualDate = domain+"lock/:id/log/dualdate";
     });
