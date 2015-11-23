@@ -1,19 +1,20 @@
-<ion-view view-title="waitingUser">
+<ion-view cache-view="false" view-title="waitingUser">
     <ion-header-bar>
-        <a ng-click="gotoEditGroup()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
+        <a ng-click="goToEditGroup()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
         <h1 class="title">Edition des membres</h1>
         <div class="buttons">
-            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logOut()"> Déconnexion </a>
+            <a class="button icon-right ion-power  button-clear button-dark" ng-controller="LoginCtrl" ng-click="logout()"> Déconnexion </a>
         </div>
     </ion-header-bar>
     <ion-content>
-    <p>Salut ---------------------- Salut</p>
       <ion-list>
-        <ion-item ng-repeat="user in users" item="user">
-
+          <ion-item class="bgEnergized black">
+              <span>#{{group.code}}: {{group.name}} -  {{users.length}} demande(s) d'accès</span>
+          </ion-item>
+          <ion-item ng-repeat="user in users" item="user">
             <div class="row">
-                <label class="col col-70">   
-                <span>{{ user.email }}</span>
+                <label class="col col-70">
+                    <span>{{ user.email }}</span>
                 </label>
                 <label class=" reduce item item-select">
                     <select>
@@ -25,13 +26,7 @@
                         <i class="icon ion-android-cancel color-red"></i>
                 </button>
             </div>
-
+          </ion-item>
       </ion-list>
     </ion-content>
-
-    <div class="footer">
-      <div class="buttons">
-            <a class="button button-full button-balanced ion-checkmark" ng-click="gotoEditGroup()"> Ok </a>
-        </div>
-    </div>
 </ion-view>

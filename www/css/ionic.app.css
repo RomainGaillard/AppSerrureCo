@@ -9126,11 +9126,17 @@ a.button {
 .black {
   color: #444 !important; }
 
+.ligth {
+  color: white !important; }
+
 .lock-divright {
   float: right; }
 
 .cursor-point {
   cursor: pointer; }
+
+.no-cursor-point {
+  cursor: default; }
 
 .lock-margin {
   margin-left: 10px; }
@@ -9165,3 +9171,27 @@ a.button {
 
 .bgEnergized {
   background-color: #ffc900; }
+
+.bgDark {
+  background-color: #444; }
+
+.infoAdminOrMember {
+  padding: 2px 4px 1px;
+  min-width: 28px;
+  min-height: 30px;
+  font-size: 12px;
+  line-height: 26px;
+  color: white;
+  border-color: #111;
+  background-color: #444;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 2px;
+  vertical-align: top;
+  text-align: center;
+  text-overflow: ellipsis;
+  margin-left: 10px; }

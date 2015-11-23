@@ -9,7 +9,7 @@ angular.module('login.controllers')
     $scope.myUser.identifier = "romain2.gaillard@ynov.com"
     $scope.myUser.password = "mdpRomain2"
 
-    $scope.gotoRegister = function() {
+    $scope.goToRegister = function() {
         $state.go("register");
     }
 

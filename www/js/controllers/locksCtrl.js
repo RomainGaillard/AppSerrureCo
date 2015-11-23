@@ -13,16 +13,34 @@ angular.module("locks.controllers")
     $scope.group = new Group();
     $scope.lock = new Lock();
 
-    $scope.gotoLock = function(lock, group){
+    var getGroups = function(){
+        io.socket.get(ConstantsSrv.group,{token:AuthSrv.getUser().token},function(groups,jwres){
+            if(jwres.statusCode == 200){
+                $scope.$apply(function(){
+                    $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
+                    $scope.groups = groups;
+                })
+            }
+        })
+    }
+    getGroups();
+
+    io.socket.get(ConstantsSrv.myUser,{token:AuthSrv.getUser().token},function(user,jwres){
+        // Permet d'établir une socket d'écoute sur l'user.
+    })
+
+    // ========= LES ROUTES ======================================
+
+    $scope.goToLock = function(lock, group){
         $state.go("tab.lock", {lock: lock, group: group},{reload:true});
     };
 
-    $scope.gotoEditGroup = function(group){
+    $scope.goToEditGroup = function(group){
         $scope.showLocks(group.group.code); // Annule le clic simultanné sur la barre + bouton.
         $state.go("editGroup",{group: group},{reload:true});
     };
 
-    $scope.gotoAccount = function(){
+    $scope.goToAccount = function(){
         $state.go("account");
     };
 
@@ -35,26 +53,84 @@ angular.module("locks.controllers")
         $("#"+code).slideToggle();
     }
 
-    io.socket.get(ConstantsSrv.group,{token:AuthSrv.getUser().token},function(groups,jwres){
-        if(jwres.statusCode == 200){
-            $scope.nbGroupWait = $filter('filter')(groups, {validate: false}).length;
-            $scope.groups = groups;
+    // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+    $rootScope.$on("giveAccess",function(event,data){
+        for(var i=0;i<$scope.groups.length;i++){
+            if($scope.groups[i].group.code == data.msg.data.codeGroup){
+                $scope.$apply(function(){
+                    $scope.groups[i].admin = data.msg.data.admin;
+                })
+            }
+        }
+    });
+
+    $rootScope.$on("groupDestroyed",function(event,data){
+        $scope.$apply(function(){
+            for(var i=0;i<$scope.groups.length;i++){
+                if($scope.groups[i].group.id == data.msg.id){
+                    $scope.groups.splice(i,1);
+                }
+            }
+        })
+    });
+
+    $rootScope.$on("userJoin",function(event,data){
+        getGroups();
+    });
+
+    $rootScope.$on("exclude",function(event,data){
+        if (data.msg.data.email == AuthSrv.getUser().email){
+            for(var i=0;i<$scope.groups.length;i++){
+                if($scope.groups[i].group.code == data.msg.data.codeGroup){
+                    $scope.$apply(function(){
+                        $scope.groups.splice(i,1);
+                    })
+                }
+            }
         }
     })
 
+    $rootScope.$on("callNewLock", function (event) {
+        $rootScope.newLock();
+    });
 
+    // =========== GESTION DES LISTENERS SOCKET ========================
     io.socket.on('group',function(msg){
         switch(msg.verb){
             case "destroyed":
-                $scope.$apply(function(){
-                    for(var i=0;i<$scope.groups.length;i++){
-                        if($scope.groups[i].group.id == msg.id){
-                            $scope.groups.splice(i,1);
-                        }
-                    }
-                })
+                $rootScope.$emit("groupDestroyed",{msg:msg});
                 break;
             case "updated":
+                if(msg.data.removeLock)
+                    $rootScope.$emit("removeLock",{msg:msg})
+                if(msg.data.addLock)
+                    $rootScope.$emit("addLock",{msg:msg})
+                if(msg.data.giveAccess)
+                    $rootScope.$emit("giveAccess",{msg:msg});
+                if(msg.data.exclude)
+                    $rootScope.$emit("exclude",{msg:msg});
+                if(msg.data.join)
+                    $rootScope.$emit("join",{msg:msg});
+                break;
+        }
+    })
+
+    io.socket.on('lock',function(msg){
+        switch(msg.verb){
+            case "updated":
+                $rootScope.$emit("lockUpdated",{msg:msg});
+                break;
+            case "destroyed":
+                $rootScope.$emit("lockDestroyed",{msg:msg});
+                break;
+        }
+    });
+
+    io.socket.on('user',function(msg){
+        switch(msg.verb){
+            case "updated":
+                if(msg.data.join)
+                    $rootScope.$emit("userJoin",{msg:msg});
                 break;
         }
     })
@@ -176,7 +252,7 @@ angular.module("locks.controllers")
 
         // ===== POPUP - NEW LOCK! =====
 
-        $ionicModal.fromTemplateUrl('templates/new_lock.html', function(modal) {
+    $ionicModal.fromTemplateUrl('templates/new_lock.html', function(modal) {
             $rootScope.newLockModal = modal;
         }, {
             scope: $scope,
@@ -210,10 +286,6 @@ angular.module("locks.controllers")
             }
         })
     };
-
-    $rootScope.$on("callNewLock", function (event) {
-        $rootScope.newLock();
-    });
 
 }])
 

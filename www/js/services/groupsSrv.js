@@ -50,7 +50,7 @@ angular.module('groups.services')
             giveAccess:{
                 method:'PUT',
                 url:ConstantsSrv.giveAccess,
-                params:{code:'@code'},
+                params:{code:'@code',email:'@email',admin:'@admin'},
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }
@@ -58,7 +58,15 @@ angular.module('groups.services')
             exclude:{
                 method:"DELETE",
                 url:ConstantsSrv.exclude,
-                params:{code:'@code'},
+                params:{code:'@code',email:'@email'},
+                headers: {
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            join:{
+                method:"POST",
+                url:ConstantsSrv.join,
+                params:{code:'@code',email:"@email",admin:"@admin"},
                 headers: {
                     'Authorization': AuthSrv.getUser().token
                 }

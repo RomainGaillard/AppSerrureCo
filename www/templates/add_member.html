@@ -1,0 +1,37 @@
+<div class="modal">
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+        <h1 class="title">Ajouter un membre</h1>
+        <button class="button button-clear button-positive" ng-click="closeAddMember()">Annuler</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+        <div class="list">
+            <form ng-submit="doAddMember()">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Email:</span>
+                    <input type="text" placeholder="Email" ng-model="member.email">
+                </label>
+                <div class="row item">
+                    <div class="col">Administrateur:
+                        <span ng-show="member.admin" class="font-bold">Oui</span>
+                        <span ng-show="!member.admin" class="font-bold">Non</span>
+                    </div>
+                    <div class="col">
+                        <label class="toggle toggle-balanced right">
+                            <input type="checkbox" ng-model="member.admin" ng-init="member.admin = false">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <button class="button button-full button-balanced" type="submit" >
+                    <i class="ion-android-add-circle"></i>
+                    <span>  Ajouter</span>
+                </button>
+            </form>
+        </div>
+    </ion-content>
+</div>

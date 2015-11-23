@@ -9,6 +9,7 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
     'tab.controllers', 'logs.services'])
 
 
+
     .run(function ($ionicPlatform,$rootScope,$http,$state,AuthSrv) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -73,26 +74,27 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
             .state('mwm', {
                 url: '/tabmwm',
                 abstract: true,
+                authenticate:true,
+                controller:"MemberWaitingCtrl",
                 templateUrl: 'templates/manage_waiting_member.html',
-                controller: 'TabMwmCtrl',
             })
 
             .state('mwm.waiting', {
                 url: '/waiting',
+                authenticate:true,
                 views: {
                     'tab-waiting': {
                         templateUrl: 'templates/waiting_user.html',
                         controller: 'WaitingCtrl'
                     }
                 },
-                params: {
-                    'group':''
-                },
+                params: {'group':{}},
                 authenticate:true
             })
 
             .state('mwm.member', {
                 url: '/member',
+                authenticate:true,
                 views: {
                     'tab-validate': {
                         templateUrl: 'templates/manage_member.html',
@@ -101,30 +103,24 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 },
                 params: {
                     'group':''
-                },
-                authenticate:true
+                }
             })
-            
-
-            //.state('member', {
-            //    url:'/member',
-            //    templateUrl: 'templates/manage_member.html',
-            //    controller: 'MemberCtrl',
-            //    authenticate:true,
-            //    params: {'group':{code:"XXXXX",name:"Undefined"}}
-                
-            //})
 
             .state('tab', {
                 url: '/tab',
                 abstract: true,
                 templateUrl: 'templates/tabs.html',
+<<<<<<< HEAD
                 controller: 'tabCtrl',
                 params:{'lock':{}}
+=======
+                authenticate:true
+>>>>>>> 11628a80349a78b196bc2c3743351265abebac51
             })
 
             .state('tab.lock', {
                 url: '/lock',
+                authenticate:true,
                 views: {
                     'tab-lock': {
                         templateUrl: 'templates/lock.html',
@@ -136,6 +132,7 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
 
             .state('tab.log', {
                 url: '/logs',
+                authenticate:true,
                 views: {
                     'tab-logs': {
                         templateUrl: 'templates/logs.html',

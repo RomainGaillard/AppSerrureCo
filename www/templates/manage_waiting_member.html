@@ -1,17 +1,14 @@
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
     <!-- validate User Tab -->
-    <ion-tab title="Validé" icon-off="ion-android-checkbox-outline" icon-on="ion-android-checkbox-outline" ui-sref="mwm.member">
+    <ion-tab title="Validé(s)" icon-off="ion-android-checkbox-outline" icon-on="ion-android-checkbox-outline" ng-click="goToManageMembers()">
         <ion-nav-view name="tab-validate"></ion-nav-view>
     </ion-tab>
 
 <!-- href="#/tabmwm/waiting"  -->
 
     <!-- waiting User Tab -->
-    <ion-tab title="En attente" icon-off="ion-android-checkbox-outline-blank" icon-on="ion-android-checkbox-outline-blank"  ui-sref="mwm.waiting" >
+    <ion-tab title="En attente(s)" icon-off="ion-android-checkbox-outline-blank" icon-on="ion-android-checkbox-outline-blank"  ng-click="goToManageWaiting()" >
         <ion-nav-view name="tab-waiting"></ion-nav-view>
     </ion-tab>
-    --{{getGroup()}}--
-
-
 </ion-tabs>

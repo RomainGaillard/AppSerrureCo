@@ -10,7 +10,7 @@ angular.module("account.controllers")
 
         $scope.myNewUser = new User();
         var finVerif = true;
-        $scope.gotoLocks = function(){
+        $scope.goToLocks = function(){
             $state.go("locks")
         };
 
@@ -35,7 +35,6 @@ angular.module("account.controllers")
         };
 
         $scope.updateUser = function() {
-            console.log("test")
             if(verifCase()){
                 $scope.myNewUser.$update().then(function (data) {
                     $state.go("locks")
