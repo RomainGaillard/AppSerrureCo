@@ -4,35 +4,22 @@
 
 angular.module("account.controllers")
 
-    .controller('AccountCtrl', ['$scope','$state','$ionicModal','User', function($scope, $state, $ionicModal, User) {
+    .controller('AccountCtrl', ['$scope','$state','$ionicModal','User','AuthSrv', function($scope, $state, $ionicModal, User,AuthSrv) {
 
         $("[id='errorSave']").hide();
 
-        $scope.myNewUser = new User();
+        $scope.myNewUser = new User(AuthSrv.getUser());
         var finVerif = true;
+
+
+
+        // ========= LES ROUTES ======================================
+
         $scope.goToLocks = function(){
             $state.go("locks")
         };
 
-        // Create and load the Modal
-        $ionicModal.fromTemplateUrl('templates/edit_password.html', function(modal) {
-            $scope.editPasswordModal = modal;
-        }, {
-            scope: $scope,
-            animation: 'slide-in-up'
-        });
-
-        $scope.editPassword = function(){
-            $scope.editPasswordModal.show();
-        };
-
-        $scope.closeEditPassword = function() {
-            $scope.editPasswordModal.hide();
-        };
-
-        $scope.doEditPassword = function(){
-
-        };
+        // ========= LES ACTIONS DU SCOPE =====================================
 
         $scope.updateUser = function() {
             if(verifCase()){
@@ -43,7 +30,7 @@ angular.module("account.controllers")
                     showError("ce mail existe déjà ou est incorrecte, veuillez en rentrer un autre");
                 })
             }
-        }
+        };
 
         var errorCaseEmpty = function(elem){
             elem.parent().css("border","1px solid red");
@@ -96,5 +83,28 @@ angular.module("account.controllers")
                 })
             }
         };
+
+        // ===== POPUP - EDIT PASSWORD ================================
+
+        // Create and load the Modal
+        $ionicModal.fromTemplateUrl('templates/edit_password.html', function(modal) {
+            $scope.editPasswordModal = modal;
+        }, {
+            scope: $scope,
+            animation: 'slide-in-up'
+        });
+
+        $scope.editPassword = function(){
+            $scope.editPasswordModal.show();
+        };
+
+        $scope.closeEditPassword = function() {
+            $scope.editPasswordModal.hide();
+        };
+
+        $scope.doEditPassword = function(){
+
+        };
+
 
     }]);
