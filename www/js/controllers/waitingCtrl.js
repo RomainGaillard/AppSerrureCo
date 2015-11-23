@@ -1,23 +1,84 @@
 angular.module("waiting.controllers")
 
-  .controller('WaitingCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group', function($scope, $state, $ionicModal, $rootScope, $stateParams, Group) {
+  .controller('WaitingCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group','AuthSrv', function($scope, $state, $ionicModal, $rootScope, $stateParams, Group,AuthSrv) {
 
-    $scope.users = {};
-    $scope.group =  $stateParams.group;
-    var myGroup = new Group($stateParams.group);
+      $scope.users = {};
+      $scope.group =  $stateParams.group;
+      var myGroup = new Group($stateParams.group);
 
-    /*$scope.group.$usersWait().then(function(data){
-        $scope.users = data.users;
+      myGroup.$usersWait().then(function(data){
+        console.log(data);
+        $scope.users = data.usersWait;
         },function(err){
         console.log(err);
-    })*/
+      })
 
+      // ========= LES ROUTES ======================================
 
-    // ========= LES ROUTES ======================================
+      $scope.goToEditGroup = function(){
+          removeListener();
+          $state.go("editGroup", {group:{group:$scope.group}});
+      }
 
-    $scope.gotoEditGroup = function(){
-      $state.go("editGroup", {group:{group:myGroup}});
-    }
+      $scope.goToLocks = function(){
+          removeListener();
+          $state.go("locks");
+      }
 
+      // ========= LES ACTIONS DU SCOPE =====================================
+
+      $scope.acceptMember = function(user){
+          myGroup.code = $scope.group.code;
+          myGroup.email = user.email;
+          myGroup.$giveAccess().then(function(data){
+          },function(err){
+              console.log(err);
+              alert(err.data.err);
+          })
+      }
+
+      $scope.excludeMember = function(user){
+          myGroup.code = $scope.group.code;
+          myGroup.email = user.email;
+          myGroup.$exclude().then(function(data){
+          },function(err){
+              console.log(err);
+          })
+      }
+
+      // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+
+      var removeListener = function(){
+          giveAccessListener();
+          excludeListener();
+      }
+
+      var giveAccessListener = $rootScope.$on("giveAccess",function(event,data){
+          if($scope.group.code == data.msg.data.codeGroup){
+              for(var i=0;i<$scope.users.length;i++){
+                  if($scope.users[i].email == data.msg.data.email){
+                      $scope.$apply(function(){
+                          $scope.users.splice(i,1);
+                      })
+                      if(data.msg.data.email == AuthSrv.getUser().email)
+                          $scope.goToLocks();
+                  }
+              }
+          }
+      })
+
+      var excludeListener = $rootScope.$on("exclude",function(event,data){
+          if($scope.group.code == data.msg.data.codeGroup){
+              for(var i=0;i<$scope.users.length;i++){
+                  if($scope.users[i].email == data.msg.data.email){
+                      $scope.$apply(function(){
+                          $scope.users.splice(i,1);
+                      })
+                      if(data.msg.data.email == AuthSrv.getUser().email)
+                          $scope.goToLocks();
+                  }
+              }
+          }
+      })
 
   }]);

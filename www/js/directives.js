@@ -98,18 +98,29 @@ angular.module('directives', ['authentification.services'])
         }
     }])
 
-    .directive('nbUsersWait',['AuthSrv','Group',function(AuthSrv,Group){
+    .directive('nbUsersWait',['AuthSrv','Group','$rootScope',function(AuthSrv,Group,$rootScope){
         return{
             restrict:'E',
             scope:true,
             template:"<button class='button-clear ion-person-add black' ng-hide='nbUsersWait == 0'> {{nbUsersWait}} demande(s) d'accès</button>",
             link:function($scope,element,attributes){
                 var group = new Group();
-                group.code = attributes.code;
-                group.$usersWait().then(function(data){
-                    $scope.nbUsersWait = data.usersWait.length;
-                },function(err){
-                    console.log(err);
+
+                var getUsersWait = function(){
+                    group.code = attributes.code;
+                    group.$usersWait().then(function(data){
+                            $scope.nbUsersWait = data.usersWait.length;
+                    },function(err){
+                        console.log(err);
+                    })
+                }
+
+                getUsersWait();
+
+                $rootScope.$on("updateNbUsersWait",function(event,data){
+                    if(attributes.code == data.code){
+                        getUsersWait();
+                    }
                 })
             }
         }

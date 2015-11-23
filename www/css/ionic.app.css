@@ -9151,8 +9151,11 @@ a.button {
 .font-bold {
   font-weight: bold; }
 
-.color-red {
-  color: #EC4545; }
+.assertive {
+  color: #ef473a !important; }
+
+.balanced {
+  color: #33cd5f !important; }
 
 .new-group-bt {
   float: right;

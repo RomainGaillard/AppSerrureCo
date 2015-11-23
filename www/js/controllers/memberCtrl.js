@@ -9,6 +9,7 @@ angular.module("member.controllers")
 
       myGroup.$user().then(function(data){
           $scope.users = data.users;
+          console.log($scope.users);
           $scope.nbAdmin = $filter('filter')($scope.users, {admin: true}).length;
       },function(err){
         console.log(err);

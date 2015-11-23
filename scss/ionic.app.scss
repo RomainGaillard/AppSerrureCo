@@ -105,8 +105,12 @@ $m_left: 10px;
 	font-weight: bold;
 }
 
-.color-red{
-	 color:#EC4545;
+.assertive{
+	color:$assertive !important;
+}
+
+.balanced{
+	color:$balanced !important;
 }
 
 .new-group-bt{

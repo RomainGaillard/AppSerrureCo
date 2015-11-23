@@ -57,11 +57,14 @@ angular.module("locks.controllers")
     $rootScope.$on("giveAccess",function(event,data){
         for(var i=0;i<$scope.groups.length;i++){
             if($scope.groups[i].group.code == data.msg.data.codeGroup){
-                if(data.msg.data.email == AuthSrv.getUser().email){
-                    $scope.$apply(function(){
+                $scope.$apply(function() {
+                    if (data.msg.data.email == AuthSrv.getUser().email) {
+                        $scope.groups[i].validate = true;
                         $scope.groups[i].admin = data.msg.data.admin;
-                    })
-                }
+                        $scope.nbGroupWait = $filter('filter')($scope.groups, {validate: false}).length;
+                    }
+                })
+                $rootScope.$emit("updateNbUsersWait",{code:data.msg.data.codeGroup});
             }
         }
     });
@@ -78,15 +81,36 @@ angular.module("locks.controllers")
 
     $rootScope.$on("userJoin",function(event,data){
         getGroups();
+        //$rootScope.updateNbUsersWait(data.msg.data.codeGroup);
     });
 
     $rootScope.$on("exclude",function(event,data){
-        if (data.msg.data.email == AuthSrv.getUser().email){
-            for(var i=0;i<$scope.groups.length;i++){
-                if($scope.groups[i].group.code == data.msg.data.codeGroup){
-                    $scope.$apply(function(){
-                        $scope.groups.splice(i,1);
-                    })
+        for (var i = 0; i < $scope.groups.length; i++) {
+            if ($scope.groups[i].group.code == data.msg.data.codeGroup) {
+                $scope.$apply(function () {
+                    if (data.msg.data.email == AuthSrv.getUser().email) {
+                        $scope.groups.splice(i, 1);
+                        $scope.nbGroupWait = $filter('filter')($scope.groups, {validate: false}).length;
+                    }
+                })
+                $rootScope.$emit("updateNbUsersWait",{code:data.msg.data.codeGroup});
+            }
+        }
+    });
+
+    $rootScope.$on("askAccess", function (event,data) {
+        for(var i=0;i<$scope.groups.length;i++){
+            if($scope.groups[i].group.code == data.msg.data.codeGroup){
+                $rootScope.$emit("updateNbUsersWait",{code:data.msg.data.codeGroup});
+            }
+        }
+    });
+
+    $rootScope.$on("exit",function(event,data){
+        for(var i=0;i<$scope.groups.length;i++){
+            if($scope.groups[i].group.code == data.msg.data.codeGroup){
+                if(AuthSrv.getUser().email == data.msg.data.email){
+                    $scope.groups.splice(i,1);
                 }
             }
         }
@@ -113,11 +137,16 @@ angular.module("locks.controllers")
                     $rootScope.$emit("exclude",{msg:msg});
                 if(msg.data.join)
                     $rootScope.$emit("join",{msg:msg});
+                if(msg.data.askAccess)
+                    $rootScope.$emit("askAccess",{msg:msg});
+                if(msg.data.exit)
+                    $rootScope.$emit("exit",{msg:msg});
                 break;
         }
     })
 
     io.socket.on('lock',function(msg){
+        alert("lock");
         switch(msg.verb){
             case "updated":
                 $rootScope.$emit("lockUpdated",{msg:msg});
@@ -154,7 +183,7 @@ angular.module("locks.controllers")
         $scope.askGroupModal.show();
     };
 
-    // ===== POPUP - JOIN GROUP! ====
+    // ===== POPUP - ASKACCESS JOIN GROUP! ====
 
     $ionicModal.fromTemplateUrl('templates/join_group.html', function(modal) {
         $scope.joinGroupModal = modal;
@@ -170,9 +199,8 @@ angular.module("locks.controllers")
     };
 
     $scope.requestJoinGroup = function() {
-        var code = $scope.group.code;
         $scope.group.$askAccess().then(function(data){
-            $scope.groups.push({validate:false,admin:false,group:{code:code}})
+            getGroups(); // Permet de suivre avec une socket les events du groupe.
         },function(err){
             console.log(err);
         })
@@ -232,7 +260,7 @@ angular.module("locks.controllers")
     });
 
     $scope.exitGroup = function(group){
-        $scope.group = group;
+        $scope.group = new Group(group.group);
         $scope.showLocks(group.group.code);
         $scope.exitGroupModal.show();
     };
@@ -242,9 +270,7 @@ angular.module("locks.controllers")
     };
 
     $scope.doExitGroup = function(group){
-        $scope.group = group;
         $scope.group.$exit().then(function(data){
-            $scope.groups.splice($scope.groups.indexOf($scope.group),1);
             $scope.closeExitGroup();
         },function(err){
             console.log(err);

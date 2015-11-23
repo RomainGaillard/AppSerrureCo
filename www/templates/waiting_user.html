@@ -13,17 +13,14 @@
           </ion-item>
           <ion-item ng-repeat="user in users" item="user">
             <div class="row">
-                <label class="col col-70">
+                <label class="col col-60">
                     <span>{{ user.email }}</span>
                 </label>
-                <label class=" reduce item item-select">
-                    <select>
-                        <option ng-selected="{{user.admin}}">Membre</option>
-                        <option ng-selected="{{!user.admin}}">Admin</option>
-                    </select>
-                </label>
-                <button class="button button-small button-icon new-group-bt" ng-click="removeMember($index)">
-                        <i class="icon ion-android-cancel color-red"></i>
+                <button class="col col-20 button button-small button-icon new-group-bt" ng-click="acceptMember(user)">
+                    <i class="icon ion-checkmark-circled balanced"></i>
+                </button>
+                <button class="col col-20 button button-small button-icon new-group-bt" ng-click="excludeMember(user)">
+                        <i class="icon ion-android-cancel assertive"></i>
                 </button>
             </div>
           </ion-item>

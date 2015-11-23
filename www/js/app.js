@@ -75,6 +75,7 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 url: '/tabmwm',
                 abstract: true,
                 authenticate:true,
+                params:{'group':{}},
                 controller:"MemberWaitingCtrl",
                 templateUrl: 'templates/manage_waiting_member.html',
             })
