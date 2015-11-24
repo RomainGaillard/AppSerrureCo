@@ -86,6 +86,14 @@ angular.module('groups.services')
                 headers:{
                     'Authorization':AuthSrv.getUser().token
                 }
+            },
+            update:{
+                method:"PUT",
+                url:ConstantsSrv.groupUpdate,
+                params:{code:'@code'},
+                headers:{
+                    'Authorization':AuthSrv.getUser().token
+                }
             }
         });
     }]);

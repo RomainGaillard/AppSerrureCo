@@ -16,6 +16,7 @@ angular.module('constants.services')
         this.askAccess       = domain+"group/:code/askAccess";
         this.groupUsersWait  = domain+"group/:code/usersWait"
         this.join            = domain+"group/:code/join";
+        this.groupUpdate     = domain+"group/:code/edit";
 
         this.updateAccount   = domain+"user/update";
 

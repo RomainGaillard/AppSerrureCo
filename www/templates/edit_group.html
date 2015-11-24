@@ -11,7 +11,7 @@
 
             <label class="item item-input">
                 <span class="input-label group-title">#{{group.code}}:</span>
-                <input type="text" placeholder="Nom du groupe" value="{{group.name}}">
+                <input type="text" placeholder="Nom du groupe" value="{{group.name}}" ng-model="group.name" ng-change="updateGroupName();">
             </label>
         </div>
 

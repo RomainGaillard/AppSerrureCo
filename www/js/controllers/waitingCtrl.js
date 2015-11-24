@@ -51,6 +51,8 @@ angular.module("waiting.controllers")
       var removeListener = function(){
           giveAccessListener();
           excludeListener();
+          exitListener();
+          updateGroupListener();
       }
 
       var giveAccessListener = $rootScope.$on("giveAccess",function(event,data){
@@ -80,5 +82,28 @@ angular.module("waiting.controllers")
               }
           }
       })
+
+      var exitListener = $rootScope.$on("exit",function(event,data){
+          if($scope.group.group.code == data.msg.data.codeGroup) {
+              for(var i=0;i<$scope.users.length;i++){
+                  if($scope.users[i].email == data.msg.data.email){
+                      $scope.$apply(function(){
+                          $scope.users.splice(i,1);
+                      })
+                      if(data.msg.data.email == AuthSrv.getUser().email)
+                          $scope.goToLocks();
+                  }
+              }
+          }
+      })
+
+      var updateGroupListener = $rootScope.$on("updateGroup",function(event,data){
+          if($scope.group.code == data.msg.data.codeGroup) {
+              $scope.$apply(function () {
+                  $scope.group.name = data.msg.data.name;
+              })
+          }
+      })
+
 
   }]);

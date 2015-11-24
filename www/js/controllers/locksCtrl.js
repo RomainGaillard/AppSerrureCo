@@ -64,6 +64,11 @@ angular.module("locks.controllers")
     }
 
     // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+
+    $rootScope.$on("callNewLock", function (event) {
+        $rootScope.newLock();
+    });
+
     $rootScope.$on("giveAccess",function(event,data){
         for(var i=0;i<$scope.groups.length;i++){
             if($scope.groups[i].group.code == data.msg.data.codeGroup){
@@ -130,9 +135,15 @@ angular.module("locks.controllers")
         }
     })
 
-    $rootScope.$on("callNewLock", function (event) {
-        $rootScope.newLock();
-    });
+    $rootScope.$on("updateGroup",function(event,data){
+        for(var i=0;i<$scope.groups.length;i++){
+            if($scope.groups[i].group.code == data.msg.data.codeGroup){
+                $scope.$apply(function(){
+                    $scope.groups[i].group.name = data.msg.data.name;
+                })
+            }
+        }
+    })
 
     // =========== GESTION DES LISTENERS SOCKET ========================
     io.socket.on('group',function(msg){
@@ -155,6 +166,9 @@ angular.module("locks.controllers")
                     $rootScope.$emit("askAccess",{msg:msg});
                 if(msg.data.exit)
                     $rootScope.$emit("exit",{msg:msg});
+                if(msg.data.update){
+                    $rootScope.$emit("updateGroup",{msg:msg});
+                }
                 break;
         }
     })

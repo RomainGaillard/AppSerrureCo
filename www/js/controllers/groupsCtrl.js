@@ -20,11 +20,22 @@ angular.module("groups.controllers")
             $state.go("mwm.member", {group:$scope.group});
         }
 
+        // ========= LES ACTIONS DU SCOPE =====================================
+
+        $scope.updateGroupName = function(){
+            var myGroup = new Group($scope.group)
+            myGroup.$update().then(function(data){
+            },function(err){
+                console.log(err);
+            })
+        }
+
         // =========== GESTION DES LISTENERS ROOTSCOPE ========================
 
         var removeListener = function(){
             giveAccessListener();
             excludeListener();
+            updateGroupListener();
         }
 
         var giveAccessListener = $rootScope.$on("giveAccess",function(event,data){
@@ -38,6 +49,14 @@ angular.module("groups.controllers")
             if($scope.group.code == data.msg.data.codeGroup){
                 if (data.msg.data.email == AuthSrv.getUser().email)
                     $scope.goToLocks();
+            }
+        })
+
+        var updateGroupListener = $rootScope.$on("updateGroup",function(event,data){
+            if($scope.group.code == data.msg.data.codeGroup){
+                $scope.$apply(function(){
+                    $scope.group.name = data.msg.data.name;
+                })
             }
         })
 

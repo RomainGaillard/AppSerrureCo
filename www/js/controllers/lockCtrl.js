@@ -40,6 +40,8 @@ angular.module("lock.controllers")
         lockDestroyedListener();
         giveAccessListener();
         excludeListener();
+        exitListener();
+        updateGroupListener();
     }
 
     var lockUpdatedListener = $rootScope.$on("lockUpdated",function(event,data){
@@ -70,6 +72,24 @@ angular.module("lock.controllers")
                 $scope.goToLocks();
         }
     })
+
+    var exitListener = $rootScope.$on("exit",function(event,data){
+        if($scope.group.group.code == data.msg.data.codeGroup) {
+            if(data.msg.email == AuthSrv.getUser().email)
+                $scope.goToLocks();
+        }
+    })
+
+    var updateGroupListener = $rootScope.$on("updateGroup",function(event,data){
+        for(var i=0;i<$scope.groups.length;i++){
+            if($scope.groups[i].code == data.msg.data.codeGroup){
+                $scope.$apply(function(){
+                    $scope.groups[i].name = data.msg.data.name;
+                })
+            }
+        }
+    })
+
 
 
 }])
