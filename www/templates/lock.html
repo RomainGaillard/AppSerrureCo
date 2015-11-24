@@ -15,7 +15,7 @@
            <label> </label>
            <label class="item item-input">
                Adresse MAC : &nbsp;
-               <input type="text" value="{{lock.address_mac}}" ng-model="lock.address_mac" ng-change="updateLock(lock);" ng-if="group.admin">
+               <input type="text" value="{{lock.address_mac}}" ng-if="group.admin" disabled>
                <label ng-if="!group.admin">{{lock.address_mac}}</label>
 
            </label>
