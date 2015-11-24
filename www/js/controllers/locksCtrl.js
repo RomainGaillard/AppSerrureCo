@@ -143,6 +143,14 @@ angular.module("locks.controllers")
                 })
             }
         }
+    });
+
+    $rootScope.$on("updateUser",function(event,data){
+        if($scope.user.id == data.msg.data.user.id){
+            $scope.$apply(function(){
+                $scope.user.email = data.msg.data.user.email;
+            })
+        }
     })
 
     // =========== GESTION DES LISTENERS SOCKET ========================
@@ -189,6 +197,8 @@ angular.module("locks.controllers")
             case "updated":
                 if(msg.data.join)
                     $rootScope.$emit("userJoin",{msg:msg});
+                if(msg.data.update)
+                    $rootScope.$emit("updateUser",{msg:msg});
                 break;
         }
     })
@@ -332,14 +342,19 @@ angular.module("locks.controllers")
             }
         }
 
-        io.socket.post(ConstantsSrv.createLock,{token:AuthSrv.getUser().token,lock:$scope.lock},function(lock,jwres){
-            if(jwres.statusCode == 201){
-                $rootScope.newLockModal.hide();
-            }
-            else{
-                alert('Erreur'+jwres.body.err);
-            }
-        })
+        if(groups.length > 0){
+            io.socket.post(ConstantsSrv.createLock,{token:AuthSrv.getUser().token,lock:$scope.lock},function(lock,jwres){
+                if(jwres.statusCode == 201){
+                    $rootScope.newLockModal.hide();
+                }
+                else{
+                    alert('Erreur'+jwres.body.err);
+                }
+            })
+        }
+        else{
+            alert('Selectionner un groupe');
+        }
     };
 
 }])
