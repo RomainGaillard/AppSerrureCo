@@ -10,12 +10,13 @@
     <ion-content>
 
         <div class="list">
-            <li class="item item-checkbox">
+            <li class="item item-checkbox" ng-repeat="lock in locks.locks" ng-if="!lock.isInGroup">
                 <label class="checkbox">
-                    <input type="checkbox">
+                    <input type="checkbox" ng-model="lock.selected">
                 </label>
-                Portail Ingésup
+                {{lock.name}}
             </li>
+            <li class="item item-checkbox" ng-if="nbLockDispo() < 1">Aucune serrures disponibles.</li>
         </div>
     </ion-content>
     <div class="footer">

@@ -94,6 +94,14 @@ angular.module('groups.services')
                 headers:{
                     'Authorization':AuthSrv.getUser().token
                 }
+            },
+            addLock:{
+                method:"POST",
+                url:ConstantsSrv.addLock,
+                params:{code:'@code',id:'@id'},
+                headers:{
+                    'Authorization':AuthSrv.getUser().token
+                }
             }
         });
     }]);

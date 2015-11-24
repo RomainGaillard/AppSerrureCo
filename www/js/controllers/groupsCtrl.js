@@ -3,9 +3,9 @@
  */
 angular.module("groups.controllers")
 
-    .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group','AuthSrv', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group,AuthSrv) {
+    .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group','AuthSrv','Lock','$filter', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group,AuthSrv,Lock,$filter) {
         $scope.group = new Group($stateParams.group.group);
-
+        var lockInGroup = {}
         // ===== ROUTES ========
 
         $scope.goToLocks = function(){
@@ -30,12 +30,24 @@ angular.module("groups.controllers")
             })
         }
 
+        $scope.nbLockDispo = function(){
+            if($scope.locks.locks.length < 1)
+                return 0;
+            var nb = 0;
+            for(var i=0;i<$scope.locks.locks.length;i++) {
+                if(!$scope.locks.locks[i].isInGroup)
+                    nb++;
+            }
+            return nb;
+        }
+
         // =========== GESTION DES LISTENERS ROOTSCOPE ========================
 
         var removeListener = function(){
             giveAccessListener();
             excludeListener();
             updateGroupListener();
+            lockInGroupListener();
         }
 
         var giveAccessListener = $rootScope.$on("giveAccess",function(event,data){
@@ -58,6 +70,11 @@ angular.module("groups.controllers")
                     $scope.group.name = data.msg.data.name;
                 })
             }
+        })
+
+        var lockInGroupListener = $rootScope.$on("lockInGroup",function(event,data){
+            // function utilisé pour la popup ajouter serrure existante.
+            lockInGroup = data.locks;
         })
 
         // ===== POPUP - DELETE GROUP! ====
@@ -124,10 +141,42 @@ angular.module("groups.controllers")
 
         $scope.addLock = function(){
             $scope.addLockModal.show();
+            $scope.locks = new Lock();
+            $scope.locks.$lock().then(function(data){
+                // Afficher uniquement les serrues qui ne sont pas déjà présente dans le groupe.
+                for(var i=0;i<$scope.locks.locks.length;i++){
+                    var inGroup = $filter('filter')(lockInGroup, {id: $scope.locks.locks[i].id}).length;
+                    if(inGroup > 0){
+                        // Si la serrure est déjà dans le groupe
+                        $scope.locks.locks[i].isInGroup = true;
+                    }
+                    else{
+                        $scope.locks.locks[i].isInGroup = false;
+                    }
+                }
+            },function(err){
+                console.log(err);
+            })
             $scope.closeAskLock()
         }
 
         $scope.doAddLock = function(){
+            if($scope.locks.locks.length > 0) {
+                for (var i = 0; i < $scope.locks.locks.length; i++) {
+                    if ($scope.locks.locks[i].selected) {
+                        var myGroup = new Group($scope.group);
+                        myGroup.id = $scope.locks.locks[i].id;
+                        myGroup.$addLock().then(function (data) {
+                        }, function (err) {
+                            console.log(err);
+                        })
+                    }
+                }
+                $scope.closeAddLock();
+            }
+            else{
+                alert("Cocher au moins une serrure");
+            }
 
         }
 

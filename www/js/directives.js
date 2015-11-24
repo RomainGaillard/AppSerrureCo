@@ -145,6 +145,7 @@ angular.module('directives', ['authentification.services'])
                         if(jwres.statusCode == 200) {
                             $scope.$apply(function(){
                                 $scope.locks = locks;
+                                $rootScope.$emit("lockInGroup",{locks:$scope.locks});
                             })
                         }
                     })
