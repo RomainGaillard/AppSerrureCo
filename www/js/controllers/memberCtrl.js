@@ -6,6 +6,7 @@ angular.module("member.controllers")
       $scope.group =  $stateParams.group;
       $scope.nbAdmin = 1;
       $scope.users = new Array();
+      var finVerif = true; // Pour gestion erreur.
 
       myGroup.$user().then(function(data){
           $scope.users = data.users;
@@ -14,6 +15,26 @@ angular.module("member.controllers")
       },function(err){
         console.log(err);
       })
+
+      var showError = function(msgError){
+          if(finVerif){
+              finVerif = false;
+              $scope.msgBtError = msgError;
+              $("[id='msgNormal']").fadeOut("fast",function(){
+                  $("[id='msgError']").fadeIn("fast");
+              });
+
+              $("[id='btValidate']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
+                  $("[id='btValidate']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
+                      $("[id='msgError']").fadeOut("fast",function(){
+                          $("[id='msgNormal']").fadeIn("fast");
+                          finVerif = true;
+                      });
+                  })
+              })
+          }
+      };
+
 
       // ========= LES ROUTES ======================================
 
@@ -135,17 +156,23 @@ angular.module("member.controllers")
 
       $scope.addMember= function(){
           $scope.addMemberModal.show();
+          $("[id='msgError']").hide();
       };
 
       $scope.doAddMember = function(){
-          myGroup.email = $scope.member.email;
-          myGroup.code = $scope.group.code;
-          myGroup.admin = $scope.member.admin;
-          myGroup.$join().then(function(data){
-              $scope.closeAddMember();
-          },function(err){
-              console.log(err);
-          })
+          if($scope.member.email == undefined || $scope.member.email == ""){
+              showError("Veuillez saisir un email");
+          }
+          else{
+              myGroup.email = $scope.member.email;
+              myGroup.code = $scope.group.code;
+              myGroup.admin = $scope.member.admin;
+              myGroup.$join().then(function(data){
+                  $scope.closeAddMember();
+              },function(err){
+                  showError(err.data.msg);
+              })
+          }
       }
 
   }]);

@@ -9,6 +9,7 @@ angular.module("locks.controllers")
     $scope.user = AuthSrv.getUser();
     $scope.groups = new Array();
     $rootScope.selectGroup = {};
+    var finVerif = true; // Pour gestion erreur.
 
     $scope.group = new Group();
     $scope.lock = new Lock();
@@ -28,6 +29,25 @@ angular.module("locks.controllers")
     io.socket.get(ConstantsSrv.myUser,{token:AuthSrv.getUser().token},function(user,jwres){
         // Permet d'établir une socket d'écoute sur l'user.
     })
+
+    var showError = function(msgError){
+        if(finVerif){
+            finVerif = false;
+            $scope.msgBtError = msgError;
+            $("[id='msgNormal']").fadeOut("fast",function(){
+                $("[id='msgError']").fadeIn("fast");
+            });
+
+            $("[id='btValidate']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
+                $("[id='btValidate']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
+                    $("[id='msgError']").fadeOut("fast",function(){
+                        $("[id='msgNormal']").fadeIn("fast");
+                        finVerif = true;
+                    });
+                })
+            })
+        }
+    };
 
     // ========= LES ROUTES ======================================
 
@@ -231,18 +251,24 @@ angular.module("locks.controllers")
 
     $scope.joinGroup = function(){
         $scope.joinGroupModal.show();
+        $("[id='msgError']").hide();
         $scope.closeAskGroup();
         $scope.group = new Group();
     };
 
     $scope.requestJoinGroup = function() {
-        $scope.group.$askAccess().then(function(data){
-            getGroups(); // Permet de suivre avec une socket les events du groupe.
-        },function(err){
-            console.log(err);
-        })
-
-        $scope.joinGroupModal.hide();
+        console.log($scope.group.code);
+        if($scope.group.code == undefined || $scope.group.code == ""){
+            showError("Saisissez le #TAG du groupe !");
+        }
+        else{
+            $scope.group.$askAccess().then(function(data){
+                getGroups(); // Permet de suivre avec une socket les events du groupe.
+                $scope.joinGroupModal.hide();
+            },function(err){
+                showError("Le groupe n'existe pas !")
+            })
+        }
     };
 
     $scope.closeJoinGroup = function() {
@@ -260,8 +286,9 @@ angular.module("locks.controllers")
     });
 
     $scope.newGroup = function(){
-        $scope.group = new Group();
         $scope.newGroupModal.show();
+        $("[id='msgError']").hide();
+        $scope.group = new Group();
         $scope.locks = new Lock();
         $scope.locks.$lock().then(function(data){
         },function(err){
@@ -277,9 +304,8 @@ angular.module("locks.controllers")
 
     $scope.createGroup = function() {
         var locks = new Array();
-        if($scope.group.name == undefined){
-            //showError();
-            alert("champ vide");
+        if($scope.group.name == undefined || $scope.group.name == ""){
+            showError("Donner un nom au groupe !");
         }
         else{
             for(var i=0;i<$scope.locks.locks.length;i++){

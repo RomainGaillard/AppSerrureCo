@@ -31,14 +31,16 @@ angular.module("groups.controllers")
         }
 
         $scope.nbLockDispo = function(){
-            if($scope.locks.locks.length < 1)
-                return 0;
-            var nb = 0;
-            for(var i=0;i<$scope.locks.locks.length;i++) {
-                if(!$scope.locks.locks[i].isInGroup)
-                    nb++;
+            if($scope.locks){
+                if($scope.locks.locks.length < 1)
+                    return 0;
+                var nb = 0;
+                for(var i=0;i<$scope.locks.locks.length;i++) {
+                    if(!$scope.locks.locks[i].isInGroup)
+                        nb++;
+                }
+                return nb;
             }
-            return nb;
         }
 
         // =========== GESTION DES LISTENERS ROOTSCOPE ========================

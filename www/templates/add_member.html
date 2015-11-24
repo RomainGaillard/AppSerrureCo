@@ -27,9 +27,15 @@
                         </label>
                     </div>
                 </div>
-                <button class="button button-full button-balanced" type="submit" >
-                    <i class="ion-android-add-circle"></i>
-                    <span>  Ajouter</span>
+                <button id="btValidate" class="button button-full button-balanced" type="submit" >
+                    <div id="msgNormal">
+                        <i class="ion-android-add-circle"></i>
+                        <span>  Ajouter</span>
+                    </div>
+                    <div id="msgError">
+                        <i class="ion-alert-circled"></i>
+                        <span>   {{msgBtError}}</span>
+                    </div>
                 </button>
             </form>
         </div>
