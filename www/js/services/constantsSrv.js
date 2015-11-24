@@ -22,7 +22,8 @@ angular.module('constants.services')
 
         this.createLock      = domain+"lock";
         this.updateLock      = domain+"lock/:id/update";
-        this.lock            = domain+"lock/:id";
+        this.lockById        = domain+"lock/:id";
+        this.lock            = domain+"lock";
 
         this.login           = domain+"auth/local";
         this.logout          = domain+"logout"

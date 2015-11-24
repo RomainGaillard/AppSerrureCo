@@ -262,6 +262,12 @@ angular.module("locks.controllers")
     $scope.newGroup = function(){
         $scope.group = new Group();
         $scope.newGroupModal.show();
+        $scope.locks = new Lock();
+        $scope.locks.$lock().then(function(data){
+        },function(err){
+            console.log(err);
+        }
+        )
         $scope.closeAskGroup();
     };
 
@@ -270,15 +276,21 @@ angular.module("locks.controllers")
     };
 
     $scope.createGroup = function() {
-        if($scope.group.name == ""){
-            showError();
+        var locks = new Array();
+        if($scope.group.name == undefined){
+            //showError();
+            alert("champ vide");
         }
         else{
-
-            io.socket.post(ConstantsSrv.createGroup,{token:AuthSrv.getUser().token,name:$scope.group.name},function(group,jwres){
+            for(var i=0;i<$scope.locks.locks.length;i++){
+                if($scope.locks.locks[i].selected)
+                    locks.push($scope.locks.locks[i].id)
+            }
+            io.socket.post(ConstantsSrv.createGroup,{token:AuthSrv.getUser().token,name:$scope.group.name,locks:locks},function(group,jwres){
                 if(jwres.statusCode == 201){
                     var grp = {validate:true,admin:true,group:{code:jwres.body.created.code,name:jwres.body.created.name,id:jwres.body.created.id}};
                     $scope.groups.push(grp);
+                    $rootScope.$emit("createGroup",{code:jwres.body.created.code});
                     $scope.newGroupModal.hide();
                 }
                 else{

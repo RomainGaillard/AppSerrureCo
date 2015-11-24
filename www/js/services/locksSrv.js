@@ -22,7 +22,7 @@ angular.module('locks.services')
             },
             lockById:{
                 method:"GET",
-                url:ConstantsSrv.lock,
+                url:ConstantsSrv.lockById,
                 params:{id:'@id'},
                 headers:{
                     'Authorization': AuthSrv.getUser().token
@@ -32,6 +32,13 @@ angular.module('locks.services')
                 method:"GET",
                 url:ConstantsSrv.logs,
                 params:{id:'@id'},
+                headers:{
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            lock:{
+                method:"GET",
+                url:ConstantsSrv.lock,
                 headers:{
                     'Authorization': AuthSrv.getUser().token
                 }

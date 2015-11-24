@@ -71,6 +71,11 @@ angular.module('directives', ['authentification.services'])
                         getLocks();
                 })
 
+                $rootScope.$on("createGroup",function(event,data){
+                    if(data.code == code)
+                        getLocks();
+                })
+
                 /*
                 io.socket.on('group',function(msg){
                     switch(msg.verb){

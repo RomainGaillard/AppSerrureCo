@@ -16,11 +16,11 @@
                 <label class="item font-bold">
                     Serrures associées:
                 </label>
-                <li class="item item-checkbox" ng-repeat="lock in locks">
+                <li class="item item-checkbox" ng-repeat="lock in locks.locks">
                     <label class="checkbox">
-                        <input type="checkbox">
+                        <input type="checkbox" ng-model="lock.selected">
                     </label>
-                    {{lock.title}}
+                    {{lock.name}}
                 </li>
 
                 <!--
