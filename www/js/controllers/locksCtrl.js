@@ -364,6 +364,8 @@ angular.module("locks.controllers")
 
     $rootScope.newLock = function(){
         $rootScope.newLockModal.show();
+        $scope.lock = {};
+        $("[id='msgError']").hide();
     };
 
     $rootScope.closeNewLock = function() {
@@ -371,27 +373,36 @@ angular.module("locks.controllers")
     };
 
     $rootScope.createLock = function() {
-        $scope.lock.groups = new Array();
-        var groups = new Array();
-        for(var i=0;i<$scope.groups.length;i++){
-            if($scope.groups[i].selected){
-                $scope.lock.groups.push($scope.groups[i].group.code);
-                groups.push($scope.groups[i].group);
-            }
+        if($scope.lock.name == undefined || $scope.lock.name == ""){
+            showError("Saisissez un nom de serrure !");
         }
-
-        if(groups.length > 0){
-            io.socket.post(ConstantsSrv.createLock,{token:AuthSrv.getUser().token,lock:$scope.lock},function(lock,jwres){
-                if(jwres.statusCode == 201){
-                    $rootScope.newLockModal.hide();
-                }
-                else{
-                    alert('Erreur'+jwres.body.err);
-                }
-            })
+        else if($scope.lock.address_mac == undefined || $scope.lock.address_mac == ""){
+            showError("Saisissez un adresse mac !")
         }
         else{
-            alert('Selectionner un groupe');
+            $scope.lock.groups = new Array();
+            var groups = new Array();
+            for(var i=0;i<$scope.groups.length;i++){
+                if($scope.groups[i].selected){
+                    $scope.lock.groups.push($scope.groups[i].group.code);
+                    groups.push($scope.groups[i].group);
+                }
+            }
+
+            if(groups.length > 0){
+                io.socket.post(ConstantsSrv.createLock,{token:AuthSrv.getUser().token,lock:$scope.lock},function(lock,jwres){
+                    if(jwres.statusCode == 201){
+                        $rootScope.newLockModal.hide();
+                    }
+                    else{
+                        showError('Erreur: Addresse Mac déjà utilisée !');
+                        console.log(jwres.body.err);
+                    }
+                })
+            }
+            else{
+                showError('Selectionner au moins un groupe !');
+            }
         }
     };
 

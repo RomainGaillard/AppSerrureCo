@@ -5,7 +5,28 @@ angular.module("groups.controllers")
 
     .controller('GroupsCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group','AuthSrv','Lock','$filter', function($scope, $state,$ionicModal,$rootScope, $stateParams, Group,AuthSrv,Lock,$filter) {
         $scope.group = new Group($stateParams.group.group);
-        var lockInGroup = {}
+        var lockInGroup = {};
+        var finVerif = true; // Pour gestion erreur.
+
+        var showError = function(msgError){
+            if(finVerif){
+                finVerif = false;
+                $scope.msgBtError = msgError;
+                $("[id='msgNormal']").fadeOut("fast",function(){
+                    $("[id='msgError']").fadeIn("fast");
+                });
+
+                $("[id='btValidate']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
+                    $("[id='btValidate']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
+                        $("[id='msgError']").fadeOut("fast",function(){
+                            $("[id='msgNormal']").fadeIn("fast");
+                            finVerif = true;
+                        });
+                    })
+                })
+            }
+        };
+
         // ===== ROUTES ========
 
         $scope.goToLocks = function(){
@@ -31,7 +52,7 @@ angular.module("groups.controllers")
         }
 
         $scope.nbLockDispo = function(){
-            if($scope.locks){
+            if($scope.locks && $scope.locks.locks){
                 if($scope.locks.locks.length < 1)
                     return 0;
                 var nb = 0;
@@ -143,6 +164,7 @@ angular.module("groups.controllers")
 
         $scope.addLock = function(){
             $scope.addLockModal.show();
+            $("[id='msgError']").hide();
             $scope.locks = new Lock();
             $scope.locks.$lock().then(function(data){
                 // Afficher uniquement les serrues qui ne sont pas déjà présente dans le groupe.

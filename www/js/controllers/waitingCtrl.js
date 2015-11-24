@@ -7,7 +7,6 @@ angular.module("waiting.controllers")
       var myGroup = new Group($stateParams.group);
 
       myGroup.$usersWait().then(function(data){
-        console.log(data);
         $scope.users = data.usersWait;
         },function(err){
         console.log(err);
