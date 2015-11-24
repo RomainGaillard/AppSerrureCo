@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view cache-view="false">
     <ion-header-bar>
         <div class="buttons">
             <a ng-click="goToLocks()" class="button icon-left ion-chevron-left button-clear button-dark">Retour</a>
@@ -9,40 +9,40 @@
         </div>
     </ion-header-bar>
     <ion-content>
-        <form ng-submit="updateUser()">
-            <div class="list">
-                <label class="item item-input item-floating-label">
-                    <span class="input-label">Prénom</span>
-                    <input type="text" placeholder="Prénom" ng-model="myNewUser.firstname " ng-focus="reinitCase($event)">
-                </label>
-                <label class="item item-input item-floating-label">
-                    <span class="input-label">Nom</span>
-                    <input type="text" placeholder="Nom" ng-model="myNewUser.lastname" ng-focus="reinitCase($event)">
-                </label>
-                <label class="item item-input item-floating-label">
-                    <span class="input-label">Email</span>
-                    <input type="text" placeholder="Email" ng-model="myNewUser.email" ng-focus="reinitCase($event)">
-                </label>
-                <br>
-                <button class="button button-outline button-positive block-center" ng-click="editPassword()">
-                    <i class="ion-android-sync"></i>
-                    <span>  Modifier mot de passe</span>
-                </button>
-                <br>
-                <button id="btSave" class="button button-full button-balanced " type="submit">
-                    <div id="successSave">
-                        <i class="ion-checkmark"></i>
-                        <span>   Sauvegarder</span>
-                    </div>
-                    <div id="errorSave">
-                        <i class="ion-alert-circled"></i>
-                        <span>   {{msgBtSave}}</span>
-                    </div>
-                    <!--<i class="ion-checkmark"></i>-->
-                    <!--<span>  Sauvegarder</span>-->
-                </button>
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Prénom</span>
+                <input type="text" placeholder="Prénom" ng-model="myNewUser.firstname " ng-focus="reinitCase($event)">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Nom</span>
+                <input type="text" placeholder="Nom" ng-model="myNewUser.lastname" ng-focus="reinitCase($event)">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Email</span>
+                <input type="text" placeholder="Email" ng-model="myNewUser.email" ng-focus="reinitCase($event)">
+            </label>
+            <br>
 
-            </div>
-        </form>
+            <button class="button button-outline button-positive block-center" ng-click="editPassword()">
+                <i class="ion-android-sync"></i>
+                <span>  Modifier mot de passe</span>
+            </button>
+            <br>
+
+            <button id="btSave" class="button button-full button-balanced " ng-click="updateUser()">
+                <div id="successSave">
+                    <i class="ion-checkmark"></i>
+                    <span>   Sauvegarder</span>
+                </div>
+                <div id="errorSave">
+                    <i class="ion-alert-circled"></i>
+                    <span>   {{msgBtSave}}</span>
+                </div>
+                <!--<i class="ion-checkmark"></i>-->
+                <!--<span>  Sauvegarder</span>-->
+            </button>
+
+        </div>
     </ion-content>
 </ion-view>
