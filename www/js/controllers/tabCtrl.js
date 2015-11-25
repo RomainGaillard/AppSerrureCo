@@ -10,15 +10,14 @@ angular.module("tab.controllers")
         console.log(lock);
         lock.$lockById().then(function(data){
             $scope.lock = data;
-            $state.go(destination, {lock:$scope.lock, group:$scope.group});
+            $state.go(destination, {lock:$scope.lock, group:$scope.group},{reload:true});
         },function(err){
             console.log(err);
         });
     };
 
-    $scope.gotoLogs = function(){
-        $scope.getLock("tab.log");
-
+    $scope.goToLogs = function(){
+        $state.go("tab.log");
     };
     $scope.gotoLock = function(){
         $scope.getLock("tab.lock");

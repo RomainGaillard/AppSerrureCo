@@ -27,12 +27,13 @@ angular.module("waiting.controllers")
       $scope.goToBack = function(){
           removeListener();
           var viewHistory = $ionicHistory.viewHistory();
-          if(viewHistory.backView.stateName == "locks"){
+          if(viewHistory.backView){
+              if(viewHistory.backView.stateName == "locks"){
                   $state.go("locks");
+              }
+              else
+                  $state.go("editGroup", {group:{group:$scope.group}});
           }
-          else
-              $state.go("editGroup", {group:{group:$scope.group}});
-
       }
 
       // ========= LES ACTIONS DU SCOPE =====================================
