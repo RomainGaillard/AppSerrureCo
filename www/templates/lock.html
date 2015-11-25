@@ -75,6 +75,13 @@
                 </p>
             </li>
 
+            <div class="item" style="text-align:center;" ng-if="lock.has_camera">
+                <a href="#" class="thumbnail">
+                    <img src="img/camera.svg" alt="camera" style="width:50%;">
+                </a>
+            </div>
+
+
             <li class="item item-toggle">
                 <label class="toggle toggle-balanced cursor-point" ng-if="lockIsAdmin">
                     <input type="checkbox" ng-model="lock.is_register" ng-init="" ng-change="updateLock(lock);">
