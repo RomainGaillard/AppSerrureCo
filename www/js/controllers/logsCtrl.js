@@ -69,6 +69,7 @@ angular.module("logs.controllers")
             affichageDate();
         } else {
             $scope.logs = defaultLogs;
+            affichageDate();
         }
 
     }
@@ -86,9 +87,7 @@ angular.module("logs.controllers")
             var jjmmaa = date.substring(0,date.indexOf("T"));
             var hhmmss = date.substring(date.indexOf("T")+1,date.lastIndexOf('.'));
             $scope.logs[i].createdAt = jjmmaa + " à "+hhmmss;
-
         }
-        console.log($scope.logs[0].createdAt)
     }
 
 }])
