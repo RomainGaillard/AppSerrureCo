@@ -57,7 +57,6 @@ angular.module("member.controllers")
           myGroup.$giveAccess().then(function(data){
         },function(err){
           console.log(err);
-          alert(err.data.err);
         })
       }
 

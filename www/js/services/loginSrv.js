@@ -33,6 +33,13 @@ angular.module('authentification.services')
                 headers:{
                     'Authorization':AuthSrv.getUser().token
                 }
+            },
+            editPassword:{
+                method:"PUT",
+                url:ConstantsSrv.editPassword,
+                headers:{
+                    'Authorization':AuthSrv.getUser().token
+                }
             }
         });
     }])
