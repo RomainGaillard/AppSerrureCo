@@ -1,19 +1,28 @@
 angular.module("logs.controllers")
 
-.controller('LogsCtrl', ['$scope','$state', '$stateParams', 'Lock', function($scope, $state, $stateParams, Lock){
-    console.log($stateParams.lock);
-    $scope.lock = $stateParams.lock;
+.controller('LogsCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group', function($scope, $state, $stateParams, Lock, Group){
+    $scope.lock     = $stateParams.lock;
+    $scope.group    = new Group($stateParams.group);
+
+    var defaultFilter = " -- ";
+    var defaultLogs;
+    $scope.filter = defaultFilter;
 
     $scope.goToLock = function(){
         $state.go("locks")
     };
 
-    var lock = new Lock($stateParams.lock);
-    lock.$logs().then(function(data){
-        $scope.logs = data.logs;
-    },function(err){
-        console.log(err);
-    });
+    $scope.findLogs = function() {
+        var lock = new Lock($stateParams.lock);
+        lock.$logs().then(function(data){
+            defaultLogs = data.logs;
+            $scope.filtrate($scope.filter);
+        },function(err){
+            console.log(err);
+        });
+    };
+    $scope.findLogs();
+
 
     $scope.findByDate = function(date){
         if (date.start != undefined) {
@@ -22,23 +31,41 @@ angular.module("logs.controllers")
                 lock.start = formatDate(date.start);
                 lock.end = formatDate(date.end);
                 lock.$logsByDualDate().then(function(data){
-                    $scope.logs = data.logs;
+                    defaultLogs = data.logs;
+                    $scope.filtrate($scope.filter);
                 },function(err){
                     console.log(err);
                 });
             } else {
                 lock.date = formatDate(date.start);
                 lock.$logsByDate().then(function(data){
-                    $scope.logs = data.logs;
+                    defaultLogs = data.logs;
+                    $scope.filtrate($scope.filter);
                 },function(err){
                     console.log(err);
                 });
             }
+        } else {
+            $scope.findLogs();
         }
-        console.log(date.start+" - "+date.end);
     };
 
-    $scope.filtre = function(choose) {
+   $scope.filtrate = function(filter){
+        $scope.filter = filter;
+        if($scope.filter != defaultFilter && $scope.filter != undefined) {
+            var filterLogs = Array();
+            var index = 0;
+            for(var i = 0; i < defaultLogs.length; i++) {
+                if(defaultLogs[i].message.indexOf($scope.filter) > -1) {
+                    filterLogs[index] = defaultLogs[i];
+                    index++;
+                }
+            }
+
+            $scope.logs = filterLogs;
+        } else {
+            $scope.logs = defaultLogs;
+        }
 
     }
 

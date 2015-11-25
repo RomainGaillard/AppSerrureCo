@@ -12,7 +12,7 @@ angular.module('login.controllers', ['authentification.services','constants.serv
 angular.module('member.controllers',['groups.services','authentification.services'])
 angular.module('register.controllers',['authentification.services'])
 angular.module('lock.controllers', ['locks.services', 'groups.services'])
-angular.module('logs.controllers', ['locks.services'])
+angular.module('logs.controllers', ['locks.services', 'groups.services'])
 angular.module('tab.controllers', [])
 angular.module('waiting.controllers', ['authentification.services'])
 angular.module("memberWaiting.controllers",[])

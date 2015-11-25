@@ -32,11 +32,13 @@
                         <div class="input-label">
                             Filtre :
                         </div>
-                        <select>
+                        <select ng-model="filter" ng-change="filtrate(filter);">
+                            <option selected> -- </option>
                             <option>Ouverture</option>
-                            <option selected>Fermeture</option>
-                            <option>Sonnette</option>
-                            <option>Ketchup</option>
+                            <option>Fermeture</option>
+                            <option>Modification</option>
+                            <option>Ajouté</option>
+                            <option>Retiré</option>
                         </select>
                     </label>
                 </div>

@@ -112,7 +112,7 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                 abstract: true,
                 templateUrl: 'templates/tabs.html',
                 controller: 'tabCtrl',
-                params:{'lock':{}},
+                params:{'lock':{},'group':{}},
                 authenticate:true
             })
 
@@ -136,7 +136,8 @@ angular.module('starter', ['ionic', 'ngResource','login.controllers', 'register.
                         templateUrl: 'templates/logs.html',
                         controller: 'LogsCtrl'
                     }
-                }
+                },
+                params: {'lock':{}, 'group':{}}
             })
 // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/#');
