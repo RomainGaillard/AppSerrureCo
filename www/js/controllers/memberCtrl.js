@@ -10,7 +10,6 @@ angular.module("member.controllers")
 
       myGroup.$user().then(function(data){
           $scope.users = data.users;
-          console.log($scope.users);
           $scope.nbAdmin = $filter('filter')($scope.users, {admin: true}).length;
       },function(err){
         console.log(err);
@@ -116,7 +115,7 @@ angular.module("member.controllers")
       })
 
       var exitListener = $rootScope.$on("exit",function(event,data){
-          if($scope.group.group.code == data.msg.data.codeGroup) {
+          if($scope.group.code == data.msg.data.codeGroup) {
               for(var i=0;i<$scope.users.length;i++){
                   if($scope.users[i].email == data.msg.data.email){
                       $scope.$apply(function(){
