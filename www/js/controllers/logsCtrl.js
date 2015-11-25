@@ -11,10 +11,22 @@ angular.module("logs.controllers")
 
     // ========= LES ROUTES ======================================
 
-    $scope.goToLock = function(){
+    $scope.goToLocks = function(){
         $state.go("locks")
     };
 
+
+    // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+
+    var removeListener = function(){
+        lockDestroyedListener();
+    }
+
+    var lockDestroyedListener = $rootScope.$on("lockDestroyed",function(event,data){
+        if(data.msg.id == $scope.lock.id)
+            $scope.gotoLocks();
+    })
+    
     // ========= LES ACTIONS DU SCOPE =====================================
 
     $scope.findLogs = function() {
