@@ -45,7 +45,9 @@ angular.module("logs.controllers")
             var lock = new Lock($stateParams.lock);
             if (date.end != undefined) {
                 lock.start = formatDate(date.start);
-                lock.end = formatDate(date.end);
+                var dateEnd = new Date(date.end);
+                dateEnd.setDate(dateEnd.getDate()+1);
+                lock.end = formatDate(dateEnd);
                 lock.$logsByDualDate().then(function(data){
                     defaultLogs = data.logs;
                     $scope.filtrate($scope.filter);

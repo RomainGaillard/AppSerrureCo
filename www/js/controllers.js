@@ -13,6 +13,6 @@ angular.module('member.controllers',['groups.services','authentification.service
 angular.module('register.controllers',['authentification.services'])
 angular.module('lock.controllers', ['locks.services', 'groups.services'])
 angular.module('logs.controllers', ['locks.services', 'groups.services'])
-angular.module('tab.controllers', [])
+angular.module('tab.controllers', ['locks.services', 'groups.services'])
 angular.module('waiting.controllers', ['authentification.services'])
 angular.module("memberWaiting.controllers",[])
