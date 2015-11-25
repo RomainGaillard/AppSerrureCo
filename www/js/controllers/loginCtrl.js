@@ -1,7 +1,7 @@
 angular.module('login.controllers')
 
 
-.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User','AuthSrv','$timeout','$ionicHistory', function($scope, $state,$ionicModal,$http,User,AuthSrv,$timeout,$ionicHistory) {
+.controller('LoginCtrl', ['$scope','$state','$ionicModal','$http','User','AuthSrv','$timeout','$ionicHistory','$rootScope', function($scope, $state,$ionicModal,$http,User,AuthSrv,$timeout,$ionicHistory,$rootScope) {
 
     $scope.myUser = new User();
     $("[id='errorCo']").hide();
@@ -106,7 +106,7 @@ angular.module('login.controllers')
         }
     };
 
-    $scope.logout = function(){
+    $rootScope.logout = function(){
         $scope.myUser.$logout(function(user){
             AuthSrv.removeUser();
             $timeout(function () {

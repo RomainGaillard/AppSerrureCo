@@ -52,6 +52,7 @@ angular.module("waiting.controllers")
           excludeListener();
           exitListener();
           updateGroupListener();
+          askAccessListener();
       }
 
       var giveAccessListener = $rootScope.$on("giveAccess",function(event,data){
@@ -83,7 +84,7 @@ angular.module("waiting.controllers")
       })
 
       var exitListener = $rootScope.$on("exit",function(event,data){
-          if($scope.group.group.code == data.msg.data.codeGroup) {
+          if($scope.group.code == data.msg.data.codeGroup) {
               for(var i=0;i<$scope.users.length;i++){
                   if($scope.users[i].email == data.msg.data.email){
                       $scope.$apply(function(){
@@ -100,6 +101,14 @@ angular.module("waiting.controllers")
           if($scope.group.code == data.msg.data.codeGroup) {
               $scope.$apply(function () {
                   $scope.group.name = data.msg.data.name;
+              })
+          }
+      })
+
+      var askAccessListener = $rootScope.$on("askAccess",function(event,data){
+          if($scope.group.code == data.msg.data.codeGroup){
+              $scope.$apply(function(){
+                  $scope.users.push({email:data.msg.data.email});
               })
           }
       })

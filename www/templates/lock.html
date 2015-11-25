@@ -9,14 +9,13 @@
         <div class="list list-inset">
             <label class="item item-input">
                Nom : &nbsp;
-               <input type="text" value="{{lock.name}}" ng-model="lock.name" ng-change="updateLock(lock);" ng-if="group.admin">
-                <label ng-if="!group.admin">{{lock.name}}</label>
+               <input type="text" value="{{lock.name}}" ng-model="lock.name" ng-change="updateLock(lock);" ng-if="lockIsAdmin">
+                <label ng-if="!lockIsAdmin">{{lock.name}}</label>
            </label>
            <label> </label>
-           <label class="item item-input">
+           <label class="item item-input" ng-if="lockIsAdmin">
                Adresse MAC : &nbsp;
-               <input type="text" value="{{lock.address_mac}}" ng-if="group.admin" disabled>
-               <label ng-if="!group.admin">{{lock.address_mac}}</label>
+               <input type="text" value="{{lock.address_mac}}" disabled>
 
            </label>
         </div>
@@ -35,7 +34,7 @@
 
         <ul class="list">
             <li class="item item-toggle">
-                <label class="toggle toggle-balanced cursor-point" ng-if="group.admin">
+                <label class="toggle toggle-balanced cursor-point" ng-if="lockIsAdmin">
                     <input type="checkbox" ng-model="lock.has_micro" ng-change="updateLock(lock);" >
                     <div class="track">
                         <div class="handle"></div>
@@ -49,7 +48,7 @@
             </li>
 
             <li class="item item-toggle">
-                <label class="toggle toggle-balanced cursor-point" ng-if="group.admin">
+                <label class="toggle toggle-balanced cursor-point" ng-if="lockIsAdmin">
                     <input type="checkbox" ng-model="lock.has_bell" ng-change="updateLock(lock);">
                     <div class="track">
                         <div class="handle"></div>
@@ -63,7 +62,7 @@
             </li>
 
             <li class="item item-toggle">
-                <label class="toggle toggle-balanced cursor-point" ng-if="group.admin">
+                <label class="toggle toggle-balanced cursor-point" ng-if="lockIsAdmin">
                     <input type="checkbox" ng-model="lock.has_camera" ng-change="updateLock(lock);">
                     <div class="track">
                         <div class="handle"></div>
@@ -77,7 +76,7 @@
             </li>
 
             <li class="item item-toggle">
-                <label class="toggle toggle-balanced cursor-point" ng-if="group.admin">
+                <label class="toggle toggle-balanced cursor-point" ng-if="lockIsAdmin">
                     <input type="checkbox" ng-model="lock.is_register" ng-init="" ng-change="updateLock(lock);">
                     <div class="track">
                         <div class="handle"></div>

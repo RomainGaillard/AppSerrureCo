@@ -1,8 +1,9 @@
 angular.module("lock.controllers")
 
-.controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group','$rootScope','AuthSrv', function($scope, $state, $stateParams, Lock, Group,$rootScope,AuthSrv){
+.controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group','$rootScope','AuthSrv','$filter', function($scope, $state, $stateParams, Lock, Group,$rootScope,AuthSrv,$filter){
     $scope.lock     = new Lock($stateParams.lock);
     $scope.group    = new Group($stateParams.group);
+    $scope.lockIsAdmin = $scope.group.admin;
 
     //Récupération des groupes
     var lock =  new Lock($scope.lock);
@@ -12,6 +13,21 @@ angular.module("lock.controllers")
         console.log(err);
     });
 
+    var getLocksAdmin = function(){
+        var locksAdmin = new Lock();
+        locksAdmin.$lock().then(function(data){
+            if($filter('filter')(data.locks, {id: $scope.lock.id}).length > 0){
+                $scope.lockIsAdmin = true;
+            }
+            else
+                $scope.lockIsAdmin = false;
+
+        },function(err){
+            console.log(err);
+        })
+    }
+
+    getLocksAdmin();
     // ========= LES ROUTES ======================================
 
     $scope.goToLocks = function(){
@@ -42,6 +58,7 @@ angular.module("lock.controllers")
         excludeListener();
         exitListener();
         updateGroupListener();
+        joinGroupListener();
     }
 
     var lockUpdatedListener = $rootScope.$on("lockUpdated",function(event,data){
@@ -56,13 +73,12 @@ angular.module("lock.controllers")
     })
 
     var giveAccessListener = $rootScope.$on("giveAccess",function(event,data){
-        if($scope.group.group.code == data.msg.data.codeGroup){
-            if(data.msg.data.email == AuthSrv.getUser().email)
-            {
-                $scope.$apply(function(){
-                    $scope.group.admin = data.msg.data.admin;
-                })
-            }
+        if(data.msg.data.email == AuthSrv.getUser().email)
+        {
+            $scope.$apply(function(){
+                $scope.group.admin = data.msg.data.admin;
+                getLocksAdmin();
+            })
         }
     })
 
@@ -75,7 +91,7 @@ angular.module("lock.controllers")
 
     var exitListener = $rootScope.$on("exit",function(event,data){
         if($scope.group.group.code == data.msg.data.codeGroup) {
-            if(data.msg.email == AuthSrv.getUser().email)
+            if(data.msg.data.email == AuthSrv.getUser().email)
                 $scope.goToLocks();
         }
     })
@@ -88,6 +104,12 @@ angular.module("lock.controllers")
                 })
             }
         }
+    })
+
+    var joinGroupListener = $rootScope.$on("join",function(event,data){
+        if(data.msg.data.email == AuthSrv.getUser().email)
+            if(!$scope.lockIsAdmin)
+                getLocksAdmin();
     })
 
 
