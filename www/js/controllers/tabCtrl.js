@@ -15,7 +15,6 @@ angular.module("tab.controllers")
             console.log(err);
         });
     };
-
     $scope.goToLogs = function(){
         $state.go("tab.log");
     };
