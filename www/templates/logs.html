@@ -46,7 +46,7 @@
         </div>
 
         <ion-item ng-repeat="log in logs" item="log">
-            <label>{{log.createdAt}} : {{log.message}} par {{log.user.username}}.</label>
+            <label style="font-size:13px;">{{log.createdAt}} : <span style="font-size:11px;">{{log.message}} par <strong>{{log.user.username}}</strong>.</span></label>
         </ion-item>
     </ion-content>
 </ion-view>

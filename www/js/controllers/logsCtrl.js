@@ -8,9 +8,14 @@ angular.module("logs.controllers")
     var defaultLogs;
     $scope.filter = defaultFilter;
 
+
+    // ========= LES ROUTES ======================================
+
     $scope.goToLock = function(){
         $state.go("locks")
     };
+
+    // ========= LES ACTIONS DU SCOPE =====================================
 
     $scope.findLogs = function() {
         var lock = new Lock($stateParams.lock);
@@ -22,7 +27,6 @@ angular.module("logs.controllers")
         });
     };
     $scope.findLogs();
-
 
     $scope.findByDate = function(date){
         if (date.start != undefined) {
@@ -50,7 +54,7 @@ angular.module("logs.controllers")
         }
     };
 
-   $scope.filtrate = function(filter){
+    $scope.filtrate = function(filter){
         $scope.filter = filter;
         if($scope.filter != defaultFilter && $scope.filter != undefined) {
             var filterLogs = Array();
@@ -61,10 +65,11 @@ angular.module("logs.controllers")
                     index++;
                 }
             }
-
             $scope.logs = filterLogs;
+            affichageDate();
         } else {
             $scope.logs = defaultLogs;
+            affichageDate();
         }
 
     }
@@ -74,6 +79,17 @@ angular.module("logs.controllers")
         date.setHours(3);
         date = date.toISOString();
         return date.substring(0, 10);
+    }
+
+    var affichageDate = function(){
+        for(var i=0;i<$scope.logs.length;i++){
+            var date = $scope.logs[i].createdAt;
+            var jjmmaa = date.substring(0,date.indexOf("T"));
+            var hhmmss = date.substring(date.indexOf("T")+1,date.lastIndexOf('.'));
+            $scope.logs[i].createdAt = jjmmaa + " à "+hhmmss;
+
+        }
+        console.log($scope.logs[0].createdAt)
     }
 
 }])
