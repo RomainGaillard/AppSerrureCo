@@ -35,6 +35,11 @@ angular.module("groups.controllers")
             $state.go("locks")
         }
 
+        $scope.goToLock = function(lock){
+            $state.go("tab.lock", {lock: lock, group: $stateParams.group},{reload:true});
+        };
+
+
         $scope.goToManageMembers = function() {
             $rootScope.removeListenerEditGroup();
             removeListener();

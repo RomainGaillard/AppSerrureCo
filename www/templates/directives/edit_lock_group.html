@@ -1,4 +1,4 @@
-<li class="item" ng-repeat="lock in locks">
+<li class="item" ng-repeat="lock in locks" ng-click="goToLock(lock)">
     <button class="button button-small button-icon group-list" ng-click="removeLock(lock,$index)">
         <i class="icon ion-android-cancel assertive"></i>
     </button>

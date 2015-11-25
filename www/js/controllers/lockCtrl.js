@@ -1,6 +1,6 @@
 angular.module("lock.controllers")
 
-.controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group','$rootScope','AuthSrv','$filter', function($scope, $state, $stateParams, Lock, Group,$rootScope,AuthSrv,$filter){
+.controller('LockCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group','$rootScope','AuthSrv','$filter','$ionicHistory', function($scope, $state, $stateParams, Lock, Group,$rootScope,AuthSrv,$filter,$ionicHistory){
     $scope.lock     = new Lock($stateParams.lock);
     $scope.group    = new Group($stateParams.group);
     $scope.lockIsAdmin = $scope.group.admin;
@@ -34,6 +34,25 @@ angular.module("lock.controllers")
         removeListener();
         $state.go("locks");
     };
+
+    $scope.goToBack = function(){
+        removeListener();
+        var viewHistory = $ionicHistory.viewHistory();
+        var currentHistory = viewHistory.histories;
+        var currentCursor = currentHistory.root.cursor;
+        if(currentCursor > 0){
+            var backView = currentHistory.root.stack[currentCursor];
+            if(backView.stateName == "editGroup"){
+                $state.go("editGroup",{group: $scope.group},{reload:true});
+            }
+            else
+                $state.go("locks");
+        }
+        else
+            $state.go("locks");
+
+    }
+
     $scope.goToLogs = function(){
         removeListener();
         $state.go("logs");
