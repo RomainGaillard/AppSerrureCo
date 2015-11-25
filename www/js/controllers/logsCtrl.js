@@ -69,7 +69,6 @@ angular.module("logs.controllers")
             affichageDate();
         } else {
             $scope.logs = defaultLogs;
-            affichageDate();
         }
 
     }
