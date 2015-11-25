@@ -18,7 +18,7 @@ angular.module("tab.controllers")
     $scope.goToLogs = function(){
         $state.go("tab.log");
     };
-    $scope.gotoLock = function(){
+    $scope.goToLock = function(){
         $scope.getLock("tab.lock");
     };
 
