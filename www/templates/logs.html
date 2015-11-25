@@ -8,24 +8,23 @@
     <ion-content>
         <div class="list">
 
-            <div class="item item-input-inset">
+            <form ng-submit="findByDate(date)" class="item item-input-inset">
                 <div class="col col-40">
                     Date :
                     <label class="item-input-wrapper">
-                        <input type="date" ng-click="logs(lock)">
+                        <input type="date" ng-model="date.start">
                     </label>
                 </div>
                 <div class="col col-40">
                     Date jusqu'à :
                     <label class="item-input-wrapper">
-                        <input type="date">
+                        <input type="date" ng-model="date.end" >
                     </label>
                 </div>
-
-                <button class="button button-positive">
+                <button class="button button-positive" type="submit">
                     <i class="icon ion-ios-search-strong"></i>
                 </button>
-            </div>
+            </form>
 
             <div class="col col-100">
                 <div class="list">
@@ -44,10 +43,8 @@
             </div>
         </div>
 
-        <ul class="list">
-            <li class="item">
-                ...
-            </li>
-        </ul>
+        <ion-item ng-repeat="log in logs" item="log">
+            <label>{{log.createdAt}} : {{log.message}} par {{log.user.username}}.</label>
+        </ion-item>
     </ion-content>
 </ion-view>

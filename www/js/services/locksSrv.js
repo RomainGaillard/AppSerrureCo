@@ -36,6 +36,22 @@ angular.module('locks.services')
                     'Authorization': AuthSrv.getUser().token
                 }
             },
+            logsByDate:{
+                method:"POST",
+                url:ConstantsSrv.logsByDate,
+                params:{id:'@id'},
+                headers:{
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
+            logsByDualDate:{
+                method:"POST",
+                url:ConstantsSrv.logsByDualDate,
+                params:{id:'@id'},
+                headers:{
+                    'Authorization': AuthSrv.getUser().token
+                }
+            },
             lock:{
                 method:"GET",
                 url:ConstantsSrv.lock,
