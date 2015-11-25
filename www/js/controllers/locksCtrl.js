@@ -5,7 +5,7 @@
 angular.module("locks.controllers")
 
 
-.controller('LocksCtrl', ['$scope','$state','$ionicModal','$rootScope','AuthSrv','Group','Lock','$filter','ConstantsSrv', function($scope, $state,$ionicModal,$rootScope,AuthSrv, Group,Lock,$filter,ConstantsSrv) {
+.controller('LocksCtrl', ['$scope','$state','$ionicModal','$rootScope','AuthSrv','Group','Lock','$filter','ConstantsSrv','$ionicHistory', function($scope, $state,$ionicModal,$rootScope,AuthSrv, Group,Lock,$filter,ConstantsSrv,$ionicHistory) {
     $scope.user = AuthSrv.getUser();
     $scope.groups = new Array();
     $rootScope.selectGroup = {};
@@ -83,7 +83,25 @@ angular.module("locks.controllers")
         })
     }
 
-    // =========== GESTION DES LISTENERS ROOTSCOPE ========================
+    // =========== GESTION DES LISTENERS  ========================
+
+    /*$scope.$on("$ionicView.beforeEnter", function () {
+        var viewHistory = $ionicHistory.viewHistory();
+        var currentHistory = viewHistory.histories;
+        var currentCursor = currentHistory.root.cursor;
+        if(currentCursor > 0){
+            var backView = currentHistory.root.stack[currentCursor - 1];
+            if(backView.stateName == "app"){
+                $ionicHistory.clearCache();
+                $ionicHistory.clearHistory();
+                // $state.reload();
+                //var current = $state.current;
+                //var params = angular.copy($stateParams);
+                //$state.transitionTo(current, {}, { reload: true, inherit: true, notify: true });
+                location.reload()
+            }
+        }
+    })*/
 
     $rootScope.$on("callNewLock", function (event) {
         $rootScope.newLock();

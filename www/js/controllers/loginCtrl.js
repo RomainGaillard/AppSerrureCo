@@ -9,55 +9,6 @@ angular.module('login.controllers')
     $scope.myUser.identifier = "romain2.gaillard@ynov.com"
     $scope.myUser.password = "mdpRomain2"
 
-    $scope.goToRegister = function() {
-        $state.go("register");
-    }
-
-    var finVerif = true;
-    $scope.doLogin = function(myUser){
-        //get(), query(), save() post, et delete() (ou remove() au choix)
-        if(verifCase()){
-            myUser.$login(function(user){
-                AuthSrv.setUser(user);
-                $state.go("locks");
-            },function(err){
-                errorCase();
-                showError("Identifiant ou mot de passe incorrect.");
-            });
-        }
-        /***********************************************************************
-        *                                                                      *
-        *     LAISSER LES COMMENTAIRES CI-DESSOUS POUR LE MOMENT. Merci !      *
-        *                                                                      *
-        ************************************************************************/
-
-        /*io.socket.on('connect',function(){
-            console.log('connected to sails ok')
-            io.socket.get('/mylocks/3',function(data,jwres){
-                console.log(data);
-                $scope.locks = data;
-            })
-            io.socket.on('lock',function(msg){
-                console.log(msg);
-            })
-        })
-
-        */
-        /*
-         var data = {identifier:loginData.email,password:loginData.password};
-        $http.post(ConstantsSrv.login,data,{
-            headers:{
-                'Content-Type':'application/json'
-            }
-        }).success(function(data,status,headers){
-            alert(status);
-            document.getElementById("test").innerHTML = data.token;
-        }).error(function(data,status,headers){
-            alert("Error:"+headers);
-        });
-        */
-    }
-
 
     var verifCase = function(){
         var noEmpty = true;
@@ -83,10 +34,6 @@ angular.module('login.controllers')
         $("[ng-model='myUser.identifier']").css({"color":"red"})
     }
 
-    $scope.reinitCase = function(elem){
-        $(elem.target).css("color","").parent().css("border","");
-    }
-
     var showError = function(msgError){
         if(finVerif){
             finVerif = false;
@@ -106,27 +53,85 @@ angular.module('login.controllers')
         }
     };
 
+
+    // ========= LES ROUTES ======================================
+
+    $scope.goToRegister = function() {
+        $state.go("register");
+    }
+
+    // ========= LES ACTIONS DU SCOPE =====================================
+
+
+    var finVerif = true;
+    $scope.doLogin = function(myUser){
+        //get(), query(), save() post, et delete() (ou remove() au choix)
+        if(verifCase()){
+            myUser.$login(function(user){
+                AuthSrv.setUser(user);
+                $state.go("locks",{},{'reload':true});
+
+            },function(err){
+                errorCase();
+                showError("Identifiant ou mot de passe incorrect.");
+            });
+        }
+        /***********************************************************************
+         *                                                                      *
+         *     LAISSER LES COMMENTAIRES CI-DESSOUS POUR LE MOMENT. Merci !      *
+         *                                                                      *
+         ************************************************************************/
+
+        /*io.socket.on('connect',function(){
+         console.log('connected to sails ok')
+         io.socket.get('/mylocks/3',function(data,jwres){
+         console.log(data);
+         $scope.locks = data;
+         })
+         io.socket.on('lock',function(msg){
+         console.log(msg);
+         })
+         })
+
+         */
+        /*
+         var data = {identifier:loginData.email,password:loginData.password};
+         $http.post(ConstantsSrv.login,data,{
+         headers:{
+         'Content-Type':'application/json'
+         }
+         }).success(function(data,status,headers){
+         alert(status);
+         document.getElementById("test").innerHTML = data.token;
+         }).error(function(data,status,headers){
+         alert("Error:"+headers);
+         });
+         */
+    }
+
+    $scope.reinitCase = function(elem){
+        $(elem.target).css("color","").parent().css("border","");
+    }
+
     $rootScope.logout = function(){
         $scope.myUser.$logout(function(user){
             AuthSrv.removeUser();
             $timeout(function () {
                 $ionicHistory.clearCache();
                 $ionicHistory.clearHistory();
-            },100)
-
-            $state.go("app");
+            })
+            $state.go("app",{},{reload:true});
         },function(err){
             alert(err);
         });
     }
-
 
     $scope.forgetPassword = function(){
         alert("Indisponible")
     }
 
 
-    // Create and load the Modal
+    // ===================== POPUP - Forget Password ==================
     $ionicModal.fromTemplateUrl('templates/forget_password.html', function(modal) {
         $scope.forgetPasswordModal = modal;
     }, {
