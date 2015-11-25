@@ -11,7 +11,7 @@
             <form ng-submit="doAddMember()">
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Email:</span>
-                    <input type="text" placeholder="Email" ng-model="member.email">
+                    <input type="text" placeholder="Email" ng-model="member.email" ng-focus="reinitCase($event)">
                 </label>
                 <div class="row item">
                     <div class="col">Administrateur:
@@ -27,12 +27,12 @@
                         </label>
                     </div>
                 </div>
-                <button id="btValidate" class="button button-full button-balanced" type="submit" >
-                    <div id="msgNormal">
+                <button id="btValidate4" class="button button-full button-balanced" type="submit" >
+                    <div id="msgNormal4">
                         <i class="ion-android-add-circle"></i>
                         <span>  Ajouter</span>
                     </div>
-                    <div id="msgError">
+                    <div id="msgError4">
                         <i class="ion-alert-circled"></i>
                         <span>   {{msgBtError}}</span>
                     </div>

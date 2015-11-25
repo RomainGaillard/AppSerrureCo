@@ -32,27 +32,26 @@ angular.module("account.controllers")
         }
 
         var errorCaseEmpty = function(elem){
-            elem.parent().css("border","1px solid red");
+            //elem.parent().css("border","1px solid red");
         }
 
-        var errorCase = function(){
-            $("[ng-model='myNewUser.firstname']").css({"color":"red"})
-            $("[ng-model='myNewUser.lastname']").css({"color":"red"})
-            $("[ng-model='myNewUser.email']").css({"color":"red"})
+        var errorCase = function(model){
+            $("[ng-model='"+model+"']").css({"color":"red"})
         }
 
-        var showError = function(msgError){
+        var showError = function(msgError,numBt){
+            if(numBt == undefined) numBt = "";
             if(finVerif){
                 finVerif = false;
                 $scope.msgBtError = msgError;
-                $("[id='msgNormal']").fadeOut("fast",function(){
-                    $("[id='msgError']").fadeIn("fast");
+                $("[id='msgNormal"+numBt+"']").fadeOut("fast",function(){
+                    $("[id='msgError"+numBt+"']").fadeIn("fast");
                 });
 
-                $("[id='btValidate']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
-                    $("[id='btValidate']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
-                        $("[id='msgError']").fadeOut("fast",function(){
-                            $("[id='msgNormal']").fadeIn("fast");
+                $("[id='btValidate"+numBt+"']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
+                    $("[id='btValidate"+numBt+"']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
+                        $("[id='msgError"+numBt+"']").fadeOut("fast",function(){
+                            $("[id='msgNormal"+numBt+"']").fadeIn("fast");
                             finVerif = true;
                         });
                     })
@@ -74,8 +73,8 @@ angular.module("account.controllers")
                 $scope.myNewUser.$update().then(function (data) {
                     $state.go("locks")
                 }, function (err) {
-                    errorCase();
-                    showError("ce mail existe déjà ou est incorrecte, veuillez en rentrer un autre");
+                    errorCase("myNewUser.email");
+                    showError("Ce mail existe déjà ou est incorrect !");
                 })
             }
         };
@@ -98,7 +97,7 @@ angular.module("account.controllers")
         $scope.editPassword = function(){
             $scope.editPasswordModal.show();
             $scope.user = new User();
-            $("[id='msgError']").hide();
+            $("[id='msgError2']").hide();
         };
 
         $scope.closeEditPassword = function() {
@@ -107,17 +106,27 @@ angular.module("account.controllers")
 
         $scope.doEditPassword = function(){
             if($scope.user.oldPassword == undefined || $scope.user.oldPassword == "" || $scope.user.newPassword == undefined || $scope.user.newPassword == "" || $scope.user.confirmNewPassword == undefined || $scope.user.confirmNewPassword == "")
-                showError("Tous les champs ne sont pas remplis !")
-            else if($scope.user.newPassword != $scope.user.confirmNewPassword)
-                showError("La confirmation ne correspond pas au nouveau mot de passe !")
+                showError("Tous les champs ne sont pas remplis !",2)
+            else if($scope.user.newPassword != $scope.user.confirmNewPassword) {
+                showError("La confirmation ne correspond pas au nouveau mot de passe !", 2)
+                errorCase("user.newPassword");
+                errorCase("user.confirmNewPassword");
+            }
             else{
                 $scope.user.$editPassword().then(function(data){
                     $scope.closeEditPassword();
                     $rootScope.logout();
                 },function(err){
                     console.log(err);
-                    if(err.status == 404)
-                        showError("Le mot de passe actuel n'est pas bon !");
+                    if(err.status == 403) {
+                        showError("Le mot de passe actuel n'est pas bon !", 2);
+                        errorCase("user.oldPassword");
+                    }
+                    else {
+                        showError("Le mot de passe doit faire au moins 8 caractères !", 2)
+                        errorCase("user.newPassword");
+                        errorCase("user.confirmNewPassword");
+                    }
                 })
             }
 

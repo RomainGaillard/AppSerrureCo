@@ -17,7 +17,7 @@
                 </label>
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Adresse Mac:</span>
-                    <input type="text" placeholder="Adresse Mac " ng-model="lock.address_mac">
+                    <input type="text" placeholder="Adresse Mac " ng-model="lock.address_mac" ng-focus="reinitCase($event)">
                 </label>
 
                 <div class="row item">
@@ -78,12 +78,12 @@
                 </li>
 
                 <div class="button-bar">
-                    <button id="btValidate" class="button button-full button-balanced" type="submit">
-                        <div id="msgNormal">
+                    <button id="btValidate1" class="button button-full button-balanced" type="submit">
+                        <div id="msgNormal1">
                             <i class="ion-android-add-circle"></i>
                             <span>  Créer la serrure</span>
                         </div>
-                        <div id="msgError">
+                        <div id="msgError1">
                             <i class="ion-alert-circled"></i>
                             <span>   {{msgBtError}}</span>
                         </div>

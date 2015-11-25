@@ -15,18 +15,19 @@ angular.module("member.controllers")
         console.log(err);
       })
 
-      var showError = function(msgError){
+      var showError = function(msgError,numBt){
+          if(numBt == undefined) numBt = "";
           if(finVerif){
               finVerif = false;
               $scope.msgBtError = msgError;
-              $("[id='msgNormal']").fadeOut("fast",function(){
-                  $("[id='msgError']").fadeIn("fast");
+              $("[id='msgNormal"+numBt+"']").fadeOut("fast",function(){
+                  $("[id='msgError"+numBt+"']").fadeIn("fast");
               });
 
-              $("[id='btValidate']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
-                  $("[id='btValidate']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
-                      $("[id='msgError']").fadeOut("fast",function(){
-                          $("[id='msgNormal']").fadeIn("fast");
+              $("[id='btValidate"+numBt+"']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
+                  $("[id='btValidate"+numBt+"']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
+                      $("[id='msgError"+numBt+"']").fadeOut("fast",function(){
+                          $("[id='msgNormal"+numBt+"']").fadeIn("fast");
                           finVerif = true;
                       });
                   })
@@ -34,6 +35,9 @@ angular.module("member.controllers")
           }
       };
 
+      var errorCase = function(model){
+          $("[ng-model='"+model+"']").css({"color":"red"})
+      }
 
       // ========= LES ROUTES ======================================
 
@@ -67,6 +71,11 @@ angular.module("member.controllers")
             console.log(err);
         })
       }
+
+      $scope.reinitCase = function(elem){
+          $(elem.target).css("color","").parent().css("border","");
+      }
+
 
       // =========== GESTION DES LISTENERS ROOTSCOPE ========================
 
@@ -154,12 +163,12 @@ angular.module("member.controllers")
 
       $scope.addMember= function(){
           $scope.addMemberModal.show();
-          $("[id='msgError']").hide();
+          $("[id='msgError4']").hide();
       };
 
       $scope.doAddMember = function(){
           if($scope.member.email == undefined || $scope.member.email == ""){
-              showError("Veuillez saisir un email");
+              showError("Veuillez saisir un email",4);
           }
           else{
               myGroup.email = $scope.member.email;
@@ -168,7 +177,8 @@ angular.module("member.controllers")
               myGroup.$join().then(function(data){
                   $scope.closeAddMember();
               },function(err){
-                  showError(err.data.msg);
+                  showError(err.data.msg,4);
+                  errorCase("member.email");
               })
           }
       }

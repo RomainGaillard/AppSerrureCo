@@ -12,16 +12,16 @@
         <div class="list">
             <form ng-submit="requestJoinGroup()">
                 <label class="item item-input">
-                    <input type="text" placeholder="#TAG du groupe (sans le #)" ng-model="group.code">
+                    <input type="text" placeholder="#TAG du groupe (sans le #)" ng-model="group.code" ng-focus="reinitCase($event)">
                 </label>
 
                 <div class="button-bar">
-                    <button id="btValidate" class="button button-full button-balanced" type="submit">
-                        <div id="msgNormal">
+                    <button id="btValidate3" class="button button-full button-balanced" type="submit">
+                        <div id="msgNormal3">
                             <i class="ion-android-unlock"></i>
                             <span>  Demander l'accès</span>
                         </div>
-                        <div id="msgError">
+                        <div id="msgError3">
                             <i class="ion-alert-circled"></i>
                             <span>   {{msgBtError}}</span>
                         </div>

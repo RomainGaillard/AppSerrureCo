@@ -30,24 +30,30 @@ angular.module("locks.controllers")
         // Permet d'établir une socket d'écoute sur l'user.
     })
 
-    var showError = function(msgError){
+    var showError = function(msgError,numBt){
+        if(numBt == undefined) numBt = "";
         if(finVerif){
             finVerif = false;
             $scope.msgBtError = msgError;
-            $("[id='msgNormal']").fadeOut("fast",function(){
-                $("[id='msgError']").fadeIn("fast");
+            $("[id='msgNormal"+numBt+"']").fadeOut("fast",function(){
+                $("[id='msgError"+numBt+"']").fadeIn("fast");
             });
 
-            $("[id='btValidate']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
-                $("[id='btValidate']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
-                    $("[id='msgError']").fadeOut("fast",function(){
-                        $("[id='msgNormal']").fadeIn("fast");
+            $("[id='btValidate"+numBt+"']").switchClass("button-balanced","button-assertive","fast","easeInQuart",function() {
+                $("[id='btValidate"+numBt+"']").delay(1500).switchClass("button-assertive", "button-balanced", "fast", "easeInQuart",function(){
+                    $("[id='msgError"+numBt+"']").fadeOut("fast",function(){
+                        $("[id='msgNormal"+numBt+"']").fadeIn("fast");
                         finVerif = true;
                     });
                 })
             })
         }
     };
+
+    var errorCase = function(model){
+        $("[ng-model='"+model+"']").css({"color":"red"})
+    }
+
 
     // ========= LES ROUTES ======================================
 
@@ -87,6 +93,11 @@ angular.module("locks.controllers")
             console.log(err);
         })
     }
+
+    $scope.reinitCase = function(elem){
+        $(elem.target).css("color","").parent().css("border","");
+    }
+
 
     // =========== GESTION DES LISTENERS  ========================
 
@@ -274,7 +285,7 @@ angular.module("locks.controllers")
 
     $scope.joinGroup = function(){
         $scope.joinGroupModal.show();
-        $("[id='msgError']").hide();
+        $("[id='msgError3']").hide();
         $scope.closeAskGroup();
         $scope.group = new Group();
     };
@@ -282,14 +293,15 @@ angular.module("locks.controllers")
     $scope.requestJoinGroup = function() {
         console.log($scope.group.code);
         if($scope.group.code == undefined || $scope.group.code == ""){
-            showError("Saisissez le #TAG du groupe !");
+            showError("Saisissez le #TAG du groupe !",3);
         }
         else{
             $scope.group.$askAccess().then(function(data){
                 getGroups(); // Permet de suivre avec une socket les events du groupe.
                 $scope.joinGroupModal.hide();
             },function(err){
-                showError("Le groupe n'existe pas !")
+                showError("Le groupe n'existe pas !",3)
+                errorCase("group.code")
             })
         }
     };
@@ -310,7 +322,7 @@ angular.module("locks.controllers")
 
     $scope.newGroup = function(){
         $scope.newGroupModal.show();
-        $("[id='msgError']").hide();
+        $("[id='msgError2']").hide();
         $scope.group = new Group();
         $scope.locks = new Lock();
         $scope.locks.$lock().then(function(data){
@@ -328,7 +340,7 @@ angular.module("locks.controllers")
     $scope.createGroup = function() {
         var locks = new Array();
         if($scope.group.name == undefined || $scope.group.name == ""){
-            showError("Donner un nom au groupe !");
+            showError("Donner un nom au groupe !",2);
         }
         else{
             for(var i=0;i<$scope.locks.locks.length;i++){
@@ -388,7 +400,7 @@ angular.module("locks.controllers")
     $rootScope.newLock = function(){
         $rootScope.newLockModal.show();
         $scope.lock = {};
-        $("[id='msgError']").hide();
+        $("[id='msgError1']").hide();
     };
 
     $rootScope.closeNewLock = function() {
@@ -397,10 +409,10 @@ angular.module("locks.controllers")
 
     $rootScope.createLock = function() {
         if($scope.lock.name == undefined || $scope.lock.name == ""){
-            showError("Saisissez un nom de serrure !");
+            showError("Saisissez un nom de serrure !",1);
         }
         else if($scope.lock.address_mac == undefined || $scope.lock.address_mac == ""){
-            showError("Saisissez un adresse mac !")
+            showError("Saisissez un adresse mac !",1)
         }
         else{
             $scope.lock.groups = new Array();
@@ -418,13 +430,16 @@ angular.module("locks.controllers")
                         $rootScope.newLockModal.hide();
                     }
                     else{
-                        showError('Erreur: Addresse Mac déjà utilisée !');
+                        $scope.$apply(function() {
+                            showError('Erreur: Addresse Mac déjà utilisée !',1);
+                        })
+                        errorCase("lock.address_mac")
                         console.log(jwres.body.err);
                     }
                 })
             }
             else{
-                showError('Selectionner au moins un groupe !');
+                showError('Selectionner au moins un groupe !',1);
             }
         }
     };
