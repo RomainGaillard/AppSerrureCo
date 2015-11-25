@@ -1,6 +1,6 @@
 angular.module("logs.controllers")
 
-.controller('LogsCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group', function($scope, $state, $stateParams, Lock, Group){
+.controller('LogsCtrl', ['$scope','$state', '$stateParams', 'Lock', 'Group','$rootScope', function($scope, $state, $stateParams, Lock, Group,$rootScope){
     $scope.lock     = $stateParams.lock;
     $scope.group    = new Group($stateParams.group);
 
@@ -26,7 +26,7 @@ angular.module("logs.controllers")
         if(data.msg.id == $scope.lock.id)
             $scope.gotoLocks();
     })
-    
+
     // ========= LES ACTIONS DU SCOPE =====================================
 
     $scope.findLogs = function() {
