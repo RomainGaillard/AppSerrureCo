@@ -73,6 +73,11 @@ angular.module("locks.controllers")
         $("#"+code).slideToggle();
     }
 
+    $scope.goToWaitingMember = function(group){
+        $scope.showLocks(group.code); // Annule le clic simultanné sur la barre + bouton.
+        $state.go("mwm.waiting", {group:group});
+    }
+
     // ========= LES ACTIONS DU SCOPE =====================================
 
     $scope.cancelAskAccess = function(group){

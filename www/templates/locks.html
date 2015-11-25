@@ -12,7 +12,7 @@
                 <div class="item item-divider" ng-click="showLocks('{{group.group.code}}')">
                     #{{group.group.code}}: {{group.group.name}}
                     <div class="right">
-                        <nb-users-wait code="{{group.group.code}}" ng-if="group.admin"></nb-users-wait>
+                        <nb-users-wait code="{{group.group.code}}" ng-if="group.admin" ng-click="goToWaitingMember(group.group)"></nb-users-wait>
                         <button ng-hide="!group.admin" class="button-clear ion-wrench black" ng-click="goToEditGroup(group)"> Editer </button>
                         <button ng-hide="group.admin" class="button-clear ion-android-walk black" ng-click="exitGroup(group)"> Quitter </button>
                     </div>

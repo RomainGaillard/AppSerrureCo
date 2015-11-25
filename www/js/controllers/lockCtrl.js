@@ -38,19 +38,11 @@ angular.module("lock.controllers")
     $scope.goToBack = function(){
         removeListener();
         var viewHistory = $ionicHistory.viewHistory();
-        var currentHistory = viewHistory.histories;
-        var currentCursor = currentHistory.root.cursor;
-        if(currentCursor > 0){
-            var backView = currentHistory.root.stack[currentCursor];
-            if(backView.stateName == "editGroup"){
-                $state.go("editGroup",{group: $scope.group},{reload:true});
-            }
-            else
-                $state.go("locks");
+        if(viewHistory.backView.stateName == "editGroup"){
+            $state.go("editGroup",{group: $scope.group},{reload:true});
         }
         else
             $state.go("locks");
-
     }
 
     $scope.goToLogs = function(){

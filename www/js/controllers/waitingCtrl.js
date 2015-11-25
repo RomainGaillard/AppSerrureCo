@@ -1,6 +1,6 @@
 angular.module("waiting.controllers")
 
-  .controller('WaitingCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group','AuthSrv', function($scope, $state, $ionicModal, $rootScope, $stateParams, Group,AuthSrv) {
+  .controller('WaitingCtrl', ['$scope','$state','$ionicModal','$rootScope','$stateParams','Group','AuthSrv','$ionicHistory', function($scope, $state, $ionicModal, $rootScope, $stateParams, Group,AuthSrv,$ionicHistory) {
 
       $scope.users = {};
       $scope.group =  $stateParams.group;
@@ -22,6 +22,17 @@ angular.module("waiting.controllers")
       $scope.goToLocks = function(){
           removeListener();
           $state.go("locks");
+      }
+
+      $scope.goToBack = function(){
+          removeListener();
+          var viewHistory = $ionicHistory.viewHistory();
+          if(viewHistory.backView.stateName == "locks"){
+                  $state.go("locks");
+          }
+          else
+              $state.go("editGroup", {group:{group:$scope.group}});
+
       }
 
       // ========= LES ACTIONS DU SCOPE =====================================
