@@ -1,10 +1,15 @@
 angular.module("tab.controllers")
 
-.controller('tabCtrl', ['$scope','$state',  function($scope, $state){
-    $scope.gotoLogs = function(lock){
+.controller('tabCtrl', ['$scope','$state','$stateParams',  function($scope, $state,$stateParams){
+
+    $scope.group = $stateParams.group;
+    $scope.lock = $stateParams.lock;
+
+
+    $scope.goToLogs = function(){
         $state.go("tab.log");
     };
-    $scope.gotoLock = function(lock){
-        $state.go("tab.lock");
+    $scope.goToLock = function(){
+        $state.go("tab.lock", {lock: $scope.lock, group: $scope.group},{reload:true});
     };
 }])

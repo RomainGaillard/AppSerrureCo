@@ -18,7 +18,7 @@ angular.module("register.controllers")
             if(verifCase()){
                 $scope.myNewUser.$register(function(user){
                     AuthSrv.setUser(user)
-                    $state.go("locks");
+                    $state.go("locks",{'reload':true});
                 },function(err) {
                     ErrorCase($("[ng-model='myNewUser.email']"));
                     ErrorCase($("[ng-model='myNewUser.username']"));
