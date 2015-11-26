@@ -343,9 +343,11 @@ angular.module("locks.controllers")
             showError("Donner un nom au groupe !",2);
         }
         else{
-            for(var i=0;i<$scope.locks.locks.length;i++){
-                if($scope.locks.locks[i].selected)
-                    locks.push($scope.locks.locks[i].id)
+            if($scope.locks.locks){
+                for(var i=0;i<$scope.locks.locks.length;i++){
+                    if($scope.locks.locks[i].selected)
+                        locks.push($scope.locks.locks[i].id)
+                }
             }
             io.socket.post(ConstantsSrv.createGroup,{token:AuthSrv.getUser().token,name:$scope.group.name,locks:locks},function(group,jwres){
                 if(jwres.statusCode == 201){
