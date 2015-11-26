@@ -7,7 +7,6 @@ angular.module("tab.controllers")
 
     $scope.getLock = function(destination) {
         var lock = new Lock($stateParams.lock);
-        console.log(lock);
         lock.$lockById().then(function(data){
             $scope.lock = data;
             $state.go(destination, {lock:$scope.lock, group:$scope.group},{reload:true});
