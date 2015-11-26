@@ -14,6 +14,14 @@ angular.module('authentification.services')
         this.removeUser = function(){
             $localStorage.user = null;
         }
+
+        this.updateUser = function(data){
+            var token = $localStorage.user.token;
+            $localStorage.user.email = data.email;
+            $localStorage.user.firstname = data.firstname;
+            $localStorage.user.lastname = data.lastname;
+            $localStorage.user.token = token;
+        }
     })
 
     .factory('User',['$resource','ConstantsSrv','AuthSrv', function ($resource,ConstantsSrv,AuthSrv) {
