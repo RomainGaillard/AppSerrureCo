@@ -71,6 +71,7 @@ angular.module("account.controllers")
         $scope.updateUser = function() {
             if(verifCase()){
                 $scope.myNewUser.$update().then(function (data) {
+                    AuthSrv.updateUser(data);
                     $state.go("locks")
                 }, function (err) {
                     errorCase("myNewUser.email");
