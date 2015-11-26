@@ -6,8 +6,8 @@ angular.module('login.controllers')
     $scope.myUser = new User();
     $("[id='errorCo']").hide();
 
-    $scope.myUser.identifier = "romain2.gaillard@ynov.com"
-    $scope.myUser.password = "mdpRomain2"
+    $scope.myUser.identifier = ""
+    $scope.myUser.password = ""
 
 
     var verifCase = function(){

@@ -12,6 +12,7 @@ angular.module("tab.controllers")
             $state.go(destination, {lock:$scope.lock, group:$scope.group},{reload:true});
         },function(err){
             console.log(err);
+            $state.go("locks");
         });
     };
     $scope.goToLogs = function(){

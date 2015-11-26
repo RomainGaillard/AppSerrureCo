@@ -12,6 +12,7 @@ angular.module("logs.controllers")
     // ========= LES ROUTES ======================================
 
     $scope.goToLocks = function(){
+        removeListener();
         $state.go("locks")
     };
 
@@ -33,6 +34,7 @@ angular.module("logs.controllers")
         var lock = new Lock($stateParams.lock);
         lock.$logs().then(function(data){
             defaultLogs = data.logs;
+            formatageDate();
             $scope.filtrate($scope.filter);
         },function(err){
             console.log(err);
@@ -50,6 +52,7 @@ angular.module("logs.controllers")
                 lock.end = formatDate(dateEnd);
                 lock.$logsByDualDate().then(function(data){
                     defaultLogs = data.logs;
+                    formatageDate();
                     $scope.filtrate($scope.filter);
                 },function(err){
                     console.log(err);
@@ -58,6 +61,7 @@ angular.module("logs.controllers")
                 lock.date = formatDate(date.start);
                 lock.$logsByDate().then(function(data){
                     defaultLogs = data.logs;
+                    formatageDate();
                     $scope.filtrate($scope.filter);
                 },function(err){
                     console.log(err);
@@ -80,10 +84,8 @@ angular.module("logs.controllers")
                 }
             }
             $scope.logs = filterLogs;
-            affichageDate();
         } else {
             $scope.logs = defaultLogs;
-            affichageDate();
         }
 
     }
@@ -95,12 +97,12 @@ angular.module("logs.controllers")
         return date.substring(0, 10);
     }
 
-    var affichageDate = function(){
-        for(var i=0;i<$scope.logs.length;i++){
-            var date = $scope.logs[i].createdAt;
+    var formatageDate = function(){
+        for(var i=0;i<defaultLogs.length;i++){
+            var date = defaultLogs[i].createdAt;
             var jjmmaa = date.substring(0,date.indexOf("T"));
             var hhmmss = date.substring(date.indexOf("T")+1,date.lastIndexOf('.'));
-            $scope.logs[i].createdAt = jjmmaa + " à "+hhmmss;
+            defaultLogs[i].createdAt = jjmmaa + " à "+hhmmss;
         }
     }
 
