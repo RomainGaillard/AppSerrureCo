@@ -69,7 +69,6 @@ angular.module("register.controllers")
                 showError("L'email n'est pas valide");
             }
             else if(password != confirm_password){
-                alert('ok');
                 ErrorCase();
                 showError("Les mots de passe ne correspondent pas !");
             }
