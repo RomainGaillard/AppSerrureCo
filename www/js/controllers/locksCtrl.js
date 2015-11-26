@@ -402,6 +402,7 @@ angular.module("locks.controllers")
     $rootScope.newLock = function(){
         $rootScope.newLockModal.show();
         $scope.lock = {};
+        $scope.lock.is_register = true;
         $("[id='msgError1']").hide();
     };
 

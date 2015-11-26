@@ -1,21 +1,22 @@
-<li class="item" ng-repeat="lock in locks" ng-click="goToLock(lock)">
+<li class="item" ng-repeat="lock in locks">
     <button class="button button-small button-icon group-list" ng-click="removeLock(lock,$index)">
         <i class="icon ion-android-cancel assertive"></i>
     </button>
-    {{lock.id}}
-    <i ng-hide="{{!lock.has_micro}}" class="ion-ios-mic"></i>
-    <i ng-hide="{{lock.has_micro}}" class="ion-ios-mic-outline"></i>
+    <div class="col col-90 cursor-point" ng-click="goToLock(lock)">
+        <i ng-hide="{{!lock.has_micro}}" class="ion-ios-mic"></i>
+        <i ng-hide="{{lock.has_micro}}" class="ion-ios-mic-outline"></i>
 
-    <i ng-hide="{{!lock.has_bell}}" class="ion-ios-bell"></i>
-    <i ng-hide="{{lock.has_bell}}" class="ion-ios-bell-outline"></i>
+        <i ng-hide="{{!lock.has_bell}}" class="ion-ios-bell"></i>
+        <i ng-hide="{{lock.has_bell}}" class="ion-ios-bell-outline"></i>
 
-    <i ng-hide="{{!lock.has_camera}}" class="ion-ios-videocam"></i>
-    <i ng-hide="{{lock.has_camera}}" class="ion-ios-videocam-outline"></i>
+        <i ng-hide="{{!lock.has_camera}}" class="ion-ios-videocam"></i>
+        <i ng-hide="{{lock.has_camera}}" class="ion-ios-videocam-outline"></i>
 
-    <i ng-hide="{{!lock.is_register}}" class="ion-ios-paper"></i>
-    <i ng-hide="{{lock.is_register}}" class="ion-ios-paper-outline"></i>
+        <i ng-hide="{{!lock.is_register}}" class="ion-ios-paper"></i>
+        <i ng-hide="{{lock.is_register}}" class="ion-ios-paper-outline"></i>
 
-    <span class="group-marginitem-title">{{lock.name}}</span>
+        <span class="group-marginitem-title">{{lock.name}}</span>
+    </div>
 </li>
 
 <br><br><br><br><br>
