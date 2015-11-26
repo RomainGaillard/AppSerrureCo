@@ -118,7 +118,16 @@ angular.module("member.controllers")
 
       var joinListener = $rootScope.$on("join",function(event,data){
           $scope.$apply(function(){
-              $scope.users.push({email:data.msg.data.email,admin:data.msg.data.admin})
+              // Vérifier que l'user n'est pas déjà en attente.
+              var userExist = false;
+              for(var i=0;i<$scope.users.length;i++){
+                  if($scope.users[i].email == data.msg.data.email){
+                      $scope.users[i].admin = data.msg.data.admin;
+                      userExist = true;
+                  }
+              }
+              if(!userExist)
+                $scope.users.push({email:data.msg.data.email,admin:data.msg.data.admin})
               $scope.nbAdmin = $filter('filter')($scope.users, {admin: true}).length;
           })
       })
