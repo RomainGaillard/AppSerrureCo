@@ -101,23 +101,6 @@ angular.module("locks.controllers")
 
     // =========== GESTION DES LISTENERS  ========================
 
-    /*$scope.$on("$ionicView.beforeEnter", function () {
-        var viewHistory = $ionicHistory.viewHistory();
-        var currentHistory = viewHistory.histories;
-        var currentCursor = currentHistory.root.cursor;
-        if(currentCursor > 0){
-            var backView = currentHistory.root.stack[currentCursor - 1];
-            if(backView.stateName == "app"){
-                $ionicHistory.clearCache();
-                $ionicHistory.clearHistory();
-                // $state.reload();
-                //var current = $state.current;
-                //var params = angular.copy($stateParams);
-                //$state.transitionTo(current, {}, { reload: true, inherit: true, notify: true });
-                location.reload()
-            }
-        }
-    })*/
 
     $rootScope.$on("callNewLock", function (event) {
         $rootScope.newLock();
@@ -208,6 +191,9 @@ angular.module("locks.controllers")
     })
 
     // =========== GESTION DES LISTENERS SOCKET ========================
+    // Tous les listeners socket sont géré à partir de cette page qui n'est jamais fermée.
+    // Permet d'éviter de créer des nouveaux listener socket à l'ouverture de chaque view et qu'on n'arrive pas à fermer.
+
     io.socket.on('group',function(msg){
         switch(msg.verb){
             case "destroyed":
